@@ -163,25 +163,25 @@
 .glbl-h1 {
   font-size: 1.5rem;
   font-weight: 500;
-  color: var(--richBlack);
+  color: #000;
 }
 
 .glbl-h2 {
   font-size: 1.25rem;
   font-weight: 500;
-  color: var(--richBlack);
+  color: #000;
 }
 
 .glbl-h3 {
   font-size: 1.15rem;
   font-weight: 500;
-  color: var(--richBlack);
+  color: #000;
 }
 
 .glbl-h4 {
   font-size: 1.1rem;
   font-weight: 500;
-  color: var(--richBlack);
+  color: #000;
 }
 
 .glbl-text {

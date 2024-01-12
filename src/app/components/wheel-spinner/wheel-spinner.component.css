@@ -1,0 +1,69 @@
+.wheel-spinner-cont {
+  display: flex;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+  /* align-items: flex-end; */
+  width: 100%;
+  margin-top: 2rem;
+  padding: 2rem;
+  outline: solid 1px black;
+}
+
+.control-sec {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  width: 80;
+  outline: solid 1px red;
+}
+
+.wheel-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+  padding: 1rem;
+  margin-right: 2rem;
+  cursor: pointer;
+  outline: solid 1px blue;
+}
+
+.spinner-wheel-img {
+  width: 90%;
+}
+
+.score-txt {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #000;
+  margin-top: 1rem;
+}
+
+.spin-animation {
+  -webkit-animation: spin 4s linear infinite;
+  -moz-animation: spin 4s linear infinite;
+  animation: spin 4s linear infinite;
+  animation-duration: 0.5s;
+}
+@-moz-keyframes spin {
+  100% {
+    -moz-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
