@@ -18,5 +18,9 @@
 .header-img {
   width: 4rem;
   padding: 10px;
-  justify-self: flex-start;
+}
+
+.header-img-txt {
+  width: 20%;
+  padding: 10px;
 }
