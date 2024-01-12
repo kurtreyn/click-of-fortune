@@ -1,3 +1,5 @@
 <section class="puzzle-board-cont">
-  <p>puzzle-board works!</p>
+  <span class="letter-cont" *ngFor="let letter of puzzleLetterArray">
+    {{ letter === " " ? "&nbsp;" : letter }}
+  </span>
 </section>

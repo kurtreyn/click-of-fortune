@@ -1,7 +1,10 @@
 <main class="container-fluid glbl-container">
   <app-header></app-header>
 
-  <app-puzzle-board></app-puzzle-board>
+  <app-puzzle-board
+    [puzzleValue]="puzzleValue"
+    [guessedLetters]="guessedLetters"
+  ></app-puzzle-board>
 
   <app-wheel-spinner></app-wheel-spinner>
 </main>

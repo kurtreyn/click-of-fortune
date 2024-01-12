@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { SpinnerEnum } from 'src/app/enums/spinner-enum';
 
 @Component({
@@ -11,6 +11,8 @@ export class WheelSpinnerComponent {
   public spinnerEnum = SpinnerEnum;
   public spinnerValue: number = SpinnerEnum.ONE;
   public score: number = 0;
+  @Input() puzzleValue!: string;
+  @Input() guessedLetters!: string[];
 
   constructor() { }
 
