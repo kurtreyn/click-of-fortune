@@ -1,5 +1,8 @@
 <section class="puzzle-board-cont">
-  <span class="letter-cont" *ngFor="let letter of puzzleLetterArray">
-    {{ letter === " " ? "&nbsp;" : letter }}
+  <span
+    *ngFor="let letter of puzzleLetterArray"
+    [ngClass]="{ 'letter-cont': letter !== ' ' }"
+  >
+    {{ letter === " " ? "&nbsp; &nbsp;" : letter }}
   </span>
 </section>
