@@ -1,1 +1,885 @@
-/* You can add global styles to this file, and also import other style files */
+/* --------------- CONTAINERS & WRAPPERS ------------------- */
+
+.glbl-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  min-height: 600px;
+  padding: 0;
+}
+
+.glbl-header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.glbl-content-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 600px;
+  padding-left: 3%;
+  padding-right: 3%;
+  margin-bottom: 0.5%;
+  margin-top: 5rem;
+}
+
+.glbl-top-content {
+  display: flex;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.glbl-top-content-col {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.glbl-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.glbl-col-start {
+  display: flex;
+  flex-direction: column;
+}
+
+.glbl-middle-content-flex-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.glbl-middle-content-flex-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.glbl-bottom-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.glbl-content-wrapper-flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.glbl-flex-row-wrapper {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.glbl-wrap {
+  flex-wrap: wrap;
+}
+
+.glbl-text-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.glbl-content-wrapper-flex-row {
+  display: flex;
+  width: 100%;
+}
+
+.glbl-subtitle-wrapper {
+  width: 70%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.glbl-contact-info-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.glbl-right {
+  display: flex;
+  width: 40%;
+}
+
+.glbl-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.glbl-filter-controls-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  margin-top: 80px;
+  margin-bottom: 20px;
+  padding: 10px;
+  border-bottom: solid 1px black;
+}
+
+.card-flex-column-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.card-flex-row-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.image-button-wrapper {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.flex-row-center {
+  justify-content: center;
+}
+
+.flex-column-center {
+  align-items: center;
+}
+
+/* --------------- TEXT------------------- */
+
+.glbl-h1 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--richBlack);
+}
+
+.glbl-h2 {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--richBlack);
+}
+
+.glbl-h3 {
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--richBlack);
+}
+
+.glbl-h4 {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--richBlack);
+}
+
+.glbl-text {
+  font-size: 1rem;
+}
+
+.glbl-ul {
+  list-style: none;
+}
+
+.glbl-center-text {
+  text-align: center;
+}
+
+.glbl-subtitle {
+  font-size: large;
+  font-weight: 500;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.glbl-subtitle-two {
+  font-size: medium;
+  font-weight: 400;
+  margin-top: 8px;
+  margin-bottom: 0px;
+}
+
+.glbl-link-text {
+  text-decoration: none;
+}
+
+.glbl-indent-text {
+  margin-left: 2.3rem;
+}
+
+.color-blueberry {
+  color: var(--blueBerry);
+}
+
+/* --------------- BUTTONS------------------- */
+
+.glbl-button-type-one {
+  width: 200px;
+  padding-left: 5px;
+  margin-right: 5px;
+}
+
+.glbl-button-type-two {
+  width: auto;
+  padding-left: 5px;
+  margin-right: 5px;
+}
+
+.glbl-link-button {
+  width: 250px;
+}
+
+.ird-products-page-image {
+  width: 70%;
+}
+
+.ird-products-page-img-link {
+  width: 270px;
+  height: auto;
+  text-decoration: none;
+}
+
+/* --------------- IMAGES & ICONS------------------- */
+
+.glbl-image {
+  width: 30%;
+}
+
+.glbl-image-thirty-percent {
+  width: 30%;
+}
+
+.glbl-image-fourty-percent {
+  width: 40%;
+}
+
+.glbl-image-seventy-percent {
+  width: 70%;
+}
+
+.glbl-icon {
+  width: 20px;
+  margin-left: 5px;
+}
+
+/* ----- MARGINS, PADDING, WIDTH, HEIGHT, & DIV CONTROLS -------- */
+.glbl-center-div {
+  justify-content: center;
+}
+
+.align-center-div {
+  align-items: center;
+}
+
+.align-start-div {
+  align-items: center;
+}
+
+.flex-start {
+  justify-content: flex-start;
+}
+
+.glbl-width-thirty-percent {
+  width: 30%;
+}
+
+.glbl-width-fourty-percent {
+  width: 40%;
+}
+
+.glbl-width-fifty-percent {
+  width: 50%;
+}
+
+.glbl-width-sixty-percent {
+  width: 60%;
+}
+
+.glbl-width-seventy-percent {
+  width: 70%;
+}
+
+.glbl-width-eighty-percent {
+  width: 80%;
+}
+
+.mt-ten-percent {
+  margin-top: 10%;
+}
+
+.mt-twenty-percent {
+  margin-top: 20%;
+}
+
+.mt-five {
+  margin-top: 5px;
+}
+
+.mt-ten {
+  margin-top: 10px;
+}
+
+.mt-ten {
+  margin-top: 10px;
+}
+
+.mt-twenty {
+  margin-top: 20px;
+}
+
+.mt-thirty {
+  margin-top: 30px;
+}
+
+.mt-fourty {
+  margin-top: 40px;
+}
+
+.mb-ten {
+  margin-bottom: 10px;
+}
+
+.mb-thirty {
+  margin-bottom: 30px;
+}
+
+.mt-mb-twenty {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.ml-two-percent {
+  margin-left: 2%;
+}
+
+.accordion-width-wrapper-eighty-percent {
+  width: 80%;
+}
+
+/* --------------- SPECIFIC TO BALANCING PAGE------------------ */
+
+.balancing-page-col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  padding: 1%;
+}
+
+.bal-img-col {
+  position: relative;
+}
+
+.balancing-page-col-img {
+  position: absolute;
+  top: 0px;
+  width: calc(50% - 50px);
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+  border-radius: 50%;
+}
+
+/* ----------------------- MOBILE SECTION --------------------- */
+
+@media only screen and (max-width: 800px) {
+  .balancing-page-col {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 250px;
+    padding: 1%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .balancing-page-col {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 10px;
+    padding: 1%;
+  }
+
+  /* --------------- CONTAINERS & WRAPPERS ------------------- */
+
+  .glbl-container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+    padding: 0;
+  }
+
+  .glbl-header {
+    display: flex;
+    align-items: center;
+    width: 98%;
+  }
+
+  .glbl-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    min-height: 600px;
+    padding-left: 3%;
+    padding-right: 3%;
+    margin-bottom: 0.5%;
+  }
+
+  .glbl-top-content {
+    display: flex;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .glbl-top-content-col {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .glbl-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .glbl-col-start {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .glbl-middle-content-flex-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .glbl-middle-content-flex-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .glbl-bottom-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .glbl-content-wrapper-flex-col {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .glbl-flex-row-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .glbl-wrap {
+    flex-wrap: wrap;
+  }
+
+  .glbl-text-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+  }
+
+  .glbl-content-wrapper-flex-row {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .glbl-subtitle-wrapper {
+    width: 70%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .glbl-contact-info-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .glbl-right {
+    display: flex;
+    width: 40%;
+  }
+
+  .glbl-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .glbl-filter-controls-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 80px;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-bottom: solid 1px black;
+  }
+
+  .card-flex-column-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .card-flex-row-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .image-button-wrapper {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  /* --------------- TEXT------------------- */
+
+  .glbl-h1 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--richBlack);
+  }
+
+  .glbl-h2 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--richBlack);
+  }
+
+  .glbl-h3 {
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--richBlack);
+  }
+
+  .glbl-text {
+    font-size: 1rem;
+  }
+
+  .glbl-ul {
+    list-style: none;
+  }
+
+  .glbl-center-text {
+    text-align: center;
+  }
+
+  .glbl-subtitle {
+    font-size: large;
+    font-weight: 500;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+
+  .glbl-subtitle-two {
+    font-size: medium;
+    font-weight: 400;
+    margin-top: 8px;
+    margin-bottom: 0px;
+  }
+
+  .glbl-link-text {
+    text-decoration: none;
+  }
+
+  .glbl-indent-text {
+    margin-left: 2.3rem;
+  }
+
+  .color-blueberry {
+    color: var(--blueBerry);
+  }
+
+  /* --------------- BUTTONS------------------- */
+
+  .glbl-button-type-one {
+    width: 160px;
+    padding-left: 5px;
+    margin-right: 5px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    font-size: 0.7rem;
+  }
+
+  .glbl-button-type-two {
+    width: auto;
+    padding-left: 5px;
+    margin-right: 5px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+  }
+
+  .glbl-link-button {
+    width: 200px;
+    font-size: 0.7rem;
+  }
+
+  .ird-products-page-image {
+    width: 70%;
+  }
+
+  .ird-products-page-img-link {
+    width: 270px;
+    height: auto;
+    text-decoration: none;
+  }
+
+  /* --------------- IMAGES & ICONS------------------- */
+
+  .glbl-image {
+    width: 30%;
+  }
+
+  .glbl-image-thirty-percent {
+    width: 30%;
+  }
+
+  .glbl-image-fourty-percent {
+    width: 40%;
+  }
+
+  .glbl-image-seventy-percent {
+    width: 70%;
+  }
+
+  .glbl-icon {
+    width: 20px;
+    margin-left: 5px;
+  }
+
+  /* --------------- MARGINS, PADDING, WIDTH, HEIGHT, & DIV CONTROLS------------------ */
+  .glbl-center-div {
+    justify-content: center;
+  }
+
+  .align-center-div {
+    align-items: center;
+  }
+
+  .align-start-div {
+    align-items: center;
+  }
+
+  .flex-start {
+    justify-content: flex-start;
+  }
+
+  .glbl-width-thirty-percent {
+    width: 30%;
+  }
+
+  .glbl-width-fourty-percent {
+    width: 40%;
+  }
+
+  .glbl-width-fifty-percent {
+    width: 50%;
+  }
+
+  .glbl-width-sixty-percent {
+    width: 60%;
+  }
+
+  .glbl-width-seventy-percent {
+    width: 70%;
+  }
+
+  .glbl-width-eighty-percent {
+    width: 80%;
+  }
+
+  .margin-top-ten {
+    margin-top: 10px;
+  }
+
+  .margin-top-twenty {
+    margin-top: 20px;
+  }
+
+  .margin-top-thirty {
+    margin-top: 30px;
+  }
+
+  .margin-bottom-ten {
+    margin-top: 10px;
+  }
+
+  .margin-bottom-thirty {
+    margin-top: 30px;
+  }
+
+  .glbl-margin-top-bottom {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .margin-left-two-percent {
+    margin-left: 2%;
+  }
+
+  .accordion-width-wrapper-eighty-percent {
+    width: 80%;
+  }
+}
+
+.bx-shdw {
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+/* --------------- MISC ------------------ */
+
+.red-outline {
+  outline: solid 1px red;
+}
+
+.blue-outline {
+  outline: solid 1px blue;
+}
+
+.green-outline {
+  outline: solid 1px green;
+}
+
+/* --- MOBILE VIEW --- */
+@media screen and (max-width: 1474px) {
+  /* --- CONTAINERS --- */
+
+  /* --- TEXT --- */
+
+  /* --- IMAGES/ICONS --- */
+
+  /* --- BUTTONS --- */
+}
+
+@media screen and (max-width: 1240px) {
+  /* --- CONTAINERS --- */
+
+  /* --- TEXT --- */
+
+  /* --- IMAGES/ICONS --- */
+
+  /* --- BUTTONS --- */
+}
+
+@media screen and (max-width: 1000px) {
+  /* --- CONTAINERS --- */
+
+  /* --- TEXT --- */
+
+  /* --- IMAGES/ICONS --- */
+
+  /* --- BUTTONS --- */
+}
+
+@media screen and (max-width: 750px) {
+  /* --- CONTAINERS --- */
+
+  /* --- TEXT --- */
+
+  /* --- IMAGES/ICONS --- */
+
+  /* --- BUTTONS --- */
+}
+
+@media screen and (max-width: 700px) {
+  /* --- CONTAINERS --- */
+
+  /* --- TEXT --- */
+
+  /* --- IMAGES/ICONS --- */
+
+  /* --- BUTTONS --- */
+}
+
+@media screen and (max-width: 700px) {
+  /* --- CONTAINERS --- */
+
+  /* --- TEXT --- */
+
+  /* --- IMAGES/ICONS --- */
+
+  /* --- BUTTONS --- */
+}
+
+@media screen and (max-width: 430px) {
+  /* --- CONTAINERS --- */
+  .glbl-content-container {
+    align-items: center;
+  }
+
+  /* --- TEXT --- */
+
+  /* --- IMAGES/ICONS --- */
+
+  /* --- BUTTONS --- */
+}
+
+@media screen and (max-width: 393px) {
+  /* --- CONTAINERS --- */
+
+  /* --- TEXT --- */
+
+  /* --- IMAGES/ICONS --- */
+
+  /* --- BUTTONS --- */
+}
+
+@media screen and (max-width: 390px) {
+  /* --- CONTAINERS --- */
+  .glbl-content-container {
+    align-items: center;
+  }
+
+  /* --- TEXT --- */
+
+  /* --- IMAGES/ICONS --- */
+
+  /* --- BUTTONS --- */
+}
+
+@media screen and (max-width: 375px) {
+  /* --- CONTAINERS --- */
+
+  /* --- TEXT --- */
+
+  /* --- IMAGES/ICONS --- */
+
+  /* --- BUTTONS --- */
+}

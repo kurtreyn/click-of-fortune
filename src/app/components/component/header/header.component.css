@@ -1,0 +1,9 @@
+.header-cont {
+  display: flex;
+  width: 100%;
+}
+
+.header-img {
+  width: 10%;
+  padding: 10px;
+}

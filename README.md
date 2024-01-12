@@ -1,1 +1,3 @@
-# AttractionGame
+# Click of Fortune
+
+## Kurt Reynolds

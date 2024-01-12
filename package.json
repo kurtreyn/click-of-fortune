@@ -1,6 +1,7 @@
 {
-  "name": "attraction-game",
-  "version": "0.0.0",
+  "name": "click-of-fortune",
+  "author": "kurt reynolds",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
