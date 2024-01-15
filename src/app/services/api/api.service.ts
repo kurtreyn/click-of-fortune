@@ -32,7 +32,7 @@ export class ApiService {
   }
 
   fetchPuzzles() {
-    this.http.get<IPuzzle[]>(this.devEnv ? this.url : this.url + this.get_puzzles).subscribe(puzzle => {
+    this.http.get<IPuzzle[]>(this.devEnv ? this.url : this.url + this.puzzlesEndpoint).subscribe(puzzle => {
       this.puzzleSubject.next(puzzle);
     })
   }
@@ -43,7 +43,7 @@ export class ApiService {
   }
 
   addPuzzle(puzzle: IPuzzle): Observable<IPuzzle> {
-    return this.http.post<IPuzzle>(this.devEnv ? this.url : this.url + this.get_puzzles, puzzle, httpOptions)
+    return this.http.post<IPuzzle>(this.devEnv ? this.url : this.url + this.puzzlesEndpoint, puzzle, httpOptions)
       .pipe(
         tap(() => {
           this.fetchPuzzles();
