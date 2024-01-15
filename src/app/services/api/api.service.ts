@@ -50,7 +50,9 @@ export class ApiService {
   }
 
   wakeUpServer() {
-    return this.http.get(this.url + this.wakeup);
+    let response = this.http.get(this.url + this.wakeup);
+    console.log('wakeUpServer response: ', response);
+    return response;
   }
 
   getEnv() {
