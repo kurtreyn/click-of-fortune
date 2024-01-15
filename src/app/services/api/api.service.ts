@@ -3,7 +3,7 @@ import { Observable, BehaviorSubject, tap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { IPuzzle } from '../../models/puzzleInterface';
-import { puzzleData } from 'src/data/puzzleData';
+import { puzzleData } from '../../../data/puzzleData';
 
 
 const httpOptions = {
@@ -27,7 +27,8 @@ export class ApiService {
 
   constructor(private http: HttpClient) {
     // Fetch the data from the database on initialization
-    this.fetchPuzzles();
+    // this.fetchPuzzles();
+    this.loadPuzzles();
   }
 
   loadPuzzles() {
@@ -45,14 +46,14 @@ export class ApiService {
     return this.puzzleSubject.asObservable();
   }
 
-  addPuzzle(puzzle: IPuzzle): Observable<IPuzzle> {
-    return this.http.post<IPuzzle>(this.devEnv ? this.url : this.url + this.puzzlesEndpoint, puzzle, httpOptions)
-      .pipe(
-        tap(() => {
-          this.fetchPuzzles();
-        })
-      )
-  }
+  // addPuzzle(puzzle: IPuzzle): Observable<IPuzzle> {
+  //   return this.http.post<IPuzzle>(this.devEnv ? this.url : this.url + this.puzzlesEndpoint, puzzle, httpOptions)
+  //     .pipe(
+  //       tap(() => {
+  //         this.fetchPuzzles();
+  //       })
+  //     )
+  // }
 
   wakeUpServer() {
     let response = this.http.get(this.url + this.wakeup);

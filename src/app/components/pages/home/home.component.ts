@@ -16,7 +16,10 @@ export class HomeComponent implements OnInit, OnDestroy, OnChanges {
   allPuzzles: IPuzzle[] = [];
   allPuzzlesLength: number = 0;
   activePuzzle = new Subject<IPuzzle>();
+  availablePuzzles: IPuzzle[] = [];
+  usedPuzzles: IPuzzle[] = [];
   solvedPuzzles: IPuzzle[] = [];
+  puzzleId: string = '';
   guessCount: number = 0;
   subscription!: Subscription;
   puzzleCategory: string = 'Category';
@@ -64,19 +67,24 @@ export class HomeComponent implements OnInit, OnDestroy, OnChanges {
     const randomIndex = Math.floor(Math.random() * this.allPuzzles.length);
     // console.log('randomIndex', randomIndex);
     const randomPuzzle = this.allPuzzles[randomIndex];
-    // console.log('randomPuzzle', randomPuzzle);
-    this.activePuzzle.next(randomPuzzle);
-    this.activePuzzle.pipe(
-      take(1)
-    ).subscribe((puzzle) => {
-      console.log('puzzle', puzzle);
-      this.puzzleCategory = puzzle.category;
-      this.puzzleValue = puzzle.puzzle;
-    })
-    // console.log('this.activePuzzle', this.activePuzzle)
-    console.log('this.puzzleCategory', this.puzzleCategory)
+    console.log('randomPuzzle', randomPuzzle);
+    const alreadyUsed = this.usedPuzzles.find(puzzle => puzzle.id === randomPuzzle.id);
+    console.log('alreadyUsed', alreadyUsed);
+    if (!alreadyUsed) {
+      this.puzzleCategory = randomPuzzle.category;
+      this.puzzleValue = randomPuzzle.puzzle;
+      this.usedPuzzles.push(randomPuzzle);
+    }
+
+    console.log("HOME this.puzzleId: ", this.puzzleId);
+    console.log('HOME this.puzzleCategory', this.puzzleCategory)
     console.log('HOME this.puzzleValue: ', this.puzzleValue)
+    console.log('HOME this.usedPuzzles: ', this.usedPuzzles)
   }
+
+
+
+
 
   setPuzzleCategory(category: string) {
     this.puzzleCategory = category;
