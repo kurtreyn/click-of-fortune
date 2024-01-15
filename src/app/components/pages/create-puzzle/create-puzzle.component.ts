@@ -11,18 +11,20 @@ import { v4 as uuidv4 } from 'uuid';
   styleUrls: ['./create-puzzle.component.css']
 })
 export class CreatePuzzleComponent implements OnInit {
+  devEnv: boolean = false;
   category!: string;
   puzzle!: string;
   id = uuidv4();
   newPuzzle: IPuzzle[] = [];
   subscription!: Subscription;
 
-  constructor(private formBuilder: FormBuilder, private service: ApiService) { }
+  constructor(private formBuilder: FormBuilder, private apiService: ApiService) { }
 
   puzzleForm!: FormGroup;
 
   ngOnInit() {
     this.createForm();
+    this.devEnv = this.apiService.getEnv();
   }
 
   ngOnDestroy() {
@@ -41,14 +43,23 @@ export class CreatePuzzleComponent implements OnInit {
   }
 
   handleSubmit() {
-    const puzzle = {
-      id: this.id,
-      category: this.puzzleForm.value.category,
-      puzzle: this.puzzleForm.value.puzzle,
+    let puzzle;
+
+    if (this.devEnv) {
+      puzzle = {
+        id: this.id,
+        category: this.puzzleForm.value.category,
+        puzzle: this.puzzleForm.value.puzzle,
+      }
+    } else {
+      puzzle = {
+        category: this.puzzleForm.value.category,
+        puzzle: this.puzzleForm.value.puzzle,
+      }
     }
     console.log('puzzle', puzzle);
 
-    this.subscription = this.service.addPuzzle(puzzle).subscribe(puzzle => {
+    this.subscription = this.apiService.addPuzzle(puzzle).subscribe(puzzle => {
       this.newPuzzle.push(puzzle);
     })
     this.puzzleForm.reset();

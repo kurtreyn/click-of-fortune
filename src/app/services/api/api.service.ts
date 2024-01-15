@@ -20,18 +20,19 @@ export class ApiService {
   wakeup: string = 'wakeup';
   add_puzzle: string = 'add-puzzle';
   get_puzzles: string = 'get-puzzles';
-  localEnv: boolean = true;
+  puzzlesEndpoint: string = 'puzzles';
+  devEnv: boolean = true;
   private puzzleSubject = new BehaviorSubject<IPuzzle[]>([]);
 
 
 
   constructor(private http: HttpClient) {
-    // Fetch the info from the database on initialization
+    // Fetch the data from the database on initialization
     this.fetchPuzzles();
   }
 
   fetchPuzzles() {
-    this.http.get<IPuzzle[]>(this.localEnv ? this.url : this.url + this.get_puzzles).subscribe(puzzle => {
+    this.http.get<IPuzzle[]>(this.devEnv ? this.url : this.url + this.get_puzzles).subscribe(puzzle => {
       this.puzzleSubject.next(puzzle);
     })
   }
@@ -42,7 +43,7 @@ export class ApiService {
   }
 
   addPuzzle(puzzle: IPuzzle): Observable<IPuzzle> {
-    return this.http.post<IPuzzle>(this.localEnv ? this.url : this.url + this.get_puzzles, puzzle, httpOptions)
+    return this.http.post<IPuzzle>(this.devEnv ? this.url : this.url + this.get_puzzles, puzzle, httpOptions)
       .pipe(
         tap(() => {
           this.fetchPuzzles();
@@ -54,7 +55,7 @@ export class ApiService {
     return this.http.get(this.url + this.wakeup);
   }
 
-  getLocalEnv() {
-    return this.localEnv;
+  getEnv() {
+    return this.devEnv;
   }
 }

@@ -10,17 +10,31 @@ import { IPuzzle } from '../../../models/puzzleInterface';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, OnDestroy {
+  devEnv: boolean = false;
   public serverReady: boolean = false;
   public puzzles: IPuzzle[] = [];
   subscription!: Subscription;
   public puzzleValue: string = 'This is a test puzzle';
   public guessedLetters: string[] = [];
 
-  constructor(private service: ApiService) { }
+  constructor(private apiService: ApiService) { }
 
   ngOnInit() {
+    this.getEnv();
 
-    this.getAllPuzzles();
+    if (this.devEnv) {
+      this.serverReady = true;
+    }
+
+    if (!this.devEnv) {
+      this.wakeUpServer();
+    }
+
+
+    if (this.serverReady) {
+      this.getAllPuzzles();
+    }
+
   }
 
   ngOnDestroy() {
@@ -28,22 +42,24 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   getAllPuzzles() {
-    this.subscription = this.service.getPuzzles().subscribe(puzzle => {
+    this.subscription = this.apiService.getPuzzles().subscribe(puzzle => {
       this.puzzles = puzzle;
       console.log('all puzzles', this.puzzles);
     });
   }
 
   wakeUpServer() {
-    if (this.service.getLocalEnv()) {
-      this.service.wakeUpServer().pipe(
-        take(1)
-      ).subscribe((resp) => {
-        if (resp === 'server is good to go') {
-          this.serverReady = true;
-        }
-      });
-    }
+    this.apiService.wakeUpServer().pipe(
+      take(1)
+    ).subscribe((resp) => {
+      if (resp === 'server is good to go') {
+        this.serverReady = true;
+      }
+    });
+  }
+
+  getEnv() {
+    this.devEnv = this.apiService.getEnv();
   }
 
 }
