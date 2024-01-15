@@ -1,87 +1,41 @@
 /* --- CONTAINERS --- */
-.wheel-spinner-cont {
+.header-cont {
   display: flex;
-  position: absolute;
-  bottom: 0px;
-  left: 0px;
   flex-direction: row;
-  justify-content: flex-end;
-  align-items: flex-end;
-  /* align-items: flex-end; */
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
-  margin-top: 2rem;
-  padding: 2rem;
-  /* outline: solid 1px black; */
+  margin-bottom: 2rem;
+  background: rgb(238, 174, 202);
+  background: radial-gradient(
+    circle,
+    rgba(238, 174, 202, 1) 0%,
+    rgba(148, 187, 233, 1) 100%
+  );
 }
 
-.control-sec {
+.header-txt-cont {
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-start;
-  width: 100%;
-  /* outline: solid 1px red; */
-}
-
-.score-sec {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-end;
-  width: 20%;
-  /* outline: solid 1px green; */
-}
-
-.wheel-wrapper {
-  display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 20%;
-  padding: 1rem;
-  margin-right: 2rem;
-  cursor: pointer;
-  /* outline: solid 1px blue; */
+  width: 100%;
+  margin-top: 10px;
 }
 
 /* --- TEXT --- */
-.score-txt {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #000;
-  margin-top: 1rem;
-}
 
 /* --- IMAGES/ICONS --- */
-.spinner-wheel-img {
-  width: 90%;
+.header-img {
+  width: 4rem;
+  padding: 10px;
+}
+
+.header-img-txt {
+  width: 20%;
+  padding: 10px;
 }
 
 /* --- BUTTONS --- */
-
-/* --- ANIMATIONS --- */
-.spin-animation {
-  -webkit-animation: spin 4s linear infinite;
-  -moz-animation: spin 4s linear infinite;
-  animation: spin 4s linear infinite;
-  animation-duration: 0.5s;
-}
-@-moz-keyframes spin {
-  100% {
-    -moz-transform: rotate(360deg);
-  }
-}
-@-webkit-keyframes spin {
-  100% {
-    -webkit-transform: rotate(360deg);
-  }
-}
-@keyframes spin {
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
 
 @media screen and (max-width: 1474px) {
   /* --- CONTAINERS --- */
@@ -155,16 +109,18 @@
 
 @media screen and (max-width: 390px) {
   /* --- CONTAINERS --- */
-  .wheel-wrapper {
-    width: 60%;
-    margin-right: 0px;
-  }
 
   /* --- TEXT --- */
 
   /* --- IMAGES/ICONS --- */
-  .spinner-wheel-img {
-    width: 100%;
+  .header-img {
+    width: 4rem;
+    padding: 10px;
+  }
+
+  .header-img-txt {
+    width: 50%;
+    padding: 10px;
   }
 
   /* --- BUTTONS --- */

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, take } from 'rxjs';
 
 import { ApiService } from '../../../services/api/api.service';
 import { IPuzzle } from '../../../models/puzzleInterface';
@@ -19,12 +19,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(private service: ApiService) { }
 
   ngOnInit() {
-    this.service.wakeUpServer().subscribe((resp) => {
-      if (resp === 'server is good to go') {
-        this.serverReady = true;
-      }
-    });
+
     this.getAllPuzzles();
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   getAllPuzzles() {
@@ -34,8 +34,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
+  wakeUpServer() {
+    if (this.service.getLocalEnv()) {
+      this.service.wakeUpServer().pipe(
+        take(1)
+      ).subscribe((resp) => {
+        if (resp === 'server is good to go') {
+          this.serverReady = true;
+        }
+      });
+    }
   }
 
 }
