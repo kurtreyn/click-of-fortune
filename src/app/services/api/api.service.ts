@@ -45,4 +45,8 @@ export class ApiService {
         })
       )
   }
+
+  wakeUpServer() {
+    return this.http.get(this.url);
+  }
 }

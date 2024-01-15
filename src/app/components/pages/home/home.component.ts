@@ -10,6 +10,7 @@ import { IPuzzle } from '../../../models/puzzleInterface';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, OnDestroy {
+  public serverReady: boolean = false;
   public puzzles: IPuzzle[] = [];
   subscription!: Subscription;
   public puzzleValue: string = 'This is a test puzzle';
@@ -18,6 +19,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(private service: ApiService) { }
 
   ngOnInit() {
+    this.service.wakeUpServer().subscribe((resp) => {
+      if (resp === 'server is good to go') {
+        this.serverReady = true;
+      }
+    });
     this.getAllPuzzles();
   }
 
