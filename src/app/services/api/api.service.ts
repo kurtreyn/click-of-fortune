@@ -16,7 +16,7 @@ const httpOptions = {
 })
 export class ApiService {
   // url: string = 'http://localhost:3000/puzzles';
-  url: string = 'https://spinoffortune.netlify.app:3000/puzzles'
+  url: string = 'https://spinoffortuneserver.onrender.com'
   private puzzleSubject = new BehaviorSubject<IPuzzle[]>([]);
 
 
