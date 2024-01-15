@@ -1,52 +1,39 @@
 /* --- CONTAINERS --- */
-.puzzle-board-cont {
+.header-cont {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
-  padding: 1rem;
-  border-bottom: solid 1px rgba(0, 0, 0, 0.2);
   margin-bottom: 2rem;
-  /* outline: solid 1px red; */
+  background: rgb(238, 174, 202);
+  background: radial-gradient(
+    circle,
+    rgba(238, 174, 202, 1) 0%,
+    rgba(148, 187, 233, 1) 100%
+  );
 }
 
-.category-row {
-  display: flex;
-  justify-content: flex-start;
-  margin-bottom: 2rem;
-  /* outline: solid 1px blue; */
-}
-
-.puzzle-row {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  /* outline: solid 1px green; */
-}
-
-.letter-wrapper {
+.header-txt-cont {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 2rem;
-  height: 3rem;
-  border: solid 1px rgba(0, 0, 0, 0.2);
-  text-transform: uppercase;
+  width: 100%;
+  margin-top: 10px;
 }
 
 /* --- TEXT --- */
-.category-label {
-  font-size: 1.5rem;
-  font-weight: 600;
-  text-transform: capitalize;
-}
-
-.category-value {
-  font-size: 1.1rem;
-  font-weight: 500;
-  text-transform: capitalize;
-}
 
 /* --- IMAGES/ICONS --- */
+.header-img {
+  width: 4rem;
+  padding: 10px;
+}
+
+.header-img-txt {
+  width: 20%;
+  padding: 10px;
+}
 
 /* --- BUTTONS --- */
 
@@ -126,6 +113,15 @@
   /* --- TEXT --- */
 
   /* --- IMAGES/ICONS --- */
+  .header-img {
+    width: 4rem;
+    padding: 10px;
+  }
+
+  .header-img-txt {
+    width: 50%;
+    padding: 10px;
+  }
 
   /* --- BUTTONS --- */
 }

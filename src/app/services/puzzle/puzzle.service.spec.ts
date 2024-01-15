@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { GlobalService } from './global.service';
+import { PuzzleService } from './puzzle.service';
 
-describe('GlobalService', () => {
-  let service: GlobalService;
+describe('PuzzleService', () => {
+  let service: PuzzleService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(GlobalService);
+    service = TestBed.inject(PuzzleService);
   });
 
   it('should be created', () => {

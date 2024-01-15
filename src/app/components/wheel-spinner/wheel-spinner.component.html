@@ -1,18 +1,20 @@
 <section class="row wheel-spinner-cont">
   <div class="control-sec col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-    <div class="score-sec">
+    <div class="score-sec col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
       <span class="score-txt"> Score: {{ score }} </span>
     </div>
+    <div class="input-section col-12">
+      <app-input-form></app-input-form>
+    </div>
   </div>
-  <div
-    class="wheel-wrapper col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
-    (click)="spinWheel()"
-  >
-    <img
-      src="../../../assets/images/wheel.png"
-      alt="spinner wheel"
-      class="spinner-wheel-img"
-      [ngClass]="{ 'spin-animation': spinActive }"
-    />
+  <div class="wheel-sec col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+    <div class="wheel-wrapper" (click)="spinWheel()">
+      <img
+        src="../../../assets/images/wheel.png"
+        alt="spinner wheel"
+        class="spinner-wheel-img"
+        [ngClass]="{ 'spin-animation': spinActive }"
+      />
+    </div>
   </div>
 </section>

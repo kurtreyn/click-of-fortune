@@ -1,5 +1,5 @@
 export interface IPuzzle {
-    id: string;
+    id?: string;
     category: string;
     puzzle: string;
 }

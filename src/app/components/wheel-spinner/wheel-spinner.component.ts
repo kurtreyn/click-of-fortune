@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { PuzzleService } from 'src/app/services/puzzle/puzzle.service';
 import { SpinnerEnum } from 'src/app/enums/spinner-enum';
 
 @Component({
@@ -14,7 +15,7 @@ export class WheelSpinnerComponent {
   @Input() puzzleValue!: string;
   @Input() guessedLetters!: string[];
 
-  constructor() { }
+  constructor(private puzzServ: PuzzleService) { }
 
 
 
@@ -52,11 +53,11 @@ export class WheelSpinnerComponent {
       this.setScore();
       console.log('this.spinnerValue: ', this.spinnerValue);
       console.log('this.score: ', this.score);
-    }, 3000);
+    }, 2000);
   }
 
   public getSpinValue(min: number, max: number): number {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+    return this.puzzServ.getRandomNumber(min, max);
   }
 
   public setSpinnerValue(value: number) {

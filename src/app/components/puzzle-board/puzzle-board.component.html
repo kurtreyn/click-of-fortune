@@ -1,8 +1,16 @@
 <section class="puzzle-board-cont">
-  <span
-    *ngFor="let letter of puzzleLetterArray"
-    [ngClass]="{ 'letter-cont': letter !== ' ' }"
-  >
-    {{ letter === " " ? "&nbsp; &nbsp;" : letter }}
-  </span>
+  <div class="row category-row">
+    <span class="category-label"
+      >Category: &nbsp;
+      <span class="category-value">{{ puzzleCategory }}</span>
+    </span>
+  </div>
+  <div class="row puzzle-row">
+    <span
+      *ngFor="let letter of puzzleLetterArray"
+      [ngClass]="{ 'letter-wrapper': letter !== ' ' }"
+    >
+      {{ letter === " " ? "&nbsp; &nbsp;" : letter }}
+    </span>
+  </div>
 </section>
