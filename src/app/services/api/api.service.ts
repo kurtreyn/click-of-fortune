@@ -15,13 +15,13 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class ApiService {
-  url: string = 'http://localhost:3000/puzzles';
-  // url: string = `https://spinoffortuneserver.onrender.com/`
+  // url: string = 'http://localhost:3000/puzzles';
+  url: string = `https://spinoffortuneserver.onrender.com/`
   wakeup: string = 'wakeup';
   add_puzzle: string = 'add-puzzle';
   get_puzzles: string = 'get-puzzles';
   puzzlesEndpoint: string = 'puzzles';
-  devEnv: boolean = true;
+  devEnv: boolean = false;
   private puzzleSubject = new BehaviorSubject<IPuzzle[]>([]);
 
 
