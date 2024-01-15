@@ -16,7 +16,10 @@ const httpOptions = {
 })
 export class ApiService {
   // url: string = 'http://localhost:3000/puzzles';
-  url: string = 'https://spinoffortuneserver.onrender.com'
+  url: string = 'https://spinoffortuneserver.onrender.com/'
+  wakeupUrl: string = 'https://spinoffortuneserver.onrender.com/wakeup';
+  addPuzzleUrl: string = 'https://spinoffortuneserver.onrender.com/add-puzzle';
+  getPuzzlesUrl: string = 'https://spinoffortuneserver.onrender.com/get-puzzles';
   private puzzleSubject = new BehaviorSubject<IPuzzle[]>([]);
 
 
@@ -27,7 +30,7 @@ export class ApiService {
   }
 
   fetchPuzzles() {
-    this.http.get<IPuzzle[]>(this.url).subscribe(puzzle => {
+    this.http.get<IPuzzle[]>(this.getPuzzlesUrl).subscribe(puzzle => {
       this.puzzleSubject.next(puzzle);
     })
   }
@@ -38,7 +41,7 @@ export class ApiService {
   }
 
   addPuzzle(puzzle: IPuzzle): Observable<IPuzzle> {
-    return this.http.post<IPuzzle>(this.url, puzzle, httpOptions)
+    return this.http.post<IPuzzle>(this.addPuzzleUrl, puzzle, httpOptions)
       .pipe(
         tap(() => {
           this.fetchPuzzles();
@@ -47,6 +50,6 @@ export class ApiService {
   }
 
   wakeUpServer() {
-    return this.http.get(this.url);
+    return this.http.get(this.wakeupUrl);
   }
 }
