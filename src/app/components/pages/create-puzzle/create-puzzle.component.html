@@ -1,0 +1,26 @@
+<section class="create-puzzle-cont">
+  <form [formGroup]="puzzleForm" (ngSubmit)="handleSubmit()">
+    <div class="form-group">
+      <label for="category">Category</label>
+      <input
+        type="text"
+        class="form-control"
+        id="category"
+        formControlName="category"
+        placeholder="Category"
+      />
+    </div>
+    <div class="form-group">
+      <label for="puzzle">Puzzle</label>
+      <input
+        type="text"
+        class="form-control"
+        id="puzzle"
+        formControlName="puzzle"
+        placeholder="Puzzle"
+      />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</section>
