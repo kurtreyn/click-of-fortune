@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.updateInfo();
+    console.log('all puzzles', this.puzzles);
   }
 
   updateInfo() {

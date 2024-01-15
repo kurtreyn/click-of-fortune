@@ -15,7 +15,8 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class ApiService {
-  url: string = 'http://localhost:3000/puzzles';
+  // url: string = 'http://localhost:3000/puzzles';
+  url: string = 'https://spinoffortune.netlify.app:3000/puzzles'
   private puzzleSubject = new BehaviorSubject<IPuzzle[]>([]);
 
 
