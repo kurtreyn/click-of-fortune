@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription, take } from 'rxjs';
+import { Component, OnInit, OnDestroy, OnChanges } from '@angular/core';
+import { Subscription, take, Subject } from 'rxjs';
 
 import { ApiService } from '../../../services/api/api.service';
+import { PuzzleService } from '../../../services/puzzle/puzzle.service';
 import { IPuzzle } from '../../../models/puzzleInterface';
 
 @Component({
@@ -9,15 +10,20 @@ import { IPuzzle } from '../../../models/puzzleInterface';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit, OnDestroy, OnChanges {
   devEnv: boolean = false;
-  public serverReady: boolean = false;
-  public puzzles: IPuzzle[] = [];
+  serverReady: boolean = false;
+  allPuzzles: IPuzzle[] = [];
+  allPuzzlesLength: number = 0;
+  activePuzzle = new Subject<IPuzzle>();
+  solvedPuzzles: IPuzzle[] = [];
+  guessCount: number = 0;
   subscription!: Subscription;
-  public puzzleValue: string = 'This is a test puzzle';
-  public guessedLetters: string[] = [];
+  puzzleCategory: string = 'Category';
+  puzzleValue: string = 'Test Puzzle Value'
+  guessedLetters: string[] = [];
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService, private puzzServ: PuzzleService) { }
 
   ngOnInit() {
     this.getEnv();
@@ -32,8 +38,12 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 
     if (this.serverReady) {
-      this.getAllPuzzles();
+      this.fetchAllPuzzles();
     }
+
+  }
+
+  ngOnChanges() {
 
   }
 
@@ -41,12 +51,46 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  getAllPuzzles() {
+  fetchAllPuzzles() {
     this.subscription = this.apiService.getPuzzles().subscribe(puzzle => {
-      this.puzzles = puzzle;
-      console.log('all puzzles', this.puzzles);
+      this.allPuzzles = puzzle;
+      this.allPuzzlesLength = this.allPuzzles.length;
+      this.setActivePuzzle(); // Call setActivePuzzle() here
     });
   }
+
+  setActivePuzzle() {
+    console.log('this.allPuzzles', this.allPuzzles)
+    const randomIndex = Math.floor(Math.random() * this.allPuzzles.length);
+    // console.log('randomIndex', randomIndex);
+    const randomPuzzle = this.allPuzzles[randomIndex];
+    // console.log('randomPuzzle', randomPuzzle);
+    this.activePuzzle.next(randomPuzzle);
+    this.activePuzzle.pipe(
+      take(1)
+    ).subscribe((puzzle) => {
+      console.log('puzzle', puzzle);
+      this.puzzleCategory = puzzle.category;
+      this.puzzleValue = puzzle.puzzle;
+    })
+    // console.log('this.activePuzzle', this.activePuzzle)
+    console.log('this.puzzleCategory', this.puzzleCategory)
+    console.log('HOME this.puzzleValue: ', this.puzzleValue)
+  }
+
+  setPuzzleCategory(category: string) {
+    this.puzzleCategory = category;
+  }
+
+  setPuzzleValue(puzzle: string) {
+    this.puzzleValue = puzzle;
+  }
+
+  setGuessedLetters(letter: string) {
+    this.guessedLetters.push(letter);
+  }
+
+
 
   wakeUpServer() {
     this.apiService.wakeUpServer().pipe(

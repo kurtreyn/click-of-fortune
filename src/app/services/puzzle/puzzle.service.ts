@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { IPuzzle } from '../../models/puzzleInterface';
 
 @Injectable({
   providedIn: 'root'

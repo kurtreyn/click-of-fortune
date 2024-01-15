@@ -1,0 +1,25 @@
+<section class="input-form-cont">
+  <form [formGroup]="inputForm" (ngSubmit)="handleSubmit()">
+    <div class="form-group">
+      <input
+        type="text"
+        class="form-control"
+        id="letter"
+        formControlName="letter"
+        placeholder="Enter Letter"
+      />
+    </div>
+    <div class="form-group">
+      <label for="solvePuzzle">Solve Puzzle</label>
+      <input
+        type="text"
+        class="form-control"
+        id="solvePuzzle"
+        formControlName="solvePuzzle"
+        placeholder="Solve Puzzle"
+      />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</section>
