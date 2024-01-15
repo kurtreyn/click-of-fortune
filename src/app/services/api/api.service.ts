@@ -3,6 +3,7 @@ import { Observable, BehaviorSubject, tap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { IPuzzle } from '../../models/puzzleInterface';
+import { puzzleData } from 'src/data/puzzleData';
 
 
 const httpOptions = {
@@ -15,11 +16,11 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class ApiService {
-  // url: string = 'http://localhost:3000/puzzles';
-  url: string = `https://spinoffortuneserver.onrender.com/`
+  url: string = 'http://localhost:3000/puzzles';
+  // url: string = `https://spinoffortuneserver.onrender.com/`
   wakeup: string = 'wakeup';
   puzzlesEndpoint: string = 'puzzles';
-  devEnv: boolean = false;
+  devEnv: boolean = true;
   private puzzleSubject = new BehaviorSubject<IPuzzle[]>([]);
 
 
@@ -27,6 +28,10 @@ export class ApiService {
   constructor(private http: HttpClient) {
     // Fetch the data from the database on initialization
     this.fetchPuzzles();
+  }
+
+  loadPuzzles() {
+    this.puzzleSubject.next(puzzleData);
   }
 
   fetchPuzzles() {
