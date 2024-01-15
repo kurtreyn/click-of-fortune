@@ -27,8 +27,8 @@ export class ApiService {
   }
 
   fetchPuzzles() {
-    this.http.get<IPuzzle[]>(this.url).subscribe(info => {
-      this.puzzleSubject.next(info);
+    this.http.get<IPuzzle[]>(this.url).subscribe(puzzle => {
+      this.puzzleSubject.next(puzzle);
     })
   }
 

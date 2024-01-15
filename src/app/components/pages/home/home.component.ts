@@ -18,14 +18,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(private service: ApiService) { }
 
   ngOnInit() {
-    this.updateInfo();
-    console.log('all puzzles', this.puzzles);
+    this.getAllPuzzles();
   }
 
-  updateInfo() {
+  getAllPuzzles() {
     this.subscription = this.service.getPuzzles().subscribe(puzzle => {
       this.puzzles = puzzle;
-    })
+      console.log('all puzzles', this.puzzles);
+    });
   }
 
   ngOnDestroy() {
