@@ -24,7 +24,6 @@ export class CreatePuzzleComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
-    this.devEnv = this.apiService.getEnv();
   }
 
   ngOnDestroy() {

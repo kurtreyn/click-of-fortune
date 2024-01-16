@@ -12,7 +12,6 @@ import { IPuzzle } from '../../../models/puzzleInterface';
 })
 export class HomeComponent implements OnInit, OnDestroy, OnChanges {
   devEnv: boolean = false;
-  serverReady: boolean = false;
   allPuzzles: IPuzzle[] = [];
   allPuzzlesLength: number = 0;
   activePuzzle = new Subject<IPuzzle>();
@@ -26,24 +25,11 @@ export class HomeComponent implements OnInit, OnDestroy, OnChanges {
   puzzleValue: string = 'Test Puzzle Value'
   guessedLetters: string[] = [];
 
-  constructor(private apiService: ApiService, private puzzServ: PuzzleService) { }
+  constructor(private apiService: ApiService, private puzzleService: PuzzleService) { }
 
   ngOnInit() {
-    this.getEnv();
-
-    if (this.devEnv) {
-      this.serverReady = true;
-    }
-
-    if (!this.devEnv) {
-      this.wakeUpServer();
-    }
-
-
-    if (this.serverReady) {
-      this.fetchAllPuzzles();
-    }
-
+    this.fetchAllPuzzles();
+    this.getInputValues();
   }
 
   ngOnChanges() {
@@ -54,32 +40,40 @@ export class HomeComponent implements OnInit, OnDestroy, OnChanges {
     this.subscription.unsubscribe();
   }
 
+  getInputValues() {
+    this.puzzleService.inputFormValues$.subscribe(values => {
+      let letter = values.letter;
+      let solvePuzzle = values.solvePuzzle;
+      console.log('letter: ', letter);
+      console.log('solvePuzzle: ', solvePuzzle);
+      if (letter !== '') {
+        this.guessedLetters.push(letter);
+      }
+      console.log('this.guessedLetters: ', this.guessedLetters);
+    });
+  }
+
   fetchAllPuzzles() {
     this.subscription = this.apiService.getPuzzles().subscribe(puzzle => {
       this.allPuzzles = puzzle;
       this.allPuzzlesLength = this.allPuzzles.length;
-      this.setActivePuzzle(); // Call setActivePuzzle() here
+      this.setActivePuzzle();
     });
   }
 
   setActivePuzzle() {
-    console.log('this.allPuzzles', this.allPuzzles)
     const randomIndex = Math.floor(Math.random() * this.allPuzzles.length);
-    // console.log('randomIndex', randomIndex);
     const randomPuzzle = this.allPuzzles[randomIndex];
-    console.log('randomPuzzle', randomPuzzle);
     const alreadyUsed = this.usedPuzzles.find(puzzle => puzzle.id === randomPuzzle.id);
-    console.log('alreadyUsed', alreadyUsed);
+    // console.log('this.allPuzzles', this.allPuzzles)
+    // console.log('randomIndex', randomIndex);
+    // console.log('randomPuzzle', randomPuzzle);
+    // console.log('alreadyUsed', alreadyUsed);
     if (!alreadyUsed) {
       this.puzzleCategory = randomPuzzle.category;
       this.puzzleValue = randomPuzzle.puzzle;
       this.usedPuzzles.push(randomPuzzle);
     }
-
-    console.log("HOME this.puzzleId: ", this.puzzleId);
-    console.log('HOME this.puzzleCategory', this.puzzleCategory)
-    console.log('HOME this.puzzleValue: ', this.puzzleValue)
-    console.log('HOME this.usedPuzzles: ', this.usedPuzzles)
   }
 
 
@@ -98,20 +92,8 @@ export class HomeComponent implements OnInit, OnDestroy, OnChanges {
     this.guessedLetters.push(letter);
   }
 
-
-
-  wakeUpServer() {
-    this.apiService.wakeUpServer().pipe(
-      take(1)
-    ).subscribe((resp) => {
-      if (resp === 'server is good to go') {
-        this.serverReady = true;
-      }
-    });
-  }
-
-  getEnv() {
-    this.devEnv = this.apiService.getEnv();
+  onInputFormValues(values: { letter: string, solvePuzzle: boolean }) {
+    console.log(values.letter, values.solvePuzzle);
   }
 
 }

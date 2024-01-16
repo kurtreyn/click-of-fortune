@@ -12,6 +12,8 @@ export class WheelSpinnerComponent {
   public spinnerEnum = SpinnerEnum;
   public spinnerValue: number = SpinnerEnum.ONE;
   public score: number = 0;
+  letter: string = '';
+  solvePuzzle: string = '';
   @Input() puzzleValue!: string;
   @Input() guessedLetters!: string[];
 

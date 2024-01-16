@@ -22,7 +22,7 @@ export class PuzzleBoardComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     if (this.puzzleValue) {
-      console.log('PUZZLE BOARD this.puzzleValue: ', this.puzzleValue);
+      // console.log('PUZZLE BOARD this.puzzleValue: ', this.puzzleValue);
       this.createPuzzleLetterArray();
     }
   }
