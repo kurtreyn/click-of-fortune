@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, OnChanges } from '@angular/core';
-import { Subscription, take, Subject } from 'rxjs';
+import { Subscription, take, Subject, takeUntil } from 'rxjs';
 
 import { ApiService } from '../../../services/api/api.service';
 import { PuzzleService } from '../../../services/puzzle/puzzle.service';
@@ -11,7 +11,6 @@ import { IPuzzle } from '../../../models/puzzleInterface';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, OnDestroy, OnChanges {
-  devEnv: boolean = false;
   allPuzzles: IPuzzle[] = [];
   allPuzzlesLength: number = 0;
   activePuzzle = new Subject<IPuzzle>();
@@ -24,6 +23,7 @@ export class HomeComponent implements OnInit, OnDestroy, OnChanges {
   puzzleCategory: string = 'Category';
   puzzleValue: string = 'Test Puzzle Value'
   guessedLetters: string[] = [];
+  destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(private apiService: ApiService, private puzzleService: PuzzleService) { }
 
@@ -38,10 +38,13 @@ export class HomeComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.destroy$.next(true);
   }
 
   getInputValues() {
-    this.puzzleService.inputFormValues$.subscribe(values => {
+    this.puzzleService.inputFormValues$.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(values => {
       let letter = values.letter;
       let solvePuzzle = values.solvePuzzle;
       console.log('letter: ', letter);
@@ -67,7 +70,7 @@ export class HomeComponent implements OnInit, OnDestroy, OnChanges {
     const alreadyUsed = this.usedPuzzles.find(puzzle => puzzle.id === randomPuzzle.id);
     // console.log('this.allPuzzles', this.allPuzzles)
     // console.log('randomIndex', randomIndex);
-    // console.log('randomPuzzle', randomPuzzle);
+    console.log('randomPuzzle', randomPuzzle);
     // console.log('alreadyUsed', alreadyUsed);
     if (!alreadyUsed) {
       this.puzzleCategory = randomPuzzle.category;

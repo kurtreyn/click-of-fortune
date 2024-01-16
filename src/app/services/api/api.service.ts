@@ -9,11 +9,6 @@ import { puzzleData } from '../../../data/puzzleData';
   providedIn: 'root'
 })
 export class ApiService {
-  url: string = 'http://localhost:3000/puzzles';
-  // url: string = `https://spinoffortuneserver.onrender.com/`
-  wakeup: string = 'wakeup';
-  puzzlesEndpoint: string = 'puzzles';
-  devEnv: boolean = true;
   private puzzleSubject = new BehaviorSubject<IPuzzle[]>([]);
 
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ApiService } from '../../services/api/api.service';
@@ -11,7 +11,6 @@ import { IPuzzle } from '../../models/puzzleInterface'
   styleUrls: ['./input-form.component.css']
 })
 export class InputFormComponent implements OnInit {
-  devEnv: boolean = false;
   letter: string = '';
   solvePuzzle: string = '';
   newPuzzle: IPuzzle[] = [];
@@ -35,17 +34,6 @@ export class InputFormComponent implements OnInit {
       solvePuzzle: new FormControl('')
     });
   }
-
-  public resetForm() {
-    this.inputForm.reset();
-  }
-
-  // handleSubmit() {
-  //   this.letter = this.inputForm.value.letter;
-  //   this.solvePuzzle = this.inputForm.value.solvePuzzle;
-  //   this.inputFormValues.emit({ letter: this.letter, solvePuzzle: this.solvePuzzle });
-  //   this.inputForm.reset();
-  // }
 
   handleSubmit() {
     this.letter = this.inputForm.value.letter;
