@@ -1,25 +1,33 @@
-import { Component, Input } from '@angular/core';
-import { PuzzleService } from 'src/app/services/puzzle/puzzle.service';
-import { SpinnerEnum } from 'src/app/enums/spinner-enum';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
+import { PuzzleService } from '../../services/puzzle/puzzle.service';
+import { SpinnerEnum } from '../../enums/spinner-enum';
 
 @Component({
   selector: 'app-wheel-spinner',
   templateUrl: './wheel-spinner.component.html',
   styleUrls: ['./wheel-spinner.component.css']
 })
-export class WheelSpinnerComponent {
-  public spinActive: boolean = false;
-  public spinnerEnum = SpinnerEnum;
-  public spinnerValue: number = SpinnerEnum.ONE;
-  public score: number = 0;
+export class WheelSpinnerComponent implements OnInit, OnDestroy {
+  spinActive: boolean = false;
+  spinnerEnum = SpinnerEnum;
+  spinnerValue: number = SpinnerEnum.ONE;
+  score: number = 0;
   letter: string = '';
   solvePuzzle: string = '';
   @Input() puzzleValue!: string;
-  @Input() guessedLetters!: string[];
+  guessedLetters: string[] = [];
+  destroy$: Subject<boolean> = new Subject<boolean>();
 
-  constructor(private puzzServ: PuzzleService) { }
+  constructor(private puzzleService: PuzzleService) { }
 
+  ngOnInit(): void {
+    this.getInputValues();
+  }
 
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+  }
 
   public spinWheel() {
     this.spinActive = true;
@@ -59,7 +67,7 @@ export class WheelSpinnerComponent {
   }
 
   public getSpinValue(min: number, max: number): number {
-    return this.puzzServ.getRandomNumber(min, max);
+    return this.puzzleService.getRandomNumber(min, max);
   }
 
   public setSpinnerValue(value: number) {
@@ -72,6 +80,21 @@ export class WheelSpinnerComponent {
     } else {
       this.score = 0;
     }
+  }
+
+  getInputValues() {
+    this.puzzleService.inputFormValues$.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(values => {
+      let letter = values.letter;
+      let solvePuzzle = values.solvePuzzle;
+      console.log('letter: ', letter);
+      console.log('solvePuzzle: ', solvePuzzle);
+      if (letter !== '') {
+        this.guessedLetters.push(letter);
+      }
+      console.log('WHEEL this.guessedLetters: ', this.guessedLetters);
+    });
   }
 
 }

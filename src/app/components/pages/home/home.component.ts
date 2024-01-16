@@ -52,7 +52,7 @@ export class HomeComponent implements OnInit, OnDestroy, OnChanges {
       if (letter !== '') {
         this.guessedLetters.push(letter);
       }
-      console.log('this.guessedLetters: ', this.guessedLetters);
+      // console.log('this.guessedLetters: ', this.guessedLetters);
     });
   }
 
