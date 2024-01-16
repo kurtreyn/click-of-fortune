@@ -1,7 +1,6 @@
 import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Subscription, Subject, takeUntil } from 'rxjs';
-import { ApiService } from '../../services/api/api.service';
 import { PuzzleService } from '../../services/puzzle/puzzle.service';
 import { IPuzzle } from '../../models/puzzleInterface'
 
@@ -16,7 +15,9 @@ export class InputFormComponent implements OnInit, OnDestroy {
   newPuzzle: IPuzzle[] = [];
   subscription!: Subscription;
   inputAnswerKey: string[] = [];
+  inputAnswerString: string = '';
   correctGuessedLetters: string[] = [];
+  correctGuessedString: string = '';
   inputGuessMax: number = 0;
   inputGuessCount: number = 0;
   canGuess: boolean = true;
@@ -24,7 +25,8 @@ export class InputFormComponent implements OnInit, OnDestroy {
   globalSpinCount: number = 0;
   destroy$: Subject<boolean> = new Subject<boolean>();
 
-  constructor(private formBuilder: FormBuilder, private apiService: ApiService, private puzzleService: PuzzleService) { }
+  constructor(private formBuilder: FormBuilder, private puzzleService: PuzzleService) {
+  }
 
   inputForm!: FormGroup;
 
@@ -34,11 +36,15 @@ export class InputFormComponent implements OnInit, OnDestroy {
     this.getCorrectGuessedLetters();
     this.setInputGuessMax();
     this.getSpinCount();
+    this.inputAnswerString = this.convertArrayToString(this.inputAnswerKey);
+    // this.correctGuessedString = this.convertArrayToString(this.correctGuessedLetters);
     console.log('INPUT this.inputAnswerKey: ', this.inputAnswerKey);
     console.log('INPUT this.correctGuessedLetters: ', this.correctGuessedLetters);
-    console.log('INPUT this.inputGuessMax: ', this.inputGuessMax);
-    console.log('INPUT this.inputGuessCount: ', this.inputGuessCount);
-    console.log('INPUT this.inputSpinCount: ', this.inputSpinCount);
+    // console.log('INPUT this.inputGuessMax: ', this.inputGuessMax);
+    // console.log('INPUT this.inputGuessCount: ', this.inputGuessCount);
+    // console.log('INPUT this.inputSpinCount: ', this.inputSpinCount);
+    console.log('INPUT this.answerString: ', this.inputAnswerString);
+    console.log('INPUT this.correctGuessedString: ', this.correctGuessedString);
   }
 
   ngOnDestroy() {
@@ -71,8 +77,15 @@ export class InputFormComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$)
     ).subscribe(letters => {
       this.correctGuessedLetters = letters;
-      console.log('CORRECT letters: ', letters);
+      // console.log('CORRECT letters: ', letters);
+      this.correctGuessedString = this.convertArrayToString(this.correctGuessedLetters);
+      // console.log('CORRECT this.correctGuessedString: ', this.correctGuessedString);
     });
+  }
+
+
+  convertArrayToString(array: string[]): string {
+    return array.join('');
   }
 
   setInputGuessMax() {
@@ -103,17 +116,9 @@ export class InputFormComponent implements OnInit, OnDestroy {
   }
 
   checkIfWinner() {
-    if (this.correctGuessedLetters.length === this.inputAnswerKey.length) {
-      for (let i = 0; i < this.correctGuessedLetters.length; i++) {
-        let correctLetter = this.correctGuessedLetters[i];
-        let answerKeyLetter = this.inputAnswerKey[i];
-        console.log(`correctLetter: ${correctLetter}, answerKeyLetter: ${answerKeyLetter}`)
-        if (correctLetter !== answerKeyLetter) {
-          this.puzzleService.setIsWinner(false);
-        } else {
-          this.puzzleService.setIsWinner(true);
-        }
-      }
+    if (this.correctGuessedString === this.inputAnswerString) {
+      this.puzzleService.setIsWinner(true);
+      alert('You won!');
     }
   }
 
@@ -140,14 +145,15 @@ export class InputFormComponent implements OnInit, OnDestroy {
       // console.log('Before increment: ', this.inputGuessCount);
       if (this.inputGuessCount < this.inputGuessMax) {
         this.inputGuessCount++;
-        console.log('MAX: ', this.inputGuessMax)
-        console.log('After increment: ', this.inputGuessCount);
+        // console.log('MAX: ', this.inputGuessMax)
+        // console.log('After increment: ', this.inputGuessCount);
       }
       // console.log('this.inputGuessCount: ', this.inputGuessCount);
     } else {
       alert('You have no more guesses left!');
     }
     this.checkIfWinner();
+
     this.inputForm.reset();
   }
 
