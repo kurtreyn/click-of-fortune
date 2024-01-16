@@ -24,7 +24,6 @@ export class CreatePuzzleComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
-    this.devEnv = this.apiService.getEnv();
   }
 
   ngOnDestroy() {
@@ -59,9 +58,9 @@ export class CreatePuzzleComponent implements OnInit {
     }
     console.log('puzzle', puzzle);
 
-    this.subscription = this.apiService.addPuzzle(puzzle).subscribe(puzzle => {
-      this.newPuzzle.push(puzzle);
-    })
+    // this.subscription = this.apiService.addPuzzle(puzzle).subscribe(puzzle => {
+    //   this.newPuzzle.push(puzzle);
+    // })
     this.puzzleForm.reset();
   }
 

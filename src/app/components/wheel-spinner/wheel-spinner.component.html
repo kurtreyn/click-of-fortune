@@ -2,6 +2,13 @@
   <div class="control-sec col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
     <div class="score-sec col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
       <span class="score-txt"> Score: {{ score }} </span>
+      <hr />
+      <div class="row puzzle-row">
+        <span class="guessed-label">Guessed Letters: </span>
+        <div *ngFor="let letter of guessedLetters; let i = index">
+          <span class="guessed-letters">{{ letter }}</span>
+        </div>
+      </div>
     </div>
     <div class="input-section col-12">
       <app-input-form></app-input-form>

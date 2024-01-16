@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ApiService } from '../../services/api/api.service';
+import { PuzzleService } from '../../services/puzzle/puzzle.service';
 import { IPuzzle } from '../../models/puzzleInterface'
 
 @Component({
@@ -10,19 +11,17 @@ import { IPuzzle } from '../../models/puzzleInterface'
   styleUrls: ['./input-form.component.css']
 })
 export class InputFormComponent implements OnInit {
-  devEnv: boolean = false;
-  letter!: string;
-  solvePuzzle!: string;
+  letter: string = '';
+  solvePuzzle: string = '';
   newPuzzle: IPuzzle[] = [];
   subscription!: Subscription;
 
-  constructor(private formBuilder: FormBuilder, private apiService: ApiService) { }
+  constructor(private formBuilder: FormBuilder, private apiService: ApiService, private puzzleService: PuzzleService) { }
 
   inputForm!: FormGroup;
 
   ngOnInit() {
     this.createForm();
-    this.devEnv = this.apiService.getEnv();
   }
 
   ngOnDestroy() {
@@ -36,20 +35,11 @@ export class InputFormComponent implements OnInit {
     });
   }
 
-  public resetForm() {
-    this.inputForm.reset();
-  }
-
   handleSubmit() {
     this.letter = this.inputForm.value.letter;
     this.solvePuzzle = this.inputForm.value.solvePuzzle;
-    console.log('letter', this.letter);
-    console.log('solvePuzzle', this.solvePuzzle);
+    this.puzzleService.setInputFormValues({ letter: this.letter, solvePuzzle: this.solvePuzzle });
 
-
-    // this.subscription = this.apiService.addPuzzle(puzzle).subscribe(puzzle => {
-    //   this.newPuzzle.push(puzzle);
-    // })
     this.inputForm.reset();
   }
 
