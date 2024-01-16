@@ -22,7 +22,9 @@ export class HomeComponent implements OnInit, OnDestroy, OnChanges {
   subscription!: Subscription;
   puzzleCategory: string = 'Category';
   puzzleValue: string = 'Test Puzzle Value'
+  localAnswerKey: string[] = [];
   guessedLetters: string[] = [];
+  localIsWinner: boolean = false;
   destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(private apiService: ApiService, private puzzleService: PuzzleService) { }
@@ -30,10 +32,11 @@ export class HomeComponent implements OnInit, OnDestroy, OnChanges {
   ngOnInit() {
     this.fetchAllPuzzles();
     this.getInputValues();
+    this.checkIfWinner();
   }
 
   ngOnChanges() {
-
+    // this.getCorrectGuessedLetters();
   }
 
   ngOnDestroy() {
@@ -47,12 +50,9 @@ export class HomeComponent implements OnInit, OnDestroy, OnChanges {
     ).subscribe(values => {
       let letter = values.letter;
       let solvePuzzle = values.solvePuzzle;
-      console.log('letter: ', letter);
-      console.log('solvePuzzle: ', solvePuzzle);
       if (letter !== '') {
         this.guessedLetters.push(letter);
       }
-      // console.log('this.guessedLetters: ', this.guessedLetters);
     });
   }
 
@@ -68,9 +68,20 @@ export class HomeComponent implements OnInit, OnDestroy, OnChanges {
     const randomIndex = Math.floor(Math.random() * this.allPuzzles.length);
     const randomPuzzle = this.allPuzzles[randomIndex];
     const alreadyUsed = this.usedPuzzles.find(puzzle => puzzle.id === randomPuzzle.id);
-    // console.log('this.allPuzzles', this.allPuzzles)
-    // console.log('randomIndex', randomIndex);
-    console.log('randomPuzzle', randomPuzzle);
+    let maxSpins = 0;
+    let puzzVal = randomPuzzle.puzzle;
+    let puzzValArr = puzzVal.split('');
+    for (let i = 0; i < puzzValArr.length; i++) {
+      if (puzzValArr[i] === ' ') {
+        puzzValArr.splice(i, 1);
+      }
+    }
+    maxSpins = puzzValArr.length;
+    this.setMaxSpinCount(maxSpins);
+    this.localAnswerKey = puzzValArr;
+    this.setAnswerKey(this.localAnswerKey);
+    // console.log('this.localAnswerKey: ', this.localAnswerKey);
+    // console.log('randomPuzzle', randomPuzzle);
     // console.log('alreadyUsed', alreadyUsed);
     if (!alreadyUsed) {
       this.puzzleCategory = randomPuzzle.category;
@@ -78,10 +89,6 @@ export class HomeComponent implements OnInit, OnDestroy, OnChanges {
       this.usedPuzzles.push(randomPuzzle);
     }
   }
-
-
-
-
 
   setPuzzleCategory(category: string) {
     this.puzzleCategory = category;
@@ -95,8 +102,32 @@ export class HomeComponent implements OnInit, OnDestroy, OnChanges {
     this.guessedLetters.push(letter);
   }
 
+  setMaxSpinCount(count: number) {
+    this.puzzleService.setMaxSpinCount(count);
+  }
+
+  setCorrectGuessedLetters(letters: string[]) {
+    this.puzzleService.setCorrectGuessedLetters(letters);
+  }
+
+  setAnswerKey(key: string[]) {
+    this.puzzleService.setAnswerKey(key);
+  }
+
+  checkIfWinner() {
+    this.puzzleService.isWinner$.pipe(
+      take(1)
+    ).subscribe(isWinner => {
+      this.localIsWinner = isWinner;
+    });
+  }
+
+
   onInputFormValues(values: { letter: string, solvePuzzle: boolean }) {
     console.log(values.letter, values.solvePuzzle);
+    if (this.localAnswerKey.includes(values.letter)) {
+      this.setCorrectGuessedLetters(this.guessedLetters);
+    }
   }
 
 }

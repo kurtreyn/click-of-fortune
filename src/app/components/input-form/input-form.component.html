@@ -1,6 +1,6 @@
 <section class="input-form-cont">
   <form [formGroup]="inputForm" (ngSubmit)="handleSubmit()">
-    <div class="form-group">
+    <div class="form-group input-cont">
       <input
         type="text"
         class="form-control"
@@ -9,8 +9,7 @@
         placeholder="Enter Letter"
       />
     </div>
-    <div class="form-group">
-      <label for="solvePuzzle">Solve Puzzle</label>
+    <!-- <div class="form-group input-cont">
       <input
         type="text"
         class="form-control"
@@ -18,7 +17,7 @@
         formControlName="solvePuzzle"
         placeholder="Solve Puzzle"
       />
-    </div>
+    </div> -->
 
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>

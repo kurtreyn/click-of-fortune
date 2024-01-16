@@ -35,8 +35,8 @@
 .input-section {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-end;
   /* width: 80%; */
   /* outline: solid 1px green; */
 }
@@ -61,11 +61,25 @@
   /* outline: solid 1px orange; */
 }
 
+.guessed-letter-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
 /* --- TEXT --- */
-.score-txt {
-  font-size: 1.5rem;
+.score-label {
+  font-size: 1.4rem;
   font-weight: bold;
   color: #000;
+  margin-top: 1rem;
+}
+
+.score-txt {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: blue;
   margin-top: 1rem;
 }
 

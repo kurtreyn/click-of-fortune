@@ -14,6 +14,7 @@ export class PuzzleBoardComponent implements OnInit, OnChanges {
   @Input() puzzleValue!: string;
   @Input() puzzleCategory!: string;
   @Input() guessedLetters!: string[];
+  @Input() isWinner!: boolean;
 
   constructor(private puzzleService: PuzzleService) { }
 
@@ -32,7 +33,7 @@ export class PuzzleBoardComponent implements OnInit, OnChanges {
       this.createPuzzleLetterArray();
       this.setEmptyPuzzleLetterArray();
     }
-    console.log('guessedLetters: ', this.guessedLetters)
+    // console.log('guessedLetters: ', this.guessedLetters)
   }
 
   private createPuzzleLetterArray() {
@@ -49,14 +50,12 @@ export class PuzzleBoardComponent implements OnInit, OnChanges {
         this.emptyPuzzleLetterArray.push('  ');
       }
     }
-
-    console.log('this.emptyPuzzleLetterArray: ', this.emptyPuzzleLetterArray);
   }
 
   checkForMatch(letter: string) {
-    console.log('checking for letter: ', letter);
+    // console.log('checking for letter: ', letter);
     if (this.puzzleLetterArray.includes(letter)) {
-      console.log('letter found!');
+      // console.log('letter found!');
       this.updateEmptyPuzzleLetterArray(letter);
     }
   }

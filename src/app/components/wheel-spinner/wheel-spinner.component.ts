@@ -17,12 +17,19 @@ export class WheelSpinnerComponent implements OnInit, OnDestroy {
   solvePuzzle: string = '';
   @Input() puzzleValue!: string;
   guessedLetters: string[] = [];
+  wheelMaxSpinCount: number = 5;
+  wheelSpinCount: number = 0;
+  globalSpinCount: number = 0;
+  wheelSpinnerDisabled: boolean = false;
   destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(private puzzleService: PuzzleService) { }
 
   ngOnInit(): void {
     this.getInputValues();
+    this.getMaxSpinCount();
+    this.getSpinCount();
+    // console.log("WHEEL globalSpinCount: ", this.globalSpinCount);
   }
 
   ngOnDestroy(): void {
@@ -30,56 +37,73 @@ export class WheelSpinnerComponent implements OnInit, OnDestroy {
   }
 
   public spinWheel() {
-    this.spinActive = true;
-    const spinVal = this.getSpinValue(1, 6);
-    switch (spinVal) {
-      case 1:
-        this.setSpinnerValue(SpinnerEnum.ONE);
-        break;
-      case 2:
-        this.setSpinnerValue(SpinnerEnum.TWO);
-        break;
-      case 3:
-        this.setSpinnerValue(SpinnerEnum.THREE);
-        break;
-      case 4:
-        this.setSpinnerValue(SpinnerEnum.FOUR);
-        break;
-      case 5:
-        this.setSpinnerValue(SpinnerEnum.FIVE);
-        break;
-      case 6:
-        this.setSpinnerValue(SpinnerEnum.BANKRUPT);
-        break;
-      default:
-        this.setSpinnerValue(SpinnerEnum.ONE);
-        break;
+    if (!this.wheelSpinnerDisabled) {
+      this.spinActive = true;
+      const spinVal = this.getSpinValue(1, 6);
+      switch (spinVal) {
+        case 1:
+          this.setSpinnerValue(SpinnerEnum.ONE);
+          break;
+        case 2:
+          this.setSpinnerValue(SpinnerEnum.TWO);
+          break;
+        case 3:
+          this.setSpinnerValue(SpinnerEnum.THREE);
+          break;
+        case 4:
+          this.setSpinnerValue(SpinnerEnum.FOUR);
+          break;
+        case 5:
+          this.setSpinnerValue(SpinnerEnum.FIVE);
+          break;
+        case 6:
+          this.setSpinnerValue(SpinnerEnum.BANKRUPT);
+          break;
+        default:
+          break;
+      }
+      this.wheelSpinCount++;
+      this.setSpinCount(this.wheelSpinCount);
+      setTimeout(() => {
+        this.spinActive = false;
+        this.setScore();
+
+        // console.log('this.spinnerValue: ', this.spinnerValue);
+        // console.log('this.score: ', this.score);
+      }, 2000);
+    } else {
+      alert('You have no more spins left!');
     }
-
-
-
-    setTimeout(() => {
-      this.spinActive = false;
-      this.setScore();
-      console.log('this.spinnerValue: ', this.spinnerValue);
-      console.log('this.score: ', this.score);
-    }, 2000);
   }
 
-  public getSpinValue(min: number, max: number): number {
+  getSpinValue(min: number, max: number): number {
     return this.puzzleService.getRandomNumber(min, max);
   }
 
-  public setSpinnerValue(value: number) {
+  getSpinCount() {
+    this.puzzleService.spinCount$.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(count => {
+      this.globalSpinCount = count;
+    });
+  }
+
+  setSpinnerValue(value: number) {
     this.spinnerValue = value;
   }
 
-  public setScore() {
+  setScore() {
     if (this.spinnerValue !== SpinnerEnum.BANKRUPT) {
       this.score += this.spinnerValue;
     } else {
       this.score = 0;
     }
+    this.puzzleService.setScore(this.score);
+  }
+
+  setSpinCount(count: number) {
+    // console.log('WHEEL count: ', count)
+    this.puzzleService.setSpinCount(count);
   }
 
   getInputValues() {
@@ -88,13 +112,35 @@ export class WheelSpinnerComponent implements OnInit, OnDestroy {
     ).subscribe(values => {
       let letter = values.letter;
       let solvePuzzle = values.solvePuzzle;
-      console.log('letter: ', letter);
-      console.log('solvePuzzle: ', solvePuzzle);
       if (letter !== '') {
         this.guessedLetters.push(letter);
       }
-      console.log('WHEEL this.guessedLetters: ', this.guessedLetters);
     });
   }
+
+  getMaxSpinCount() {
+    this.puzzleService.maxSpinCount$.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(max => {
+      this.wheelMaxSpinCount = max;
+    });
+  }
+
+  disableSpinner() {
+    if (this.wheelSpinCount >= this.wheelMaxSpinCount) {
+      this.wheelSpinnerDisabled = true;
+      this.puzzleService.setSpinDisabled(true);
+    }
+  }
+
+  checkSpinDisabled() {
+    this.puzzleService.spinDisabled$.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(disabled => {
+      this.wheelSpinnerDisabled = disabled;
+    });
+  }
+
+
 
 }
