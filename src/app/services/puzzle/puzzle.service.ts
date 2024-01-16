@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { IPuzzleControl } from 'src/app/models/IPuzzleControl';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,15 @@ export class PuzzleService {
   private correctGuessedLetters = new BehaviorSubject<string[]>([]);
   private spinDisabled = new BehaviorSubject<boolean>(false);
   private isWinner = new BehaviorSubject<boolean>(false);
+  private answerString = new BehaviorSubject<string>('');
+  private correctGuessedString = new BehaviorSubject<string>('');
+  private puzzleControl = new BehaviorSubject<IPuzzleControl>({} as IPuzzleControl);
 
   constructor() { }
+
+  get puzzleControl$() {
+    return this.puzzleControl.asObservable();
+  }
 
   get inputFormValues$() {
     return this.inputFormValuesSubject.asObservable();
@@ -49,6 +57,18 @@ export class PuzzleService {
     return this.spinDisabled.asObservable();
   }
 
+  get answerString$() {
+    return this.answerString.asObservable();
+  }
+
+  get correctGuessedString$() {
+    return this.correctGuessedString.asObservable();
+  }
+
+  setPuzzleControl(control: IPuzzleControl) {
+    this.puzzleControl.next(control);
+  }
+
   setInputFormValues(values: { letter: string, solvePuzzle: string }) {
     this.inputFormValuesSubject.next(values);
   }
@@ -75,6 +95,14 @@ export class PuzzleService {
 
   setIsWinner(isWinner: boolean) {
     this.isWinner.next(isWinner);
+  }
+
+  setAnswerString(answerString: string) {
+    this.answerString.next(answerString);
+  }
+
+  setCorrectGuessedString(correctGuessedString: string) {
+    this.correctGuessedString.next(correctGuessedString);
   }
 
   setSpinDisabled(spinDisabled: boolean) {
