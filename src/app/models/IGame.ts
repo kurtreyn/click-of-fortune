@@ -20,6 +20,7 @@ export interface IGame {
     guessMax?: number;
     canGuess?: boolean;
     score?: number;
+    totalScore?: number;
     inputValues?: { letter: string };
     answerKey?: string[];
     answerLength?: number;
@@ -30,7 +31,6 @@ export interface IGame {
     spinDisabled?: boolean;
     hasSpun?: boolean;
     spinActive?: boolean;
-    spinnerValue?: number;
-    isPuzzleSolved?: boolean;
+    spinValue?: number;
     isWinner?: boolean;
 }

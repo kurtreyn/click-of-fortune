@@ -18,14 +18,6 @@ export class PuzzleBoardComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.loadGameDetails();
-    // this.puzzleService.gameDetails$.pipe(
-    //   take(1)
-    // ).subscribe(details => {
-    //   const letter = details.inputValues?.letter;
-    //   if (letter) {
-    //     this.checkForMatch(letter);
-    //   }
-    // });
   }
 
   ngOnChanges() {
@@ -63,39 +55,5 @@ export class PuzzleBoardComponent implements OnInit, OnChanges {
         emptyPuzzleLetterArray: emptyArray,
       });
     }
-    // console.log('this.gameDetails: ', this.gameDetails);
-  }
-
-  checkForMatch(letter: string) {
-    console.log('CHECK MATCH letter: ', letter)
-    if (this.gameDetails && this.gameDetails.answerKey && this.gameDetails.answerKey.length > 0) {
-      console.log('checking for letter: ', letter);
-      if (this.gameDetails.answerKey.includes(letter)) {
-        console.log('letter found!');
-        this.updateEmptyPuzzleLetterArray(letter);
-      }
-    }
-  }
-
-  updateEmptyPuzzleLetterArray(letter: string) {
-    console.log('UPDATE EMPTY PUZZLE LETTER ARRAY letter: ', letter);
-    if (this.gameDetails && this.gameDetails.answerKey && this.gameDetails.answerKey.length > 0) {
-      let answArr = this.gameDetails.answerKey;
-      let emptyArr = this.gameDetails.emptyPuzzleLetterArray || [];
-      console.log('answArr: ', answArr);
-      console.log('emptyArr: ', emptyArr);
-
-      for (let i = 0; i < answArr.length; i++) {
-        if (answArr[i] === letter) {
-          emptyArr[i] = letter;
-        }
-      }
-
-      this.setGameDetails({
-        ...this.gameDetails,
-        emptyPuzzleLetterArray: emptyArr,
-      });
-    }
-    console.log('UPDATE EMPTY PUZZLE LETTERS gameDetails: ', this.gameDetails.emptyPuzzleLetterArray);
   }
 }

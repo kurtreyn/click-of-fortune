@@ -11,131 +11,115 @@ import { IGame } from '../../models/IGame';
 })
 export class WheelSpinnerComponent implements OnInit, OnDestroy {
   subscription!: Subject<boolean>;
-  puzzleDetails: IGame = {} as IGame;
-  spinnerEnum = SpinnerEnum;
-  spinnerValue: number = SpinnerEnum.ONE;
-  letter: string = '';
   destroy$: Subject<boolean> = new Subject<boolean>();
-  // score: number = 0;
-  // guessedLetters: string[] = [];
-  // wheelMaxSpinCount: number = 5;
-  // wheelSpinCount: number = 0;
-  // globalSpinCount: number = 0;
-  // wheelSpinnerDisabled: boolean = false;
+  gameDetails: IGame = {} as IGame;
+  spinnerEnum = SpinnerEnum;
+  spinValue: number = SpinnerEnum.ONE;
+  score: number = 0;
+  spinCount: number = 0;
+  spinActive: boolean = false;
+  hasSpun: boolean = false;
+  canGuess: boolean = false;
 
   constructor(private puzzleService: PuzzleService) { }
 
   ngOnInit(): void {
-    // this.getInputValues();
-    // this.getMaxSpinCount();
-    // this.getSpinCount();
-    // console.log("WHEEL globalSpinCount: ", this.globalSpinCount);
+    this.loadGameDetails();
+
   }
 
   ngOnDestroy(): void {
     this.destroy$.next(true);
   }
 
-  public spinWheel() {
-    // if (!this.wheelSpinnerDisabled) {
-    //   this.spinActive = true;
-    //   const spinVal = this.getSpinValue(1, 6);
-    //   switch (spinVal) {
-    //     case 1:
-    //       this.setSpinnerValue(SpinnerEnum.ONE);
-    //       break;
-    //     case 2:
-    //       this.setSpinnerValue(SpinnerEnum.TWO);
-    //       break;
-    //     case 3:
-    //       this.setSpinnerValue(SpinnerEnum.THREE);
-    //       break;
-    //     case 4:
-    //       this.setSpinnerValue(SpinnerEnum.FOUR);
-    //       break;
-    //     case 5:
-    //       this.setSpinnerValue(SpinnerEnum.FIVE);
-    //       break;
-    //     case 6:
-    //       this.setSpinnerValue(SpinnerEnum.BANKRUPT);
-    //       break;
-    //     default:
-    //       break;
-    //   }
-    //   this.wheelSpinCount++;
-    //   this.setSpinCount(this.wheelSpinCount);
-    //   setTimeout(() => {
-    //     this.spinActive = false;
-    //     this.setScore();
-    //   }, 2000);
-    // } else {
-    //   alert('You have no more spins left!');
-    // }
+  loadGameDetails() {
+    this.puzzleService.gameDetails$.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(details => {
+      this.gameDetails = details;
+    });
+    // console.log('gameDetails: ', this.gameDetails)
   }
 
-  // getSpinValue(min: number, max: number): number {
-  //   return this.puzzleService.genRandomNum(min, max);
-  // }
+  setGameDetails(details: IGame) {
+    this.gameDetails = details;
+    this.puzzleService.setGameDetails(this.gameDetails);
+  }
 
-  // getSpinCount() {
-  //   this.puzzleService.spinCount$.pipe(
-  //     takeUntil(this.destroy$)
-  //   ).subscribe(count => {
-  //     this.globalSpinCount = count;
-  //   });
-  // }
+  spinWheel() {
+    if (this.gameDetails) {
+      if (!this.gameDetails.spinDisabled && !this.gameDetails.hasSpun) {
+        this.gameDetails.spinActive = true;
+        const spinVal = this.puzzleService.genRandomNum(1, 6);
+        switch (spinVal) {
+          case 1:
+            this.setSpinValue(SpinnerEnum.ONE);
+            break;
+          case 2:
+            this.setSpinValue(SpinnerEnum.TWO);
+            break;
+          case 3:
+            this.setSpinValue(SpinnerEnum.THREE);
+            break;
+          case 4:
+            this.setSpinValue(SpinnerEnum.FOUR);
+            break;
+          case 5:
+            this.setSpinValue(SpinnerEnum.FIVE);
+            break;
+          case 6:
+            this.setSpinValue(SpinnerEnum.BANKRUPT);
+            break;
+          default:
+            break;
+        }
+        this.spinCount++;
+        this.hasSpun = true;
+        this.canGuess = true;
+        setTimeout(() => {
+          this.spinActive = false;
+          this.setScore();
+          this.updateGameDetails();
+        }, 2000);
+      } else {
+        this.hasSpun ? alert('Guess a letter before spinning again') : alert('No more spins available');
+      }
+    }
+  }
 
-  // setSpinnerValue(value: number) {
-  //   this.spinnerValue = value;
-  // }
 
-  // setScore() {
-  //   if (this.spinnerValue !== SpinnerEnum.BANKRUPT) {
-  //     this.score += this.spinnerValue;
-  //   } else {
-  //     this.score = 0;
-  //   }
-  //   this.puzzleService.setScore(this.score);
-  // }
+  setScore() {
+    if (this.spinValue !== SpinnerEnum.BANKRUPT) {
+      this.score += this.spinValue;
+    } else {
+      this.score = 0;
+    }
+  }
 
-  // setSpinCount(count: number) {
-  //   this.puzzleService.setSpinCount(count);
-  // }
+  setSpinValue(value: number) {
+    this.spinValue = value;
+  }
 
-  // getInputValues() {
-  //   this.puzzleService.inputFormValues$.pipe(
-  //     takeUntil(this.destroy$)
-  //   ).subscribe(values => {
-  //     let letter = values.letter;
-  //     let solvePuzzle = values.solvePuzzle;
-  //     if (letter !== '') {
-  //       this.guessedLetters.push(letter);
-  //     }
-  //   });
-  // }
+  updateGameDetails() {
+    if (this.gameDetails && this.gameDetails.maxSpins) {
+      this.setGameDetails({
+        ...this.gameDetails,
+        spinCount: this.spinCount,
+        spinValue: this.spinValue,
+        score: this.score,
+        spinActive: this.spinActive,
+        hasSpun: this.hasSpun,
+        spinDisabled: this.spinCount >= this.gameDetails.maxSpins ? true : false,
+        canGuess: this.canGuess
+      });
+    }
+  }
 
-  // getMaxSpinCount() {
-  //   this.puzzleService.maxSpinCount$.pipe(
-  //     takeUntil(this.destroy$)
-  //   ).subscribe(max => {
-  //     this.wheelMaxSpinCount = max;
-  //   });
-  // }
 
-  // disableSpinner() {
-  //   if (this.wheelSpinCount >= this.wheelMaxSpinCount) {
-  //     this.wheelSpinnerDisabled = true;
-  //     this.puzzleService.setSpinDisabled(true);
-  //   }
-  // }
 
-  // checkSpinDisabled() {
-  //   this.puzzleService.spinDisabled$.pipe(
-  //     takeUntil(this.destroy$)
-  //   ).subscribe(disabled => {
-  //     this.wheelSpinnerDisabled = disabled;
-  //   });
-  // }
+
+
+
 
 
 

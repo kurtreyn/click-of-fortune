@@ -1,16 +1,18 @@
 <section class="row wheel-spinner-cont">
   <div class="control-sec col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
     <div class="score-sec col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-      <!-- <span class="score-label"
-        >Score: <span class="score-txt">{{ score }} </span></span
-      > -->
+      <span class="score-label"
+        >Score: <span class="score-txt">{{ gameDetails.score }} </span></span
+      >
       <hr />
       <div class="row puzzle-row">
         <div class="guessed-letter-row">
           <span class="guessed-label">Guessed Letters: </span>
-          <!-- <div *ngFor="let letter of guessedLetters; let i = index">
+          <div
+            *ngFor="let letter of gameDetails.allGuessedLetters; let i = index"
+          >
             <span class="guessed-letters">{{ letter }}</span>
-          </div> -->
+          </div>
         </div>
       </div>
     </div>
@@ -24,7 +26,7 @@
         src="../../../assets/images/wheel.png"
         alt="spinner wheel"
         class="spinner-wheel-img"
-        [ngClass]="{ 'spin-animation': puzzleDetails.spinActive }"
+        [ngClass]="{ 'spin-animation': gameDetails.spinActive }"
       />
     </div>
   </div>

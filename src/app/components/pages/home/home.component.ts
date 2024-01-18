@@ -25,7 +25,6 @@ export class HomeComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges() {
-    // this.getCorrectGuessedLetters();
   }
 
   ngOnDestroy() {
@@ -33,24 +32,11 @@ export class HomeComponent implements OnInit, OnDestroy, OnChanges {
     this.destroy$.next(true);
   }
 
-  // getInputValues() {
-  //   this.puzzleService.inputFormValues$.pipe(
-  //     takeUntil(this.destroy$)
-  //   ).subscribe(values => {
-  //     let letter = values.letter;
-  //     let solvePuzzle = values.solvePuzzle;
-  //     if (letter !== '') {
-  //       this.guessedLetters.push(letter);
-  //     }
-  //   });
-  // }
-
 
   loadAllPuzzles() {
     this.apiService.getPuzzles().subscribe(puzzles => {
       if (puzzles && puzzles.length > 0) {
         this.allPuzzles = puzzles;
-        // console.log('this.allPuzzles: ', this.allPuzzles);
         this.setCurrentPuzzle();
         this.updateGameDetails();
       }
@@ -94,7 +80,6 @@ export class HomeComponent implements OnInit, OnDestroy, OnChanges {
         usedPuzzles: [...this.gameDetails.usedPuzzles || [], this.currentPuzzle]
       });
     }
-
     // console.log('this.gameDetails: ', this.gameDetails);
   }
 }

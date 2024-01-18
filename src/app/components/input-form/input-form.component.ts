@@ -3,7 +3,6 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { Subscription, Subject, takeUntil } from 'rxjs';
 import { PuzzleService } from '../../services/puzzle/puzzle.service';
 import { IGame } from '../../models/IGame';
-import { IPuzzle } from '../../models/IPuzzle'
 
 @Component({
   selector: 'app-input-form',
@@ -18,6 +17,7 @@ export class InputFormComponent implements OnInit, OnDestroy {
   guessedLetters: string[] = [];
   correctGuesses: string[] = [];
   guessCount: number = 0;
+  canGuess: boolean = true;
 
   constructor(private formBuilder: FormBuilder, private puzzleService: PuzzleService) {
   }
@@ -34,6 +34,13 @@ export class InputFormComponent implements OnInit, OnDestroy {
     this.destroy$.next(true);
   }
 
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      this.handleSubmit();
+    }
+  }
+
   createForm() {
     this.inputForm = this.formBuilder.group({
       letter: new FormControl('', [Validators.required]),
@@ -47,7 +54,6 @@ export class InputFormComponent implements OnInit, OnDestroy {
       this.gameDetails = details;
     });
     // console.log('gameDetails: ', this.gameDetails)
-    // this.createPuzzleLetterArray();
   }
 
   setGameDetails(details: IGame) {
@@ -55,12 +61,7 @@ export class InputFormComponent implements OnInit, OnDestroy {
     this.puzzleService.setGameDetails(this.gameDetails);
   }
 
-  @HostListener('document:keydown', ['$event'])
-  handleKeyboardEvent(event: KeyboardEvent) {
-    if (event.key === 'Enter') {
-      this.handleSubmit();
-    }
-  }
+
 
   updateEmptyPuzzleLetterArray(letter: string) {
     console.log('UPDATE EMPTY PUZZLE LETTER ARRAY letter: ', letter);
@@ -87,7 +88,9 @@ export class InputFormComponent implements OnInit, OnDestroy {
   handleSubmit() {
     this.letter = this.inputForm.value.letter;
     this.guessCount++;
-    this.guessedLetters.push(this.letter);
+    if (this.letter !== '' || this.letter !== null) {
+      this.guessedLetters.push(this.letter);
+    }
     let correctLetter;
     let canGuess = true;
     let currentEmptyArr = this.gameDetails.emptyPuzzleLetterArray || [];
@@ -118,72 +121,10 @@ export class InputFormComponent implements OnInit, OnDestroy {
       correctGuessedLetters: this.correctGuesses,
       allGuessedLetters: this.guessedLetters,
       guessCount: this.guessCount,
-      canGuess: canGuess,
+      canGuess: this.canGuess,
       emptyPuzzleLetterArray: newEmptyArr,
     });
-    // console.log('UPDATED gameDetails: ', this.gameDetails)
 
     this.inputForm.reset();
   }
-
-
-  // getCorrectGuessedLetters() {
-  //   this.puzzleService.correctGuessedLetters$.pipe(
-  //     takeUntil(this.destroy$)
-  //   ).subscribe(letters => {
-  //     this.correctGuessedLetters = letters;
-  //     this.correctGuessedString = this.convertArrayToString(this.correctGuessedLetters);
-  //   });
-  // }
-
-
-
-
-  // setInputGuessMax() {
-  //   this.puzzleService.maxSpinCount$.subscribe(max => {
-  //     this.inputGuessMax = max;
-  //   });
-  // }
-
-  // getSpinCount() {
-  //   this.puzzleService.spinCount$.pipe(
-  //     takeUntil(this.destroy$)
-  //   ).subscribe(count => {
-  //     console.log('INPUT getSpinCount: ', count)
-  //     this.globalSpinCount = count;
-  //     console.log('INPUT globalSpinCount: ', this.globalSpinCount);
-  //   });
-  // }
-
-  // checkIfCanGuess() {
-  //   if (this.inputGuessCount >= this.inputGuessMax) {
-  //     this.canGuess = false;
-  //   }
-  //   if (this.globalSpinCount === this.inputSpinCount) {
-  //     this.canGuess = false;
-  //     alert('Spin the wheel before making a guess')
-  //     // this.inputForm.reset();
-  //   }
-  // }
-
-  // checkIfWinner() {
-  //   if (this.correctGuessedString === this.inputAnswerString) {
-  //     this.puzzleService.setIsWinner(true);
-  //     alert('You won!');
-  //   }
-  // }
-
-  // getIsWinner() {
-  //   this.puzzleService.isWinner$.pipe(
-  //     takeUntil(this.destroy$)
-  //   ).subscribe(isWinner => {
-  //     if (isWinner) {
-  //       alert('You won!');
-  //       this.inputForm.reset();
-  //     }
-  //   });
-  // }
-
-
-
 }
