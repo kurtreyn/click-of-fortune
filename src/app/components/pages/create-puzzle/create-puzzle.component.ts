@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ApiService } from '../../../services/api/api.service';
-import { IPuzzle } from '../../../models/puzzleInterface';
+import { IPuzzle } from '../../../models/IPuzzle';
 import { v4 as uuidv4 } from 'uuid';
 
 @Component({

@@ -18,7 +18,7 @@ export const puzzleData = [
     //     id: '4',
     //     category: "music",
     //     puzzle: "korn"
-    // }, // Added missing comma here
+    // },
     // {
     //     id: '5',
     //     category: "phrases",

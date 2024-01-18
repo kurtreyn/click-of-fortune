@@ -1,16 +1,16 @@
 <section class="puzzle-board-cont">
-  <div *ngIf="isWinner; else gameContent">You win!</div>
+  <div *ngIf="gameDetails.isWinner; else gameContent">You win!</div>
 
   <ng-template #gameContent>
     <div class="row category-row">
       <span class="category-label"
         >Category: &nbsp;
-        <span class="category-value">{{ puzzleCategory }}</span>
+        <span class="category-value">{{ gameDetails.puzzleCategory }}</span>
       </span>
     </div>
     <div class="row puzzle-row">
       <div
-        *ngFor="let letter of emptyPuzzleLetterArray; let i = index"
+        *ngFor="let letter of gameDetails.emptyPuzzleLetterArray; let i = index"
         [ngClass]="{
           'letter-wrapper': letter !== '  ',
           'empty-wrapper': letter === '  '

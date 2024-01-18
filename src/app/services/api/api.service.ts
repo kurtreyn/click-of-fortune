@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-import { IPuzzle } from '../../models/puzzleInterface';
+import { IPuzzle } from '../../models/IPuzzle';
 import { puzzleData } from '../../../data/puzzleData';
 
 
