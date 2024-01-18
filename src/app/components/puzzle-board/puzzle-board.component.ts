@@ -18,18 +18,17 @@ export class PuzzleBoardComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.loadGameDetails();
-    this.puzzleService.gameDetails$.pipe(
-      take(1)
-    ).subscribe(details => {
-      const letter = details.inputValues?.letter;
-      if (letter) {
-        this.checkForMatch(letter);
-      }
-    });
+    // this.puzzleService.gameDetails$.pipe(
+    //   take(1)
+    // ).subscribe(details => {
+    //   const letter = details.inputValues?.letter;
+    //   if (letter) {
+    //     this.checkForMatch(letter);
+    //   }
+    // });
   }
 
   ngOnChanges() {
-
   }
 
   loadGameDetails() {
@@ -37,14 +36,17 @@ export class PuzzleBoardComponent implements OnInit, OnChanges {
       takeUntil(this.destroy$)
     ).subscribe(details => {
       this.gameDetails = details;
+      console.log("PUZZLE BOARD: ", this.gameDetails);
     });
     this.createPuzzleLetterArray();
+
   }
 
   setGameDetails(details: IGame) {
     this.gameDetails = details;
     this.puzzleService.setGameDetails(this.gameDetails);
   }
+
 
   createPuzzleLetterArray() {
     if (this.gameDetails && this.gameDetails.answerKey && this.gameDetails.answerKey.length > 0) {
@@ -94,8 +96,6 @@ export class PuzzleBoardComponent implements OnInit, OnChanges {
         emptyPuzzleLetterArray: emptyArr,
       });
     }
-    console.log('this.gameDetails: ', this.gameDetails);
+    console.log('UPDATE EMPTY PUZZLE LETTERS gameDetails: ', this.gameDetails.emptyPuzzleLetterArray);
   }
-
-
 }

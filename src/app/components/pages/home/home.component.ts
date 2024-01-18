@@ -87,6 +87,7 @@ export class HomeComponent implements OnInit, OnDestroy, OnChanges {
         maxSpins: maxSpins,
         answerKey: puzzValArr,
         answerLength: puzzValArr.length,
+        guessMax: puzzValArr.length,
         answerString: this.puzzleService.convertArrayToString(puzzValArr),
         puzzleCategory: this.currentPuzzle.category,
         puzzleValue: this.currentPuzzle.puzzle,
