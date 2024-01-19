@@ -31,12 +31,14 @@
   height: 3rem;
   border: solid 1px rgba(0, 0, 0, 0.2);
   text-transform: uppercase;
+  margin-bottom: 0.5rem;
 }
 
 .empty-wrapper {
   width: 2rem;
   height: 3rem;
   border: none;
+  margin-bottom: 0.5rem;
 }
 
 /* --- TEXT --- */

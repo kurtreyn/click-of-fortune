@@ -194,7 +194,7 @@ export const puzzleData = [
     {
         id: '38',
         category: "phrases",
-        puzzle: "the bigger they are, the harder they fall"
+        puzzle: "the bigger they are the harder they fall"
     },
     {
         id: '39',
