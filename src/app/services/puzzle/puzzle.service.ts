@@ -30,7 +30,7 @@ export class PuzzleService {
     return str.split('');
   }
 
-  createPuzzleLetterArray(puzzleValue: string): string[] {
+  createMaksedPuzzleArr(puzzleValue: string): string[] {
     const emptyArray: string[] = [];
     for (let i = 0; i < puzzleValue.length; i++) {
       if (puzzleValue[i] !== ' ') {

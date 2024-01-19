@@ -52,8 +52,6 @@ export class InputFormComponent implements OnInit, OnDestroy {
       this.availablePuzzles = details.availablePuzzles || [];
       this.usedPuzzles = details.usedPuzzles || [];
       this.newGame = details.startNewGame || false;
-      console.log('INPUT hasSpun: ', details.hasSpun)
-      console.log('INPUT canGuess: ', details.canGuess)
     });
   }
 
@@ -75,7 +73,7 @@ export class InputFormComponent implements OnInit, OnDestroy {
       const randomIndex = Math.floor(Math.random() * this.availablePuzzles.length);
       const randomPuzzle = this.availablePuzzles[randomIndex];
       const puzzleId: string = randomPuzzle.id as string;
-      const emptyArr = this.puzzleService.createPuzzleLetterArray(randomPuzzle.puzzle);
+      const emptyArr = this.puzzleService.createMaksedPuzzleArr(randomPuzzle.puzzle);
       const answerKey = this.puzzleService.convertStringToArray(randomPuzzle.puzzle);
       const answerString = this.puzzleService.convertArrayToString(answerKey);
       this.currentPuzzle = randomPuzzle;
@@ -92,7 +90,7 @@ export class InputFormComponent implements OnInit, OnDestroy {
         currentPuzzle: this.currentPuzzle,
         availablePuzzles: this.availablePuzzles,
         usedPuzzles: this.usedPuzzles,
-        emptyPuzzleLetterArray: emptyArr,
+        maskedPuzzleArr: emptyArr,
         guessCount: this.guessCount,
         canGuess: false,
         hasSpun: false,
@@ -119,7 +117,7 @@ export class InputFormComponent implements OnInit, OnDestroy {
   updateEmptyPuzzleLetterArray(letter: string) {
     if (this.gameDetails && this.gameDetails.answerKey && this.gameDetails.answerKey.length > 0) {
       let answArr = this.gameDetails.answerKey;
-      let emptyArr = this.gameDetails.emptyPuzzleLetterArray || [];
+      let emptyArr = this.gameDetails.maskedPuzzleArr || [];
 
       for (let i = 0; i < answArr.length; i++) {
         if (answArr[i] === letter) {
@@ -129,20 +127,20 @@ export class InputFormComponent implements OnInit, OnDestroy {
 
       this.setGameDetails({
         ...this.gameDetails,
-        emptyPuzzleLetterArray: emptyArr,
+        maskedPuzzleArr: emptyArr,
       });
     }
   }
 
 
   checkGameStatus() {
-    if (this.gameDetails && this.gameDetails.guessCount && this.gameDetails.maxGuess && this.gameDetails.answerKey && this.gameDetails.answerKey.length > 0 && this.gameDetails.emptyPuzzleLetterArray && this.gameDetails.emptyPuzzleLetterArray.length > 0) {
+    if (this.gameDetails && this.gameDetails.guessCount && this.gameDetails.maxGuess && this.gameDetails.answerKey && this.gameDetails.answerKey.length > 0 && this.gameDetails.maskedPuzzleArr && this.gameDetails.maskedPuzzleArr.length > 0) {
       if (this.gameDetails.guessCount === this.gameDetails.maxGuess) {
         let hasWon = false;
         let hasLost = false;
         let totalScore = this.gameDetails.score || 0;
         let answerKey = this.gameDetails.answerString
-        let valueString = this.puzzleService.convertArrayToString(this.gameDetails.emptyPuzzleLetterArray);
+        let valueString = this.puzzleService.convertArrayToString(this.gameDetails.maskedPuzzleArr);
         let startNewGame = this.gameDetails.startNewGame || false;
 
         if (answerKey === valueString) {
@@ -193,7 +191,7 @@ export class InputFormComponent implements OnInit, OnDestroy {
         }
       }
       let correctLetter;
-      let currentEmptyArr = this.gameDetails.emptyPuzzleLetterArray || [];
+      let currentEmptyArr = this.gameDetails.maskedPuzzleArr || [];
       let answArr = this.gameDetails.answerKey || [];
       const newEmptyArr = [...currentEmptyArr];
       let canGuess = false;
@@ -225,11 +223,10 @@ export class InputFormComponent implements OnInit, OnDestroy {
         guessCount: this.guessCount,
         canGuess: canGuess,
         hasSpun: hasSpun,
-        emptyPuzzleLetterArray: newEmptyArr,
+        maskedPuzzleArr: newEmptyArr,
       });
     } else {
       if (this.gameDetails.hasSpun === false) {
-        // console.log('handleSubmit hasSpun ', this.gameDetails.hasSpun)
         alert('Spin the wheel first!');
       }
     }

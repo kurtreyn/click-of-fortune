@@ -1,26 +1,20 @@
 /* --- CONTAINERS --- */
 .wheel-spinner-cont {
   display: flex;
-  /* position: absolute; */
-  /* bottom: 0px; */
-  /* left: 0px; */
   flex-direction: row;
   justify-content: flex-end;
   align-items: flex-end;
-  /* align-items: flex-end; */
   width: 100%;
   margin-top: 2rem;
   padding: 2rem;
-  /* outline: solid 3px black; */
 }
 
 .control-sec {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: flex-start;
-  /* width: 100%; */
-  /* outline: solid 1px red; */
+  min-height: 300px;
 }
 
 .score-sec {
@@ -28,8 +22,6 @@
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-start;
-  /* width: 20%; */
-  /* outline: solid 1px blue; */
 }
 
 .input-section {
@@ -37,8 +29,6 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-end;
-  /* width: 80%; */
-  /* outline: solid 1px green; */
 }
 
 .wheel-sec {
@@ -47,8 +37,6 @@
   justify-content: flex-end;
   align-items: flex-end;
   min-height: 300px;
-  /* width: 100%; */
-  /* outline: solid 1px grey; */
 }
 
 .wheel-wrapper {
@@ -59,7 +47,6 @@
   width: 100%;
   padding: 1rem;
   cursor: pointer;
-  /* outline: solid 1px orange; */
 }
 
 .guessed-letter-row {
@@ -89,6 +76,7 @@
   font-weight: bold;
   color: red;
   margin-top: 1rem;
+  margin-left: 1rem;
   text-transform: uppercase;
 }
 
@@ -97,6 +85,7 @@
   font-weight: bold;
   color: #000;
   margin-top: 1rem;
+  margin-right: 1rem;
 }
 
 /* --- IMAGES/ICONS --- */

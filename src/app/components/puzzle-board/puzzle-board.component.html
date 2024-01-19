@@ -1,13 +1,21 @@
 <section class="puzzle-board-cont">
-  <div class="row category-row">
-    <span class="category-label"
-      >Category: &nbsp;
-      <span class="category-value">{{ gameDetails.puzzleCategory }}</span>
-    </span>
+  <div class="row category-top-score-row">
+    <div class="col category-col">
+      <span class="category-label"
+        >Category: &nbsp;
+        <span class="category-value">{{ gameDetails.puzzleCategory }}</span>
+      </span>
+    </div>
+    <div class="col total-score-col">
+      <span class="total-score-label"
+        >Total Score: &nbsp;
+        <span class="total-score-value">{{ gameDetails.totalScore || 0 }}</span>
+      </span>
+    </div>
   </div>
   <div class="row puzzle-row">
     <div
-      *ngFor="let letter of gameDetails.emptyPuzzleLetterArray; let i = index"
+      *ngFor="let letter of gameDetails.maskedPuzzleArr; let i = index"
       [ngClass]="{
         'letter-wrapper': letter !== '  ',
         'empty-wrapper': letter === '  '
