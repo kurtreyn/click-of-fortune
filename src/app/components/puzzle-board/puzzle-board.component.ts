@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
-import { Subscription, take, Subject, takeUntil } from 'rxjs';
+import { Subscription, Subject, takeUntil } from 'rxjs';
 import { PuzzleService } from 'src/app/services/puzzle/puzzle.service';
 import { IGame } from 'src/app/models/IGame';
 

@@ -36,6 +36,7 @@ export class HomeComponent implements OnInit, OnDestroy, OnChanges {
 
 
   loadAllPuzzles() {
+    this.subscription
     this.apiService.getPuzzles().subscribe(puzzles => {
       if (puzzles && puzzles.length > 0) {
         this.allPuzzles = puzzles;
