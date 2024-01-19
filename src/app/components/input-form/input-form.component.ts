@@ -22,6 +22,7 @@ export class InputFormComponent implements OnInit, OnDestroy {
   usedPuzzles: string[] = [];
   guessCount: number = 0;
   newGame: boolean = false;
+  totalScore: number = 0;
 
   constructor(private formBuilder: FormBuilder, private puzzleService: PuzzleService) {
   }
@@ -121,24 +122,20 @@ export class InputFormComponent implements OnInit, OnDestroy {
     if (this.gameDetails && this.gameDetails.guessCount && this.gameDetails.maxGuess && this.gameDetails.answerArr && this.gameDetails.answerArr.length > 0 && this.gameDetails.maskedPuzzleArr && this.gameDetails.maskedPuzzleArr.length > 0) {
       let hasWon = false;
       let hasLost = false;
-      let totalScore = this.gameDetails.score || 0;
+      let totalScore = 0;
       let answerKey = this.gameDetails.answerString
       let startNewGame = this.gameDetails.startNewGame || false;
       let correctGuessStrNoSpaces = this.puzzleService.createNoSpaceStrFromArr(this.gameDetails.maskedPuzzleArr);
+
+      if (this.gameDetails.score) {
+        this.totalScore += this.gameDetails.score;
+      }
 
       if (this.gameDetails.guessCount <= this.gameDetails.maxGuess && answerKey === correctGuessStrNoSpaces) {
         hasWon = true;
         hasLost = false;
         startNewGame = true;
         alert("You won!");
-
-        this.setGameDetails({
-          ...this.gameDetails,
-          hasWon: hasWon,
-          hasLost: hasLost,
-          startNewGame: startNewGame,
-          totalScore: totalScore,
-        });
       }
 
       if (this.gameDetails.guessCount === this.gameDetails.maxGuess) {
@@ -158,15 +155,16 @@ export class InputFormComponent implements OnInit, OnDestroy {
           startNewGame = true;
           alert("Sorry, you lost");
         }
-
-        this.setGameDetails({
-          ...this.gameDetails,
-          hasWon: hasWon,
-          hasLost: hasLost,
-          startNewGame: startNewGame,
-          totalScore: totalScore,
-        });
       }
+
+      this.setGameDetails({
+        ...this.gameDetails,
+        hasWon: hasWon,
+        hasLost: hasLost,
+        startNewGame: startNewGame,
+        totalScore: this.totalScore
+      });
+
       console.log('hasWon: ', hasWon);
 
       if (startNewGame) {
