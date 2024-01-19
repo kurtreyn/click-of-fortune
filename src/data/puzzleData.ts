@@ -309,7 +309,7 @@ export const puzzleData = [
     {
         id: "61",
         category: "test one",
-        puzzle: "oh ho"
+        puzzle: "oh oh"
     },
     {
         id: "62",

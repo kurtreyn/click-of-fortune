@@ -42,5 +42,9 @@ export class PuzzleService {
     return emptyArray;
   }
 
+  createNoSpaceStrFromArr(arr: string[]): string {
+    return arr.filter(str => str !== ' ').join('');
+  }
+
 
 }
