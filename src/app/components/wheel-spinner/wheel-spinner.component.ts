@@ -38,9 +38,6 @@ export class WheelSpinnerComponent implements OnInit, OnDestroy {
     ).subscribe(details => {
       this.gameDetails = details;
       this.spinCount = details.spinCount || 0;
-      // console.log('WHEEL spinCount: ', details.spinCount)
-      // console.log('WHEEL hasSpun: ', details.hasSpun)
-      // console.log('WHEEL canGuess: ', details.canGuess)
     });
   }
 

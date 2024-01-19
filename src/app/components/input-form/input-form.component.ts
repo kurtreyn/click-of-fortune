@@ -127,10 +127,6 @@ export class InputFormComponent implements OnInit, OnDestroy {
       let startNewGame = this.gameDetails.startNewGame || false;
       let correctGuessStrNoSpaces = this.puzzleService.createNoSpaceStrFromArr(this.gameDetails.maskedPuzzleArr);
 
-      if (this.gameDetails.score) {
-        this.totalScore += this.gameDetails.score;
-      }
-
       if (this.gameDetails.guessCount <= this.gameDetails.maxGuess && answerKey === correctGuessStrNoSpaces) {
         hasWon = true;
         hasLost = false;
@@ -176,7 +172,7 @@ export class InputFormComponent implements OnInit, OnDestroy {
 
   handleSubmit() {
     if (this.inputForm.valid && this.gameDetails.hasSpun && this.gameDetails.canGuess) {
-      this.letter = this.inputForm.value.letter;
+      this.letter = this.inputForm.value.letter.toLowerCase();
 
       if (this.letter !== '' || this.letter !== null) {
         if (this.guessedLetters.includes(this.letter)) {
@@ -208,6 +204,9 @@ export class InputFormComponent implements OnInit, OnDestroy {
       if (this.gameDetails.answerArr?.includes(this.letter)) {
         correctLetter = this.letter;
         this.correctGuesses.push(correctLetter);
+        if (this.gameDetails.score) {
+          this.totalScore += this.gameDetails.score;
+        }
       }
       if (this.gameDetails.maxGuess) {
         if (this.guessCount >= this.gameDetails.maxGuess) {
@@ -227,7 +226,7 @@ export class InputFormComponent implements OnInit, OnDestroy {
         correctGuessedString: correctGuessedString,
       });
     } else {
-      if (this.gameDetails.hasSpun === false) {
+      if (this.gameDetails.hasSpun === false || this.gameDetails.hasSpun === undefined) {
         alert('Spin the wheel first!');
       }
     }
