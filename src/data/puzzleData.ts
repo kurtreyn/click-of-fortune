@@ -14,11 +14,11 @@ export const puzzleData = [
         category: "music",
         puzzle: "oasis"
     },
-    // {
-    //     id: '4',
-    //     category: "music",
-    //     puzzle: "korn"
-    // },
+    {
+        id: '4',
+        category: "music",
+        puzzle: "korn"
+    },
     // {
     //     id: '5',
     //     category: "phrases",
@@ -34,16 +34,16 @@ export const puzzleData = [
     //     category: "places",
     //     puzzle: "new york city"
     // },
-    // {
-    //     id: '8',
-    //     category: "places",
-    //     puzzle: "rome"
-    // },
-    // {
-    //     id: '9',
-    //     category: "places",
-    //     puzzle: "london"
-    // },
+    {
+        id: '8',
+        category: "places",
+        puzzle: "rome"
+    },
+    {
+        id: '9',
+        category: "places",
+        puzzle: "london"
+    },
     // {
     //     id: '10',
     //     category: "people",

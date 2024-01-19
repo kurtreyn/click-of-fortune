@@ -17,7 +17,6 @@ export class InputFormComponent implements OnInit, OnDestroy {
   guessedLetters: string[] = [];
   correctGuesses: string[] = [];
   guessCount: number = 0;
-  canGuess: boolean = true;
 
   constructor(private formBuilder: FormBuilder, private puzzleService: PuzzleService) {
   }
@@ -85,46 +84,95 @@ export class InputFormComponent implements OnInit, OnDestroy {
     console.log('UPDATE EMPTY PUZZLE LETTERS gameDetails: ', this.gameDetails.emptyPuzzleLetterArray);
   }
 
-  handleSubmit() {
-    this.letter = this.inputForm.value.letter;
-    this.guessCount++;
-    if (this.letter !== '' || this.letter !== null) {
-      this.guessedLetters.push(this.letter);
-    }
-    let correctLetter;
-    let canGuess = true;
-    let currentEmptyArr = this.gameDetails.emptyPuzzleLetterArray || [];
-    let answArr = this.gameDetails.answerKey || [];
-    const newEmptyArr = [...currentEmptyArr];
 
-    if (this.gameDetails.answerKey) {
-      for (let i = 0; i < answArr.length; i++) {
-        if (answArr[i] === this.letter) {
-          newEmptyArr[i] = this.letter;
+  checkGameStatus() {
+    if (this.gameDetails && this.gameDetails.guessCount && this.gameDetails.guessMax && this.gameDetails.answerKey && this.gameDetails.answerKey.length > 0) {
+      if (this.gameDetails.guessCount === this.gameDetails.guessMax) {
+        let hasWon = false;
+        let hasLost = false;
+        let startNewGame = false;
+        let totalScore = this.gameDetails.score || 0;
+        let answerKey = this.gameDetails.answerString
+        let valueString = this.puzzleService.convertArrayToString(this.gameDetails.correctGuessedLetters || []);
+
+        if (answerKey === valueString) {
+          hasWon = true;
+          hasLost = false;
+          startNewGame = true;
+          alert('You won!');
+        } else if (answerKey !== valueString && this.gameDetails.guessCount === this.gameDetails.guessMax) {
+          hasWon = false;
+          hasLost = true;
+          startNewGame = true;
+          alert('Sorry, you lost!');
+        } else {
+          hasWon = false;
+          hasLost = true;
+          startNewGame = true;
+          alert('Sorry, you lost!');
+        }
+
+        this.setGameDetails({
+          ...this.gameDetails,
+          hasWon: hasWon,
+          hasLost: hasLost,
+          startNewGame: startNewGame,
+          totalScore: totalScore,
+        });
+      }
+    }
+  }
+
+
+  handleSubmit() {
+    if (this.inputForm.valid && this.gameDetails.hasSpun && this.gameDetails.canGuess) {
+      this.letter = this.inputForm.value.letter;
+      this.guessCount++;
+      if (this.letter !== '' || this.letter !== null) {
+        this.guessedLetters.push(this.letter);
+      }
+      let correctLetter;
+      let currentEmptyArr = this.gameDetails.emptyPuzzleLetterArray || [];
+      let answArr = this.gameDetails.answerKey || [];
+      const newEmptyArr = [...currentEmptyArr];
+      let canGuess = !this.gameDetails.canGuess;
+      let hasSpun = !this.gameDetails.hasSpun;
+
+      if (this.gameDetails.answerKey) {
+        for (let i = 0; i < answArr.length; i++) {
+          if (answArr[i] === this.letter) {
+            newEmptyArr[i] = this.letter;
+          }
         }
       }
-    }
-    if (this.gameDetails.answerKey?.includes(this.letter)) {
-      correctLetter = this.letter;
-      this.correctGuesses.push(correctLetter);
-    }
-    if (this.gameDetails.guessMax) {
-      if (this.guessCount >= this.gameDetails.guessMax) {
-        canGuess = false;
+      if (this.gameDetails.answerKey?.includes(this.letter)) {
+        correctLetter = this.letter;
+        this.correctGuesses.push(correctLetter);
       }
+      if (this.gameDetails.guessMax) {
+        if (this.guessCount >= this.gameDetails.guessMax) {
+          canGuess = false;
+        }
+      }
+
+      this.setGameDetails({
+        ...this.gameDetails,
+        inputValues: { letter: this.letter },
+        correctGuessedLetters: this.correctGuesses,
+        allGuessedLetters: this.guessedLetters,
+        guessCount: this.guessCount,
+        canGuess: canGuess,
+        hasSpun: hasSpun,
+        emptyPuzzleLetterArray: newEmptyArr,
+      });
+    } else {
+      alert('Spin the wheel before guessing a letter')
     }
-
-
-    this.setGameDetails({
-      ...this.gameDetails,
-      inputValues: { letter: this.letter },
-      correctGuessedLetters: this.correctGuesses,
-      allGuessedLetters: this.guessedLetters,
-      guessCount: this.guessCount,
-      canGuess: this.canGuess,
-      emptyPuzzleLetterArray: newEmptyArr,
-    });
 
     this.inputForm.reset();
+
+    setTimeout(() => {
+      this.checkGameStatus();
+    }, 300);
   }
 }

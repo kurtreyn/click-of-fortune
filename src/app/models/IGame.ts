@@ -6,7 +6,7 @@ export interface IGame {
     allPuzzlesCount?: number;
     activePuzzle?: IPuzzle;
     availablePuzzles?: IPuzzle[];
-    usedPuzzles?: IPuzzle[];
+    usedPuzzles?: string[];
     solvedPuzzles?: IPuzzle[];
     emptyPuzzleLetterArray?: string[];
     newPuzzle?: IPuzzle[];
@@ -32,5 +32,7 @@ export interface IGame {
     hasSpun?: boolean;
     spinActive?: boolean;
     spinValue?: number;
-    isWinner?: boolean;
+    hasWon?: boolean;
+    hasLost?: boolean;
+    startNewGame?: boolean;
 }

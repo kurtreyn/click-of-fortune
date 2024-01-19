@@ -1,5 +1,5 @@
 <section class="puzzle-board-cont">
-  <div *ngIf="gameDetails.isWinner; else gameContent">You win!</div>
+  <div *ngIf="gameDetails.hasWon; else gameContent">You win!</div>
 
   <ng-template #gameContent>
     <div class="row category-row">

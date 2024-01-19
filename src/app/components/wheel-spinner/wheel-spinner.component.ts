@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { PuzzleService } from '../../services/puzzle/puzzle.service';
 import { SpinnerEnum } from '../../enums/spinner-enum';

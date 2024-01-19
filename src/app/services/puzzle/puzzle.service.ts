@@ -26,5 +26,9 @@ export class PuzzleService {
     return array.filter(str => str !== ' ').join('');
   }
 
+  convertStringToArray(str: string): string[] {
+    return str.split('');
+  }
+
 
 }
