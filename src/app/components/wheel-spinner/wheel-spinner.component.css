@@ -171,6 +171,26 @@
 
 @media screen and (max-width: 700px) {
   /* --- CONTAINERS --- */
+  .wheel-spinner-cont {
+    margin-top: 0px;
+  }
+
+  .wheel-sec {
+    min-height: 0px;
+  }
+
+  .control-sec {
+    min-height: 100px;
+  }
+
+  .input-section {
+    align-items: flex-start;
+  }
+
+  .wheel-wrapper {
+    width: 60%;
+    margin-right: 0px;
+  }
 
   /* --- TEXT --- */
 
@@ -181,6 +201,26 @@
 
 @media screen and (max-width: 393px) {
   /* --- CONTAINERS --- */
+  .wheel-spinner-cont {
+    margin-top: 0px;
+  }
+
+  .wheel-sec {
+    min-height: 0px;
+  }
+
+  .control-sec {
+    min-height: 100px;
+  }
+
+  .input-section {
+    align-items: flex-start;
+  }
+
+  .wheel-wrapper {
+    width: 60%;
+    margin-right: 0px;
+  }
 
   /* --- TEXT --- */
 
@@ -191,6 +231,22 @@
 
 @media screen and (max-width: 390px) {
   /* --- CONTAINERS --- */
+  .wheel-spinner-cont {
+    margin-top: 0px;
+  }
+
+  .wheel-sec {
+    min-height: 0px;
+  }
+
+  .control-sec {
+    min-height: 100px;
+  }
+
+  .input-section {
+    align-items: flex-start;
+  }
+
   .wheel-wrapper {
     width: 60%;
     margin-right: 0px;

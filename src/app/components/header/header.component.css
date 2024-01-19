@@ -93,6 +93,9 @@
   /* --- TEXT --- */
 
   /* --- IMAGES/ICONS --- */
+  .header-img-txt {
+    width: 60%;
+  }
 
   /* --- BUTTONS --- */
 }
@@ -103,6 +106,9 @@
   /* --- TEXT --- */
 
   /* --- IMAGES/ICONS --- */
+  .header-img-txt {
+    width: 60%;
+  }
 
   /* --- BUTTONS --- */
 }
@@ -119,8 +125,7 @@
   }
 
   .header-img-txt {
-    width: 50%;
-    padding: 10px;
+    width: 60%;
   }
 
   /* --- BUTTONS --- */
@@ -132,6 +137,9 @@
   /* --- TEXT --- */
 
   /* --- IMAGES/ICONS --- */
+  .header-img-txt {
+    width: 60%;
+  }
 
   /* --- BUTTONS --- */
 }
