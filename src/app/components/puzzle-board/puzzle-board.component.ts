@@ -42,17 +42,10 @@ export class PuzzleBoardComponent implements OnInit, OnChanges {
 
   createPuzzleLetterArray() {
     if (this.gameDetails && this.gameDetails.puzzleValue && this.gameDetails.puzzleValue.length > 0) {
-      const emptyArray: string[] = [];
-      for (let i = 0; i < this.gameDetails.puzzleValue.length; i++) {
-        if (this.gameDetails.puzzleValue[i] !== ' ') {
-          emptyArray.push('_');
-        } else {
-          emptyArray.push('  ');
-        }
-      }
+      const emptyArr = this.puzzleService.createPuzzleLetterArray(this.gameDetails.puzzleValue);
       this.setGameDetails({
         ...this.gameDetails,
-        emptyPuzzleLetterArray: emptyArray,
+        emptyPuzzleLetterArray: emptyArr,
       });
     }
   }

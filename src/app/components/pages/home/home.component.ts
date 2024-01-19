@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit, OnDestroy, OnChanges {
     this.apiService.getPuzzles().subscribe(puzzles => {
       if (puzzles && puzzles.length > 0) {
         this.allPuzzles = puzzles;
-        this.setCurrentPuzzle();
+        this.setInitialPuzzle();
         this.updateGameDetails();
       }
     });
@@ -50,31 +50,15 @@ export class HomeComponent implements OnInit, OnDestroy, OnChanges {
     this.puzzleService.setGameDetails(this.gameDetails);
   }
 
-  setCurrentPuzzle() {
+  setInitialPuzzle() {
     if (this.allPuzzles.length > 0) {
-      if (this.availablePuzzles.length === 0 && this.usedPuzzles.length === 0) {
-        this.allPuzzles.forEach(puzzle => {
-          this.availablePuzzles.push(puzzle);
-        });
-      } else {
-        this.allPuzzles.forEach(puzzle => {
-          if (!this.usedPuzzles.includes(puzzle.id as string)) {
-            this.availablePuzzles.push(puzzle);
-          }
-        });
-      }
-      const randomIndex = Math.floor(Math.random() * this.availablePuzzles.length);
-      const randomPuzzle = this.availablePuzzles[randomIndex];
+      const randomIndex = Math.floor(Math.random() * this.allPuzzles.length);
+      const randomPuzzle = this.allPuzzles[randomIndex];
       const puzzleId: string = randomPuzzle.id as string;
-
+      const filteredPuzzles = this.allPuzzles.filter(puzzle => puzzle.id !== puzzleId);
       this.currentPuzzle = randomPuzzle;
+      this.availablePuzzles = filteredPuzzles;
       this.usedPuzzles.push(puzzleId);
-
-      console.log('allPuzzles: ', this.allPuzzles);
-      console.log('availablePuzzles: ', this.availablePuzzles);
-      console.log('randomPuzzle: ', randomPuzzle)
-      console.log('puzzleId: ', puzzleId);
-      console.log('usedPuzzles: ', this.usedPuzzles);
     }
   }
 
@@ -98,7 +82,11 @@ export class HomeComponent implements OnInit, OnDestroy, OnChanges {
         answerString: this.puzzleService.convertArrayToString(puzzValArr),
         puzzleCategory: this.currentPuzzle.category,
         puzzleValue: this.currentPuzzle.puzzle,
-        usedPuzzles: this.usedPuzzles
+        usedPuzzles: this.usedPuzzles,
+        availablePuzzles: this.availablePuzzles,
+        currentPuzzle: this.currentPuzzle,
+        allPuzzles: this.allPuzzles,
+        startNewGame: false
       });
     }
   }

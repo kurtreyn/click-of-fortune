@@ -7,6 +7,7 @@ export interface IGame {
     activePuzzle?: IPuzzle;
     availablePuzzles?: IPuzzle[];
     usedPuzzles?: string[];
+    currentPuzzle?: IPuzzle;
     solvedPuzzles?: IPuzzle[];
     emptyPuzzleLetterArray?: string[];
     newPuzzle?: IPuzzle[];

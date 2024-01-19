@@ -80,7 +80,7 @@ export class WheelSpinnerComponent implements OnInit, OnDestroy {
           this.spinActive = false;
           this.setScore();
           this.updateGameDetails();
-        }, 2000);
+        }, 400);
       } else {
         this.hasSpun ? alert('Guess a letter before spinning again') : alert('No more spins available');
       }

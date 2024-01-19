@@ -1,23 +1,19 @@
 <section class="puzzle-board-cont">
-  <div *ngIf="gameDetails.hasWon; else gameContent">You win!</div>
-
-  <ng-template #gameContent>
-    <div class="row category-row">
-      <span class="category-label"
-        >Category: &nbsp;
-        <span class="category-value">{{ gameDetails.puzzleCategory }}</span>
-      </span>
+  <div class="row category-row">
+    <span class="category-label"
+      >Category: &nbsp;
+      <span class="category-value">{{ gameDetails.puzzleCategory }}</span>
+    </span>
+  </div>
+  <div class="row puzzle-row">
+    <div
+      *ngFor="let letter of gameDetails.emptyPuzzleLetterArray; let i = index"
+      [ngClass]="{
+        'letter-wrapper': letter !== '  ',
+        'empty-wrapper': letter === '  '
+      }"
+    >
+      <span>{{ letter }}</span>
     </div>
-    <div class="row puzzle-row">
-      <div
-        *ngFor="let letter of gameDetails.emptyPuzzleLetterArray; let i = index"
-        [ngClass]="{
-          'letter-wrapper': letter !== '  ',
-          'empty-wrapper': letter === '  '
-        }"
-      >
-        <span>{{ letter }}</span>
-      </div>
-    </div>
-  </ng-template>
+  </div>
 </section>
