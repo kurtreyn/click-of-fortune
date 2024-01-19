@@ -36,10 +36,18 @@ export class PuzzleService {
       if (puzzleValue[i] !== ' ') {
         emptyArray.push('_');
       } else {
-        emptyArray.push('  ');
+        emptyArray.push(' ');
       }
     }
     return emptyArray;
+  }
+
+  createNoSpaceStrFromArr(arr: string[]): string {
+    return arr.filter(str => str !== ' ').join('');
+  }
+
+  createNoSpaceArrFromString(str: string): string[] {
+    return str.split('').filter(char => char !== ' ');
   }
 
 

@@ -22,6 +22,7 @@ export class InputFormComponent implements OnInit, OnDestroy {
   usedPuzzles: string[] = [];
   guessCount: number = 0;
   newGame: boolean = false;
+  totalScore: number = 0;
 
   constructor(private formBuilder: FormBuilder, private puzzleService: PuzzleService) {
   }
@@ -68,14 +69,16 @@ export class InputFormComponent implements OnInit, OnDestroy {
   }
 
   startNewGame() {
+    console.log('STARTING NEW GAME');
     if (this.availablePuzzles.length > 0) {
       this.updateAvailablePuzzles();
       const randomIndex = Math.floor(Math.random() * this.availablePuzzles.length);
       const randomPuzzle = this.availablePuzzles[randomIndex];
       const puzzleId: string = randomPuzzle.id as string;
       const emptyArr = this.puzzleService.createMaksedPuzzleArr(randomPuzzle.puzzle);
-      const answerKey = this.puzzleService.convertStringToArray(randomPuzzle.puzzle);
-      const answerString = this.puzzleService.convertArrayToString(answerKey);
+      const answerArr = this.puzzleService.createNoSpaceArrFromString(randomPuzzle.puzzle);
+      const answerString = this.puzzleService.createNoSpaceStrFromArr(answerArr);
+      const puzzVal = randomPuzzle.puzzle;
       this.currentPuzzle = randomPuzzle;
       this.guessedLetters = [];
       this.correctGuesses = [];
@@ -91,16 +94,18 @@ export class InputFormComponent implements OnInit, OnDestroy {
         availablePuzzles: this.availablePuzzles,
         usedPuzzles: this.usedPuzzles,
         maskedPuzzleArr: emptyArr,
+        indexRefArr: this.puzzleService.convertStringToArray(puzzVal),
         guessCount: this.guessCount,
+        correctGuessedString: '',
         canGuess: false,
         hasSpun: false,
         spinActive: false,
         spinValue: 0,
         spinCount: 0,
         spinDisabled: false,
-        maxGuess: answerKey.length,
-        answerKey: answerKey,
-        answerLength: answerKey.length,
+        maxGuess: answerArr.length,
+        answerArr: answerArr,
+        answerLength: answerArr.length,
         answerString: answerString,
         puzzleCategory: this.currentPuzzle.category,
         puzzleValue: this.currentPuzzle.puzzle,
@@ -113,64 +118,57 @@ export class InputFormComponent implements OnInit, OnDestroy {
   }
 
 
+  checkGameStatus() {
+    if (this.gameDetails && this.gameDetails.guessCount && this.gameDetails.maxGuess && this.gameDetails.answerArr && this.gameDetails.answerArr.length > 0 && this.gameDetails.maskedPuzzleArr && this.gameDetails.maskedPuzzleArr.length > 0) {
+      let hasWon = false;
+      let hasLost = false;
+      let totalScore = 0;
+      let answerKey = this.gameDetails.answerString
+      let startNewGame = this.gameDetails.startNewGame || false;
+      let correctGuessStrNoSpaces = this.puzzleService.createNoSpaceStrFromArr(this.gameDetails.maskedPuzzleArr);
 
-  updateEmptyPuzzleLetterArray(letter: string) {
-    if (this.gameDetails && this.gameDetails.answerKey && this.gameDetails.answerKey.length > 0) {
-      let answArr = this.gameDetails.answerKey;
-      let emptyArr = this.gameDetails.maskedPuzzleArr || [];
+      if (this.gameDetails.score) {
+        this.totalScore += this.gameDetails.score;
+      }
 
-      for (let i = 0; i < answArr.length; i++) {
-        if (answArr[i] === letter) {
-          emptyArr[i] = letter;
+      if (this.gameDetails.guessCount <= this.gameDetails.maxGuess && answerKey === correctGuessStrNoSpaces) {
+        hasWon = true;
+        hasLost = false;
+        startNewGame = true;
+        alert("You won!");
+      }
+
+      if (this.gameDetails.guessCount === this.gameDetails.maxGuess) {
+        if (answerKey === correctGuessStrNoSpaces) {
+          hasWon = true;
+          hasLost = false;
+          startNewGame = true;
+          alert("You won!");
+        } else if (answerKey !== correctGuessStrNoSpaces && this.gameDetails.guessCount === this.gameDetails.maxGuess) {
+          hasWon = false;
+          hasLost = true;
+          startNewGame = true;
+          alert("Sorry, you lost");
+        } else {
+          hasWon = false;
+          hasLost = true;
+          startNewGame = true;
+          alert("Sorry, you lost");
         }
       }
 
       this.setGameDetails({
         ...this.gameDetails,
-        maskedPuzzleArr: emptyArr,
+        hasWon: hasWon,
+        hasLost: hasLost,
+        startNewGame: startNewGame,
+        totalScore: this.totalScore
       });
-    }
-  }
 
+      console.log('hasWon: ', hasWon);
 
-  checkGameStatus() {
-    if (this.gameDetails && this.gameDetails.guessCount && this.gameDetails.maxGuess && this.gameDetails.answerKey && this.gameDetails.answerKey.length > 0 && this.gameDetails.maskedPuzzleArr && this.gameDetails.maskedPuzzleArr.length > 0) {
-      if (this.gameDetails.guessCount === this.gameDetails.maxGuess) {
-        let hasWon = false;
-        let hasLost = false;
-        let totalScore = this.gameDetails.score || 0;
-        let answerKey = this.gameDetails.answerString
-        let valueString = this.puzzleService.convertArrayToString(this.gameDetails.maskedPuzzleArr);
-        let startNewGame = this.gameDetails.startNewGame || false;
-
-        if (answerKey === valueString) {
-          hasWon = true;
-          hasLost = false;
-          startNewGame = true;
-          alert('You won!');
-        } else if (answerKey !== valueString && this.gameDetails.guessCount === this.gameDetails.maxGuess) {
-          hasWon = false;
-          hasLost = true;
-          startNewGame = true;
-          alert('Sorry, you lost!');
-        } else {
-          hasWon = false;
-          hasLost = true;
-          startNewGame = true;
-          alert('Sorry, you lost!');
-        }
-
-        if (startNewGame) {
-          this.startNewGame();
-        }
-
-        this.setGameDetails({
-          ...this.gameDetails,
-          hasWon: hasWon,
-          hasLost: hasLost,
-          startNewGame: startNewGame,
-          totalScore: totalScore,
-        });
+      if (startNewGame) {
+        this.startNewGame();
       }
     }
   }
@@ -192,20 +190,22 @@ export class InputFormComponent implements OnInit, OnDestroy {
       }
       let correctLetter;
       let currentEmptyArr = this.gameDetails.maskedPuzzleArr || [];
-      let answArr = this.gameDetails.answerKey || [];
       const newEmptyArr = [...currentEmptyArr];
+      let indexRefArr = this.gameDetails.indexRefArr || [];
       let canGuess = false;
       let hasSpun = false;
+      let correctGuessedString;
 
 
-      if (this.gameDetails.answerKey) {
-        for (let i = 0; i < answArr.length; i++) {
-          if (answArr[i] === this.letter) {
+      if (this.gameDetails.indexRefArr) {
+        for (let i = 0; i < indexRefArr.length; i++) {
+          if (indexRefArr[i] === this.letter) {
             newEmptyArr[i] = this.letter;
+            correctGuessedString = this.puzzleService.convertArrayToString(newEmptyArr);
           }
         }
       }
-      if (this.gameDetails.answerKey?.includes(this.letter)) {
+      if (this.gameDetails.answerArr?.includes(this.letter)) {
         correctLetter = this.letter;
         this.correctGuesses.push(correctLetter);
       }
@@ -224,6 +224,7 @@ export class InputFormComponent implements OnInit, OnDestroy {
         canGuess: canGuess,
         hasSpun: hasSpun,
         maskedPuzzleArr: newEmptyArr,
+        correctGuessedString: correctGuessedString,
       });
     } else {
       if (this.gameDetails.hasSpun === false) {
@@ -235,6 +236,6 @@ export class InputFormComponent implements OnInit, OnDestroy {
 
     setTimeout(() => {
       this.checkGameStatus();
-    }, 200);
+    }, 400);
   }
 }

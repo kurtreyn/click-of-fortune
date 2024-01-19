@@ -74,7 +74,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.setGameDetails({
         ...this.gameDetails,
         maxSpins: maxSpins,
-        answerKey: puzzValArr,
+        answerArr: puzzValArr,
+        indexRefArr: this.puzzleService.convertStringToArray(puzzVal),
         answerLength: puzzValArr.length,
         maxGuess: puzzValArr.length,
         answerString: this.puzzleService.convertArrayToString(puzzValArr),

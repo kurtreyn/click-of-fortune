@@ -10,6 +10,7 @@ export interface IGame {
     currentPuzzle?: IPuzzle;
     solvedPuzzles?: IPuzzle[];
     maskedPuzzleArr?: string[];
+    indexRefArr?: string[];
     newPuzzle?: IPuzzle[];
     isEmpty?: boolean;
     puzzleId?: string;
@@ -23,7 +24,7 @@ export interface IGame {
     score?: number;
     totalScore?: number;
     inputValues?: { letter: string };
-    answerKey?: string[];
+    answerArr?: string[];
     answerLength?: number;
     answerString?: string;
     correctGuessedLetters?: string[];

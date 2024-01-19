@@ -9,7 +9,7 @@
     <div class="col total-score-col">
       <span class="total-score-label"
         >Total Score: &nbsp;
-        <span class="total-score-value">{{ gameDetails.totalScore || 0 }}</span>
+        <span class="total-score-value">{{ gameDetails.totalScore }}</span>
       </span>
     </div>
   </div>
@@ -17,8 +17,8 @@
     <div
       *ngFor="let letter of gameDetails.maskedPuzzleArr; let i = index"
       [ngClass]="{
-        'letter-wrapper': letter !== '  ',
-        'empty-wrapper': letter === '  '
+        'letter-wrapper': letter !== ' ',
+        'empty-wrapper': letter === ' '
       }"
     >
       <span>{{ letter }}</span>
