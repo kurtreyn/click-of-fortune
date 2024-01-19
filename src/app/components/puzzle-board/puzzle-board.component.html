@@ -17,8 +17,8 @@
     <div
       *ngFor="let letter of gameDetails.maskedPuzzleArr; let i = index"
       [ngClass]="{
-        'letter-wrapper': letter !== '  ',
-        'empty-wrapper': letter === '  '
+        'letter-wrapper': letter !== ' ',
+        'empty-wrapper': letter === ' '
       }"
     >
       <span>{{ letter }}</span>

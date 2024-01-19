@@ -315,6 +315,16 @@ export const puzzleData = [
         id: "62",
         category: "test one",
         puzzle: "no no"
+    },
+    {
+        id: "63",
+        category: "test one",
+        puzzle: "ao ao"
+    },
+    {
+        id: "64",
+        category: "test one",
+        puzzle: "bo bo"
     }
 
 ]
