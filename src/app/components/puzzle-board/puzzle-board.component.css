@@ -9,11 +9,27 @@
   /* outline: solid 1px red; */
 }
 
-.category-row {
+.category-top-score-row {
   display: flex;
   justify-content: flex-start;
   margin-bottom: 2rem;
   /* outline: solid 1px blue; */
+}
+
+.category-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  /* outline: solid 1px red; */
+}
+
+.total-score-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  /* outline: solid 1px red; */
 }
 
 .puzzle-row {
@@ -49,6 +65,18 @@
 }
 
 .category-value {
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.total-score-label {
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.total-score-value {
   font-size: 1.1rem;
   font-weight: 500;
   text-transform: capitalize;

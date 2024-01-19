@@ -28,9 +28,9 @@ export class PuzzleBoardComponent implements OnInit, OnChanges {
       takeUntil(this.destroy$)
     ).subscribe(details => {
       this.gameDetails = details;
+      console.log("GAME DETAILS: ", this.gameDetails)
     });
-    this.createPuzzleLetterArray();
-
+    this.createMaksedPuzzleArr();
   }
 
   setGameDetails(details: IGame) {
@@ -39,12 +39,12 @@ export class PuzzleBoardComponent implements OnInit, OnChanges {
   }
 
 
-  createPuzzleLetterArray() {
+  createMaksedPuzzleArr() {
     if (this.gameDetails && this.gameDetails.puzzleValue && this.gameDetails.puzzleValue.length > 0) {
-      const emptyArr = this.puzzleService.createPuzzleLetterArray(this.gameDetails.puzzleValue);
+      const emptyArr = this.puzzleService.createMaksedPuzzleArr(this.gameDetails.puzzleValue);
       this.setGameDetails({
         ...this.gameDetails,
-        emptyPuzzleLetterArray: emptyArr,
+        maskedPuzzleArr: emptyArr,
       });
     }
   }

@@ -42,7 +42,6 @@ export class WheelSpinnerComponent implements OnInit, OnDestroy {
       // console.log('WHEEL hasSpun: ', details.hasSpun)
       // console.log('WHEEL canGuess: ', details.canGuess)
     });
-    // console.log('gameDetails: ', this.gameDetails)
   }
 
   setGameDetails(details: IGame) {
@@ -52,11 +51,7 @@ export class WheelSpinnerComponent implements OnInit, OnDestroy {
 
   spinWheel() {
     if (this.gameDetails) {
-      console.log('!hasSpun: ', !this.gameDetails.hasSpun)
-      console.log('!spinDisabled: ', !this.gameDetails.spinDisabled)
       if (!this.gameDetails.spinDisabled && !this.gameDetails.hasSpun) {
-        console.log('2 !hasSpun: ', !this.gameDetails.hasSpun)
-        console.log('2 !spinDisabled: ', !this.gameDetails.spinDisabled)
         this.gameDetails.spinActive = true;
         const spinVal = this.puzzleService.genRandomNum(1, 6);
         switch (spinVal) {
