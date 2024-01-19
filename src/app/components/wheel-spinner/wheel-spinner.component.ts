@@ -1,7 +1,8 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { PuzzleService } from '../../services/puzzle/puzzle.service';
 import { SpinnerEnum } from '../../enums/spinner-enum';
+import { IGame } from '../../models/IGame';
 
 @Component({
   selector: 'app-wheel-spinner',
@@ -9,137 +10,116 @@ import { SpinnerEnum } from '../../enums/spinner-enum';
   styleUrls: ['./wheel-spinner.component.css']
 })
 export class WheelSpinnerComponent implements OnInit, OnDestroy {
-  spinActive: boolean = false;
-  spinnerEnum = SpinnerEnum;
-  spinnerValue: number = SpinnerEnum.ONE;
-  score: number = 0;
-  letter: string = '';
-  solvePuzzle: string = '';
-  @Input() puzzleValue!: string;
-  guessedLetters: string[] = [];
-  wheelMaxSpinCount: number = 5;
-  wheelSpinCount: number = 0;
-  globalSpinCount: number = 0;
-  wheelSpinnerDisabled: boolean = false;
+  subscription!: Subject<boolean>;
   destroy$: Subject<boolean> = new Subject<boolean>();
+  gameDetails: IGame = {} as IGame;
+  spinnerEnum = SpinnerEnum;
+  spinValue: number = SpinnerEnum.ONE;
+  score: number = 0;
+  spinCount: number = 0;
+  spinActive: boolean = false;
+  hasSpun: boolean = false;
+  canGuess: boolean = false;
 
   constructor(private puzzleService: PuzzleService) { }
 
   ngOnInit(): void {
-    this.getInputValues();
-    this.getMaxSpinCount();
-    this.getSpinCount();
-    // console.log("WHEEL globalSpinCount: ", this.globalSpinCount);
+    this.loadGameDetails();
+
   }
 
   ngOnDestroy(): void {
     this.destroy$.next(true);
   }
 
-  public spinWheel() {
-    if (!this.wheelSpinnerDisabled) {
-      this.spinActive = true;
-      const spinVal = this.getSpinValue(1, 6);
-      switch (spinVal) {
-        case 1:
-          this.setSpinnerValue(SpinnerEnum.ONE);
-          break;
-        case 2:
-          this.setSpinnerValue(SpinnerEnum.TWO);
-          break;
-        case 3:
-          this.setSpinnerValue(SpinnerEnum.THREE);
-          break;
-        case 4:
-          this.setSpinnerValue(SpinnerEnum.FOUR);
-          break;
-        case 5:
-          this.setSpinnerValue(SpinnerEnum.FIVE);
-          break;
-        case 6:
-          this.setSpinnerValue(SpinnerEnum.BANKRUPT);
-          break;
-        default:
-          break;
-      }
-      this.wheelSpinCount++;
-      this.setSpinCount(this.wheelSpinCount);
-      setTimeout(() => {
-        this.spinActive = false;
-        this.setScore();
+  loadGameDetails() {
+    this.puzzleService.gameDetails$.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(details => {
+      this.gameDetails = details;
+    });
+    // console.log('gameDetails: ', this.gameDetails)
+  }
 
-        // console.log('this.spinnerValue: ', this.spinnerValue);
-        // console.log('this.score: ', this.score);
-      }, 2000);
-    } else {
-      alert('You have no more spins left!');
+  setGameDetails(details: IGame) {
+    this.gameDetails = details;
+    this.puzzleService.setGameDetails(this.gameDetails);
+  }
+
+  spinWheel() {
+    if (this.gameDetails) {
+      if (!this.gameDetails.spinDisabled && !this.gameDetails.hasSpun) {
+        this.gameDetails.spinActive = true;
+        const spinVal = this.puzzleService.genRandomNum(1, 6);
+        switch (spinVal) {
+          case 1:
+            this.setSpinValue(SpinnerEnum.ONE);
+            break;
+          case 2:
+            this.setSpinValue(SpinnerEnum.TWO);
+            break;
+          case 3:
+            this.setSpinValue(SpinnerEnum.THREE);
+            break;
+          case 4:
+            this.setSpinValue(SpinnerEnum.FOUR);
+            break;
+          case 5:
+            this.setSpinValue(SpinnerEnum.FIVE);
+            break;
+          case 6:
+            this.setSpinValue(SpinnerEnum.BANKRUPT);
+            break;
+          default:
+            break;
+        }
+        this.spinCount++;
+        this.hasSpun = true;
+        this.canGuess = true;
+        setTimeout(() => {
+          this.spinActive = false;
+          this.setScore();
+          this.updateGameDetails();
+        }, 400);
+      } else {
+        this.hasSpun ? alert('Guess a letter before spinning again') : alert('No more spins available');
+      }
     }
   }
 
-  getSpinValue(min: number, max: number): number {
-    return this.puzzleService.getRandomNumber(min, max);
-  }
-
-  getSpinCount() {
-    this.puzzleService.spinCount$.pipe(
-      takeUntil(this.destroy$)
-    ).subscribe(count => {
-      this.globalSpinCount = count;
-    });
-  }
-
-  setSpinnerValue(value: number) {
-    this.spinnerValue = value;
-  }
 
   setScore() {
-    if (this.spinnerValue !== SpinnerEnum.BANKRUPT) {
-      this.score += this.spinnerValue;
+    if (this.spinValue !== SpinnerEnum.BANKRUPT) {
+      this.score += this.spinValue;
     } else {
       this.score = 0;
     }
-    this.puzzleService.setScore(this.score);
   }
 
-  setSpinCount(count: number) {
-    // console.log('WHEEL count: ', count)
-    this.puzzleService.setSpinCount(count);
+  setSpinValue(value: number) {
+    this.spinValue = value;
   }
 
-  getInputValues() {
-    this.puzzleService.inputFormValues$.pipe(
-      takeUntil(this.destroy$)
-    ).subscribe(values => {
-      let letter = values.letter;
-      let solvePuzzle = values.solvePuzzle;
-      if (letter !== '') {
-        this.guessedLetters.push(letter);
-      }
-    });
-  }
-
-  getMaxSpinCount() {
-    this.puzzleService.maxSpinCount$.pipe(
-      takeUntil(this.destroy$)
-    ).subscribe(max => {
-      this.wheelMaxSpinCount = max;
-    });
-  }
-
-  disableSpinner() {
-    if (this.wheelSpinCount >= this.wheelMaxSpinCount) {
-      this.wheelSpinnerDisabled = true;
-      this.puzzleService.setSpinDisabled(true);
+  updateGameDetails() {
+    if (this.gameDetails && this.gameDetails.maxSpins) {
+      this.setGameDetails({
+        ...this.gameDetails,
+        spinCount: this.spinCount,
+        spinValue: this.spinValue,
+        score: this.score,
+        spinActive: this.spinActive,
+        hasSpun: this.hasSpun,
+        spinDisabled: this.spinCount >= this.gameDetails.maxSpins ? true : false,
+        canGuess: this.canGuess
+      });
     }
   }
 
-  checkSpinDisabled() {
-    this.puzzleService.spinDisabled$.pipe(
-      takeUntil(this.destroy$)
-    ).subscribe(disabled => {
-      this.wheelSpinnerDisabled = disabled;
-    });
-  }
+
+
+
+
+
 
 
 
