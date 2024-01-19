@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Subscription, Subject, takeUntil } from 'rxjs';
 import { PuzzleService } from '../../services/puzzle/puzzle.service';
@@ -38,13 +38,6 @@ export class InputFormComponent implements OnInit, OnDestroy {
     this.destroy$.next(true);
   }
 
-  @HostListener('document:keydown', ['$event'])
-  handleKeyboardEvent(event: KeyboardEvent) {
-    if (event.key === 'Enter') {
-      this.handleSubmit();
-    }
-  }
-
   createForm() {
     this.inputForm = this.formBuilder.group({
       letter: new FormControl('', [Validators.required]),
@@ -56,11 +49,12 @@ export class InputFormComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$)
     ).subscribe(details => {
       this.gameDetails = details;
-      this.availablePuzzles = this.gameDetails.availablePuzzles || [];
-      this.usedPuzzles = this.gameDetails.usedPuzzles || [];
-      this.newGame = this.gameDetails.startNewGame || false;
+      this.availablePuzzles = details.availablePuzzles || [];
+      this.usedPuzzles = details.usedPuzzles || [];
+      this.newGame = details.startNewGame || false;
+      console.log('INPUT hasSpun: ', details.hasSpun)
+      console.log('INPUT canGuess: ', details.canGuess)
     });
-    console.log('INPUT gameDetails: ', this.gameDetails)
   }
 
   setGameDetails(details: IGame) {
@@ -82,7 +76,12 @@ export class InputFormComponent implements OnInit, OnDestroy {
       const randomPuzzle = this.availablePuzzles[randomIndex];
       const puzzleId: string = randomPuzzle.id as string;
       const emptyArr = this.puzzleService.createPuzzleLetterArray(randomPuzzle.puzzle);
+      const answerKey = this.puzzleService.convertStringToArray(randomPuzzle.puzzle);
+      const answerString = this.puzzleService.convertArrayToString(answerKey);
       this.currentPuzzle = randomPuzzle;
+      this.guessedLetters = [];
+      this.correctGuesses = [];
+      this.guessCount = 0;
       this.usedPuzzles.push(puzzleId);
 
       this.setGameDetails({
@@ -94,21 +93,23 @@ export class InputFormComponent implements OnInit, OnDestroy {
         availablePuzzles: this.availablePuzzles,
         usedPuzzles: this.usedPuzzles,
         emptyPuzzleLetterArray: emptyArr,
-        guessCount: 0,
+        guessCount: this.guessCount,
         canGuess: false,
         hasSpun: false,
         spinActive: false,
         spinValue: 0,
+        spinCount: 0,
         spinDisabled: false,
-        guessMax: this.currentPuzzle.puzzle.length,
-        answerKey: this.currentPuzzle.puzzle.split(''),
-        answerLength: this.currentPuzzle.puzzle.length,
-        answerString: this.puzzleService.convertArrayToString(this.currentPuzzle.puzzle.split('')),
+        maxGuess: answerKey.length,
+        answerKey: answerKey,
+        answerLength: answerKey.length,
+        answerString: answerString,
         puzzleCategory: this.currentPuzzle.category,
         puzzleValue: this.currentPuzzle.puzzle,
-        correctGuessedLetters: [],
-        allGuessedLetters: [],
+        correctGuessedLetters: this.correctGuesses,
+        allGuessedLetters: this.guessedLetters,
         score: 0,
+        inputValues: { letter: '' },
       });
     }
   }
@@ -135,8 +136,8 @@ export class InputFormComponent implements OnInit, OnDestroy {
 
 
   checkGameStatus() {
-    if (this.gameDetails && this.gameDetails.guessCount && this.gameDetails.guessMax && this.gameDetails.answerKey && this.gameDetails.answerKey.length > 0 && this.gameDetails.emptyPuzzleLetterArray && this.gameDetails.emptyPuzzleLetterArray.length > 0) {
-      if (this.gameDetails.guessCount === this.gameDetails.guessMax) {
+    if (this.gameDetails && this.gameDetails.guessCount && this.gameDetails.maxGuess && this.gameDetails.answerKey && this.gameDetails.answerKey.length > 0 && this.gameDetails.emptyPuzzleLetterArray && this.gameDetails.emptyPuzzleLetterArray.length > 0) {
+      if (this.gameDetails.guessCount === this.gameDetails.maxGuess) {
         let hasWon = false;
         let hasLost = false;
         let totalScore = this.gameDetails.score || 0;
@@ -149,7 +150,7 @@ export class InputFormComponent implements OnInit, OnDestroy {
           hasLost = false;
           startNewGame = true;
           alert('You won!');
-        } else if (answerKey !== valueString && this.gameDetails.guessCount === this.gameDetails.guessMax) {
+        } else if (answerKey !== valueString && this.gameDetails.guessCount === this.gameDetails.maxGuess) {
           hasWon = false;
           hasLost = true;
           startNewGame = true;
@@ -180,22 +181,24 @@ export class InputFormComponent implements OnInit, OnDestroy {
   handleSubmit() {
     if (this.inputForm.valid && this.gameDetails.hasSpun && this.gameDetails.canGuess) {
       this.letter = this.inputForm.value.letter;
-      this.guessCount++;
+
       if (this.letter !== '' || this.letter !== null) {
         if (this.guessedLetters.includes(this.letter)) {
-          alert(`You've already guessed ${this.letter.toUpperCase}!`)
+          alert(`You've already guessed ${this.letter.toUpperCase()}`)
           this.inputForm.reset();
           return;
         } else {
           this.guessedLetters.push(this.letter);
+          this.guessCount++;
         }
       }
       let correctLetter;
       let currentEmptyArr = this.gameDetails.emptyPuzzleLetterArray || [];
       let answArr = this.gameDetails.answerKey || [];
       const newEmptyArr = [...currentEmptyArr];
-      let canGuess = !this.gameDetails.canGuess;
-      let hasSpun = !this.gameDetails.hasSpun;
+      let canGuess = false;
+      let hasSpun = false;
+
 
       if (this.gameDetails.answerKey) {
         for (let i = 0; i < answArr.length; i++) {
@@ -208,8 +211,8 @@ export class InputFormComponent implements OnInit, OnDestroy {
         correctLetter = this.letter;
         this.correctGuesses.push(correctLetter);
       }
-      if (this.gameDetails.guessMax) {
-        if (this.guessCount >= this.gameDetails.guessMax) {
+      if (this.gameDetails.maxGuess) {
+        if (this.guessCount >= this.gameDetails.maxGuess) {
           canGuess = false;
         }
       }
@@ -225,13 +228,16 @@ export class InputFormComponent implements OnInit, OnDestroy {
         emptyPuzzleLetterArray: newEmptyArr,
       });
     } else {
-      alert('Spin the wheel before guessing a letter')
+      if (this.gameDetails.hasSpun === false) {
+        // console.log('handleSubmit hasSpun ', this.gameDetails.hasSpun)
+        alert('Spin the wheel first!');
+      }
     }
 
     this.inputForm.reset();
 
     setTimeout(() => {
       this.checkGameStatus();
-    }, 300);
+    }, 200);
   }
 }

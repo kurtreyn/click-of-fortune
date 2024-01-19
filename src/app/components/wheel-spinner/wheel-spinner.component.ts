@@ -37,6 +37,10 @@ export class WheelSpinnerComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$)
     ).subscribe(details => {
       this.gameDetails = details;
+      this.spinCount = details.spinCount || 0;
+      // console.log('WHEEL spinCount: ', details.spinCount)
+      // console.log('WHEEL hasSpun: ', details.hasSpun)
+      // console.log('WHEEL canGuess: ', details.canGuess)
     });
     // console.log('gameDetails: ', this.gameDetails)
   }
@@ -48,7 +52,11 @@ export class WheelSpinnerComponent implements OnInit, OnDestroy {
 
   spinWheel() {
     if (this.gameDetails) {
+      console.log('!hasSpun: ', !this.gameDetails.hasSpun)
+      console.log('!spinDisabled: ', !this.gameDetails.spinDisabled)
       if (!this.gameDetails.spinDisabled && !this.gameDetails.hasSpun) {
+        console.log('2 !hasSpun: ', !this.gameDetails.hasSpun)
+        console.log('2 !spinDisabled: ', !this.gameDetails.spinDisabled)
         this.gameDetails.spinActive = true;
         const spinVal = this.puzzleService.genRandomNum(1, 6);
         switch (spinVal) {
@@ -81,8 +89,6 @@ export class WheelSpinnerComponent implements OnInit, OnDestroy {
           this.setScore();
           this.updateGameDetails();
         }, 400);
-      } else {
-        this.hasSpun ? alert('Guess a letter before spinning again') : alert('No more spins available');
       }
     }
   }
@@ -102,6 +108,12 @@ export class WheelSpinnerComponent implements OnInit, OnDestroy {
 
   updateGameDetails() {
     if (this.gameDetails && this.gameDetails.maxSpins) {
+      let disabled;
+      if (this.spinCount === this.gameDetails.maxSpins) {
+        disabled = true;
+      } else {
+        disabled = false;
+      }
       this.setGameDetails({
         ...this.gameDetails,
         spinCount: this.spinCount,
@@ -109,7 +121,7 @@ export class WheelSpinnerComponent implements OnInit, OnDestroy {
         score: this.score,
         spinActive: this.spinActive,
         hasSpun: this.hasSpun,
-        spinDisabled: this.spinCount >= this.gameDetails.maxSpins ? true : false,
+        spinDisabled: disabled,
         canGuess: this.canGuess
       });
     }

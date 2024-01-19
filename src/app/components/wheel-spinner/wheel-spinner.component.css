@@ -46,6 +46,7 @@
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-end;
+  min-height: 300px;
   /* width: 100%; */
   /* outline: solid 1px grey; */
 }
@@ -55,7 +56,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 45%;
+  width: 100%;
   padding: 1rem;
   cursor: pointer;
   /* outline: solid 1px orange; */
