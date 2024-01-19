@@ -52,8 +52,6 @@ export class InputFormComponent implements OnInit, OnDestroy {
       this.availablePuzzles = details.availablePuzzles || [];
       this.usedPuzzles = details.usedPuzzles || [];
       this.newGame = details.startNewGame || false;
-      // console.log('INPUT hasSpun: ', details.hasSpun)
-      // console.log('INPUT canGuess: ', details.canGuess)
     });
   }
 

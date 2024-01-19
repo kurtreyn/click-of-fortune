@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy, OnChanges } from '@angular/core';
-import { Subscription, take, Subject, takeUntil } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription, Subject } from 'rxjs';
 
 import { ApiService } from '../../../services/api/api.service';
 import { PuzzleService } from '../../../services/puzzle/puzzle.service';
@@ -11,7 +11,7 @@ import { IPuzzle } from 'src/app/models/IPuzzle';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit, OnDestroy, OnChanges {
+export class HomeComponent implements OnInit, OnDestroy {
   subscription!: Subscription;
   destroy$: Subject<boolean> = new Subject<boolean>();
   allPuzzles: IPuzzle[] = [];
@@ -24,9 +24,6 @@ export class HomeComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnInit() {
     this.loadAllPuzzles();
-  }
-
-  ngOnChanges() {
   }
 
   ngOnDestroy() {

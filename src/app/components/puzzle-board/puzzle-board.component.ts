@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Subscription, Subject, takeUntil } from 'rxjs';
 import { PuzzleService } from 'src/app/services/puzzle/puzzle.service';
 import { IGame } from 'src/app/models/IGame';
@@ -9,7 +9,7 @@ import { IGame } from 'src/app/models/IGame';
   templateUrl: './puzzle-board.component.html',
   styleUrls: ['./puzzle-board.component.css']
 })
-export class PuzzleBoardComponent implements OnInit, OnChanges {
+export class PuzzleBoardComponent implements OnInit {
   subscription!: Subscription;
   destroy$: Subject<boolean> = new Subject<boolean>();
   gameDetails: IGame = {} as IGame;
@@ -20,8 +20,6 @@ export class PuzzleBoardComponent implements OnInit, OnChanges {
     this.loadGameDetails();
   }
 
-  ngOnChanges() {
-  }
 
   loadGameDetails() {
     this.puzzleService.gameDetails$.pipe(
