@@ -18,7 +18,7 @@ export interface IGame {
     puzzleValue?: string;
     maxSpins?: number;
     spinCount?: number;
-    guessMax?: number;
+    maxGuess?: number;
     canGuess?: boolean;
     score?: number;
     totalScore?: number;

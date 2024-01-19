@@ -28,7 +28,6 @@ export class PuzzleBoardComponent implements OnInit, OnChanges {
       takeUntil(this.destroy$)
     ).subscribe(details => {
       this.gameDetails = details;
-      console.log("PUZZLE BOARD: ", this.gameDetails);
     });
     this.createPuzzleLetterArray();
 

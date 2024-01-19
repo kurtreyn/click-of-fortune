@@ -305,5 +305,25 @@ export const puzzleData = [
         id: '60',
         category: "history",
         puzzle: "cold war"
+    },
+    {
+        id: '61',
+        category: "places",
+        puzzle: "on"
+    },
+    {
+        id: '62',
+        category: "places",
+        puzzle: "tw"
+    },
+    {
+        id: '63',
+        category: "places",
+        puzzle: "th"
+    },
+    {
+        id: '64',
+        category: "places",
+        puzzle: "fo"
     }
 ]
