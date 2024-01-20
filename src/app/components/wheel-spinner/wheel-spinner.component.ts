@@ -108,23 +108,15 @@ export class WheelSpinnerComponent implements OnInit, OnDestroy {
       }
       this.setGameDetails({
         ...this.gameDetails,
-        spinCount: this.spinCount,
-        spinValue: this.spinValue,
+        canGuess: this.canGuess,
+        hasSpun: this.hasSpun,
         score: this.score,
         spinActive: this.spinActive,
-        hasSpun: this.hasSpun,
+        spinCount: this.spinCount,
         spinDisabled: disabled,
-        canGuess: this.canGuess
+        spinValue: this.spinValue,
       });
     }
   }
-
-
-
-
-
-
-
-
 
 }
