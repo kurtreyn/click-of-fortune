@@ -64,12 +64,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (this.currentPuzzle) {
       let maxSpins = 0;
       let puzzVal = this.currentPuzzle.puzzle;
-      let puzzValArr = puzzVal.split('');
-      for (let i = 0; i < puzzValArr.length; i++) {
-        if (puzzValArr[i] === ' ') {
-          puzzValArr.splice(i, 1);
-        }
-      }
+      let puzzValArr = this.puzzleService.createNoSpaceArrFromString(puzzVal);
+
       maxSpins = puzzValArr.length;
       this.setGameDetails({
         ...this.gameDetails,
