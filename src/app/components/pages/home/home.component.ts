@@ -73,20 +73,20 @@ export class HomeComponent implements OnInit, OnDestroy {
       maxSpins = puzzValArr.length;
       this.setGameDetails({
         ...this.gameDetails,
-        maxSpins: maxSpins,
+        allPuzzles: this.allPuzzles,
         answerArr: puzzValArr,
-        indexRefArr: this.puzzleService.convertStringToArray(puzzVal),
         answerLength: puzzValArr.length,
-        maxGuess: puzzValArr.length,
-        remainingGuess: puzzValArr.length,
         answerString: this.puzzleService.convertArrayToString(puzzValArr),
-        puzzleCategory: this.currentPuzzle.category,
-        puzzleValue: this.currentPuzzle.puzzle,
-        usedPuzzles: this.usedPuzzles,
         availablePuzzles: this.availablePuzzles,
         currentPuzzle: this.currentPuzzle,
-        allPuzzles: this.allPuzzles,
-        startNewGame: false
+        indexRefArr: this.puzzleService.convertStringToArray(puzzVal),
+        maxGuess: puzzValArr.length,
+        maxSpins: maxSpins,
+        puzzleCategory: this.currentPuzzle.category,
+        puzzleValue: this.currentPuzzle.puzzle,
+        remainingGuess: puzzValArr.length,
+        startNewGame: false,
+        usedPuzzles: this.usedPuzzles,
       });
     }
   }

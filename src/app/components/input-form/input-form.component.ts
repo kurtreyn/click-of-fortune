@@ -79,7 +79,6 @@ export class InputFormComponent implements OnInit, OnDestroy {
       const puzzleId: string = randomPuzzle.id as string;
       const emptyArr = this.puzzleService.createMaksedPuzzleArr(randomPuzzle.puzzle);
       const answerArr = this.puzzleService.createNoSpaceArrFromString(randomPuzzle.puzzle);
-      const answerString = this.puzzleService.createNoSpaceStrFromArr(answerArr);
       const puzzVal = randomPuzzle.puzzle;
       const remainingGuess = answerArr.length;
       this.currentPuzzle = randomPuzzle;
@@ -90,33 +89,33 @@ export class InputFormComponent implements OnInit, OnDestroy {
 
       this.setGameDetails({
         ...this.gameDetails,
-        hasWon: false,
-        hasLost: false,
-        startNewGame: false,
-        currentPuzzle: this.currentPuzzle,
-        availablePuzzles: this.availablePuzzles,
-        usedPuzzles: this.usedPuzzles,
-        maskedPuzzleArr: emptyArr,
-        indexRefArr: this.puzzleService.convertStringToArray(puzzVal),
-        guessCount: this.guessCount,
-        remainingGuess: remainingGuess,
-        correctGuessedString: '',
-        canGuess: false,
-        hasSpun: false,
-        spinActive: false,
-        spinValue: 0,
-        spinCount: 0,
-        spinDisabled: false,
-        maxGuess: answerArr.length,
+        allGuessedLetters: this.guessedLetters,
         answerArr: answerArr,
         answerLength: answerArr.length,
-        answerString: answerString,
+        answerString: this.puzzleService.createNoSpaceStrFromArr(answerArr),
+        availablePuzzles: this.availablePuzzles,
+        canGuess: false,
+        correctGuessedLetters: this.correctGuesses,
+        correctGuessedString: '',
+        currentPuzzle: this.currentPuzzle,
+        guessCount: this.guessCount,
+        hasLost: false,
+        hasSpun: false,
+        hasWon: false,
+        indexRefArr: this.puzzleService.convertStringToArray(puzzVal),
+        inputValues: { letter: '' },
+        maskedPuzzleArr: emptyArr,
+        maxGuess: answerArr.length,
         puzzleCategory: this.currentPuzzle.category,
         puzzleValue: this.currentPuzzle.puzzle,
-        correctGuessedLetters: this.correctGuesses,
-        allGuessedLetters: this.guessedLetters,
+        remainingGuess: remainingGuess,
         score: 0,
-        inputValues: { letter: '' },
+        spinActive: false,
+        spinCount: 0,
+        spinDisabled: false,
+        spinValue: 0,
+        startNewGame: false,
+        usedPuzzles: this.usedPuzzles,
       });
     }
   }
@@ -158,13 +157,11 @@ export class InputFormComponent implements OnInit, OnDestroy {
 
       this.setGameDetails({
         ...this.gameDetails,
-        hasWon: hasWon,
         hasLost: hasLost,
+        hasWon: hasWon,
         startNewGame: startNewGame,
         totalScore: this.totalScore
       });
-
-      console.log('hasWon: ', hasWon);
 
       if (startNewGame) {
         this.startNewGame();
@@ -220,15 +217,15 @@ export class InputFormComponent implements OnInit, OnDestroy {
 
       this.setGameDetails({
         ...this.gameDetails,
-        inputValues: { letter: this.letter },
-        correctGuessedLetters: this.correctGuesses,
         allGuessedLetters: this.guessedLetters,
-        guessCount: this.guessCount,
-        remainingGuess: this.remainingGuess,
         canGuess: canGuess,
-        hasSpun: hasSpun,
-        maskedPuzzleArr: newEmptyArr,
+        correctGuessedLetters: this.correctGuesses,
         correctGuessedString: correctGuessedString,
+        guessCount: this.guessCount,
+        hasSpun: hasSpun,
+        inputValues: { letter: this.letter },
+        maskedPuzzleArr: newEmptyArr,
+        remainingGuess: this.remainingGuess,
       });
     } else {
       if (this.gameDetails.hasSpun === false || this.gameDetails.hasSpun === undefined) {
