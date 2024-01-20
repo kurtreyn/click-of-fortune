@@ -5,7 +5,14 @@
         >Score:
         <span class="score-txt">{{ gameDetails.score || 0 }} </span></span
       >
-      <hr />
+      <div class="row remaining-guess-row">
+        <span class="remaining-gues-label"
+          >Remaining Guesses:
+          <span class="remaining-gues-txt"
+            >{{ gameDetails.remainingGuess || 0 }}
+          </span></span
+        >
+      </div>
       <div class="row puzzle-row">
         <div class="guessed-letter-row">
           <span class="guessed-label">Guessed Letters: </span>
