@@ -20,6 +20,7 @@ export interface IGame {
     maxSpins?: number;
     spinCount?: number;
     maxGuess?: number;
+    remainingGuess?: number;
     canGuess?: boolean;
     score?: number;
     totalScore?: number;

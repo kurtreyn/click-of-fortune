@@ -24,6 +24,10 @@
   align-items: flex-start;
 }
 
+.remaining-gues-row {
+  display: flex;
+}
+
 .input-section {
   display: flex;
   flex-direction: column;
@@ -84,6 +88,22 @@
   font-size: 1.2rem;
   font-weight: bold;
   color: #000;
+  margin-top: 1rem;
+  margin-right: 1rem;
+}
+
+.remaining-gues-label {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #000;
+  margin-top: 1rem;
+  margin-right: 1rem;
+}
+
+.remaining-gues-txt {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: blue;
   margin-top: 1rem;
   margin-right: 1rem;
 }

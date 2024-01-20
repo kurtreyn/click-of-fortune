@@ -21,6 +21,7 @@ export class InputFormComponent implements OnInit, OnDestroy {
   currentPuzzle: IPuzzle = {} as IPuzzle;
   usedPuzzles: string[] = [];
   guessCount: number = 0;
+  remainingGuess: number = 0;
   newGame: boolean = false;
   totalScore: number = 0;
 
@@ -53,6 +54,7 @@ export class InputFormComponent implements OnInit, OnDestroy {
       this.availablePuzzles = details.availablePuzzles || [];
       this.usedPuzzles = details.usedPuzzles || [];
       this.newGame = details.startNewGame || false;
+      this.remainingGuess = details.remainingGuess || 0;
     });
   }
 
@@ -79,6 +81,7 @@ export class InputFormComponent implements OnInit, OnDestroy {
       const answerArr = this.puzzleService.createNoSpaceArrFromString(randomPuzzle.puzzle);
       const answerString = this.puzzleService.createNoSpaceStrFromArr(answerArr);
       const puzzVal = randomPuzzle.puzzle;
+      const remainingGuess = answerArr.length;
       this.currentPuzzle = randomPuzzle;
       this.guessedLetters = [];
       this.correctGuesses = [];
@@ -96,6 +99,7 @@ export class InputFormComponent implements OnInit, OnDestroy {
         maskedPuzzleArr: emptyArr,
         indexRefArr: this.puzzleService.convertStringToArray(puzzVal),
         guessCount: this.guessCount,
+        remainingGuess: remainingGuess,
         correctGuessedString: '',
         canGuess: false,
         hasSpun: false,
@@ -122,7 +126,6 @@ export class InputFormComponent implements OnInit, OnDestroy {
     if (this.gameDetails && this.gameDetails.guessCount && this.gameDetails.maxGuess && this.gameDetails.answerArr && this.gameDetails.answerArr.length > 0 && this.gameDetails.maskedPuzzleArr && this.gameDetails.maskedPuzzleArr.length > 0) {
       let hasWon = false;
       let hasLost = false;
-      let totalScore = 0;
       let answerKey = this.gameDetails.answerString
       let startNewGame = this.gameDetails.startNewGame || false;
       let correctGuessStrNoSpaces = this.puzzleService.createNoSpaceStrFromArr(this.gameDetails.maskedPuzzleArr);
@@ -171,7 +174,7 @@ export class InputFormComponent implements OnInit, OnDestroy {
 
 
   handleSubmit() {
-    if (this.inputForm.valid && this.gameDetails.hasSpun && this.gameDetails.canGuess) {
+    if (this.inputForm.valid && this.gameDetails.hasSpun && this.gameDetails.canGuess, this.gameDetails.maxGuess) {
       this.letter = this.inputForm.value.letter.toLowerCase();
 
       if (this.letter !== '' || this.letter !== null) {
@@ -213,6 +216,7 @@ export class InputFormComponent implements OnInit, OnDestroy {
           canGuess = false;
         }
       }
+      this.remainingGuess = this.gameDetails.maxGuess - this.guessCount;
 
       this.setGameDetails({
         ...this.gameDetails,
@@ -220,6 +224,7 @@ export class InputFormComponent implements OnInit, OnDestroy {
         correctGuessedLetters: this.correctGuesses,
         allGuessedLetters: this.guessedLetters,
         guessCount: this.guessCount,
+        remainingGuess: this.remainingGuess,
         canGuess: canGuess,
         hasSpun: hasSpun,
         maskedPuzzleArr: newEmptyArr,
