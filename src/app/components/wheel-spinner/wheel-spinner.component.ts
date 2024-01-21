@@ -19,7 +19,6 @@ export class WheelSpinnerComponent implements OnInit, OnDestroy {
   spinCount: number = 0;
   spinActive: boolean = false;
   hasSpun: boolean = false;
-  canGuess: boolean = false;
 
   constructor(private puzzleService: PuzzleService) { }
 
@@ -75,7 +74,6 @@ export class WheelSpinnerComponent implements OnInit, OnDestroy {
         }
         this.spinCount++;
         this.hasSpun = true;
-        this.canGuess = true;
         setTimeout(() => {
           this.spinActive = false;
           this.setScore();
@@ -108,7 +106,6 @@ export class WheelSpinnerComponent implements OnInit, OnDestroy {
       }
       this.setGameDetails({
         ...this.gameDetails,
-        canGuess: this.canGuess,
         hasSpun: this.hasSpun,
         score: this.score,
         spinActive: this.spinActive,

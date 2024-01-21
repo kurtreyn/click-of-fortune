@@ -9,7 +9,6 @@ export interface IGame {
     answerLength?: number;
     answerString?: string;
     availablePuzzles?: IPuzzle[];
-    canGuess?: boolean;
     correctGuessedLetters?: string[];
     correctGuessedString?: string;
     currentPuzzle?: IPuzzle;
@@ -17,8 +16,9 @@ export interface IGame {
     hasLost?: boolean;
     hasSpun?: boolean;
     hasWon?: boolean;
-    inputValues?: { letter: string };
+    incorrectGuessedLetters?: string[];
     indexRefArr?: string[];
+    inputValues?: { letter: string };
     maskedPuzzleArr?: string[];
     maxGuess?: number;
     maxSpins?: number;

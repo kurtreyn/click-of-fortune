@@ -15,9 +15,12 @@
       </div>
       <div class="row puzzle-row">
         <div class="guessed-letter-row">
-          <span class="guessed-label">Guessed Letters: </span>
+          <span class="guessed-label">Incorrect Letters: </span>
           <div
-            *ngFor="let letter of gameDetails.allGuessedLetters; let i = index"
+            *ngFor="
+              let letter of gameDetails.incorrectGuessedLetters;
+              let i = index
+            "
           >
             <span class="guessed-letters">{{ letter }}</span>
           </div>

@@ -82,6 +82,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         puzzleValue: this.currentPuzzle.puzzle,
         remainingGuess: puzzValArr.length,
         startNewGame: false,
+        hasSpun: false,
         usedPuzzles: this.usedPuzzles,
       });
     }
