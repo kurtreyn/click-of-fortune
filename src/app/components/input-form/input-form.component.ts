@@ -17,6 +17,7 @@ export class InputFormComponent implements OnInit, OnDestroy {
   letter: string = '';
   guessedLetters: string[] = [];
   correctGuesses: string[] = [];
+  incorrectGuesses: string[] = [];
   availablePuzzles: IPuzzle[] = [];
   currentPuzzle: IPuzzle = {} as IPuzzle;
   usedPuzzles: string[] = [];
@@ -24,6 +25,8 @@ export class InputFormComponent implements OnInit, OnDestroy {
   remainingGuess: number = 0;
   newGame: boolean = false;
   totalScore: number = 0;
+  canGuess: boolean = false;
+  hasSpun: boolean = false;
 
   constructor(private formBuilder: FormBuilder, private puzzleService: PuzzleService) {
   }
@@ -42,7 +45,7 @@ export class InputFormComponent implements OnInit, OnDestroy {
 
   createForm() {
     this.inputForm = this.formBuilder.group({
-      letter: new FormControl('', [Validators.required]),
+      letter: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(1)]),
     });
   }
 
@@ -55,6 +58,7 @@ export class InputFormComponent implements OnInit, OnDestroy {
       this.usedPuzzles = details.usedPuzzles || [];
       this.newGame = details.startNewGame || false;
       this.remainingGuess = details.remainingGuess || 0;
+      this.hasSpun = details.hasSpun || false;
     });
   }
 
@@ -94,7 +98,6 @@ export class InputFormComponent implements OnInit, OnDestroy {
         answerLength: answerArr.length,
         answerString: this.puzzleService.createNoSpaceStrFromArr(answerArr),
         availablePuzzles: this.availablePuzzles,
-        canGuess: false,
         correctGuessedLetters: this.correctGuesses,
         correctGuessedString: '',
         currentPuzzle: this.currentPuzzle,
@@ -102,6 +105,7 @@ export class InputFormComponent implements OnInit, OnDestroy {
         hasLost: false,
         hasSpun: false,
         hasWon: false,
+        incorrectGuessedLetters: [],
         indexRefArr: this.puzzleService.convertStringToArray(puzzVal),
         inputValues: { letter: '' },
         maskedPuzzleArr: emptyArr,
@@ -171,7 +175,13 @@ export class InputFormComponent implements OnInit, OnDestroy {
 
 
   handleSubmit() {
-    if (this.inputForm.valid && this.gameDetails.hasSpun && this.gameDetails.canGuess, this.gameDetails.maxGuess) {
+    if (!this.hasSpun) {
+      alert('Spin the wheel before guessing!');
+      this.inputForm.reset();
+      return;
+    }
+
+    if (this.inputForm.valid && this.hasSpun && this.canGuess, this.gameDetails.maxGuess) {
       this.letter = this.inputForm.value.letter.toLowerCase();
 
       if (this.letter !== '' || this.letter !== null) {
@@ -179,58 +189,56 @@ export class InputFormComponent implements OnInit, OnDestroy {
           alert(`You've already guessed ${this.letter.toUpperCase()}`)
           this.inputForm.reset();
           return;
-        } else {
-          this.guessedLetters.push(this.letter);
-          this.guessCount++;
         }
       }
-      let correctLetter;
-      let currentEmptyArr = this.gameDetails.maskedPuzzleArr || [];
-      const newEmptyArr = [...currentEmptyArr];
-      let indexRefArr = this.gameDetails.indexRefArr || [];
-      let canGuess = false;
-      let hasSpun = false;
-      let correctGuessedString;
 
+      let currentEmptyArr = this.gameDetails.maskedPuzzleArr || [];
+      const newMaskedArr = [...currentEmptyArr];
+      let indexRefArr = this.gameDetails.indexRefArr || [];
+      let correctGuessedString;
 
       if (this.gameDetails.indexRefArr) {
         for (let i = 0; i < indexRefArr.length; i++) {
           if (indexRefArr[i] === this.letter) {
-            newEmptyArr[i] = this.letter;
-            correctGuessedString = this.puzzleService.convertArrayToString(newEmptyArr);
+            newMaskedArr[i] = this.letter;
+            correctGuessedString = this.puzzleService.convertArrayToString(newMaskedArr);
           }
         }
       }
+
       if (this.gameDetails.answerArr?.includes(this.letter)) {
-        correctLetter = this.letter;
-        this.correctGuesses.push(correctLetter);
+        this.correctGuesses.push(this.letter);
+        this.guessedLetters.push(this.letter);
+        this.guessCount++;
         if (this.gameDetails.score) {
           this.totalScore += this.gameDetails.score;
         }
+      } else {
+        this.incorrectGuesses.push(this.letter);
+        this.guessedLetters.push(this.letter);
+        this.guessCount++;
       }
+
       if (this.gameDetails.maxGuess) {
         if (this.guessCount >= this.gameDetails.maxGuess) {
-          canGuess = false;
+          this.canGuess = false;
         }
       }
+
       this.remainingGuess = this.gameDetails.maxGuess - this.guessCount;
 
       this.setGameDetails({
         ...this.gameDetails,
         allGuessedLetters: this.guessedLetters,
-        canGuess: canGuess,
         correctGuessedLetters: this.correctGuesses,
         correctGuessedString: correctGuessedString,
         guessCount: this.guessCount,
-        hasSpun: hasSpun,
+        hasSpun: false,
+        incorrectGuessedLetters: this.incorrectGuesses,
         inputValues: { letter: this.letter },
-        maskedPuzzleArr: newEmptyArr,
+        maskedPuzzleArr: newMaskedArr,
         remainingGuess: this.remainingGuess,
       });
-    } else {
-      if (this.gameDetails.hasSpun === false || this.gameDetails.hasSpun === undefined) {
-        alert('Spin the wheel first!');
-      }
     }
 
     this.inputForm.reset();

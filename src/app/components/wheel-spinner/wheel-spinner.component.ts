@@ -108,7 +108,6 @@ export class WheelSpinnerComponent implements OnInit, OnDestroy {
       }
       this.setGameDetails({
         ...this.gameDetails,
-        canGuess: this.canGuess,
         hasSpun: this.hasSpun,
         score: this.score,
         spinActive: this.spinActive,
