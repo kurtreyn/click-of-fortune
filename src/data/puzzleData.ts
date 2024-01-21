@@ -264,7 +264,7 @@ export const puzzleData = [
     {
         id: '52',
         category: "phrases",
-        puzzle: "caught red-handed"
+        puzzle: "caught red handed"
     },
     {
         id: '53',
@@ -404,7 +404,7 @@ export const puzzleData = [
     {
         id: '80',
         category: "movies",
-        puzzle: "schindler's list"
+        puzzle: "schindlers list"
     },
     {
         id: '81',
@@ -434,7 +434,7 @@ export const puzzleData = [
     {
         id: '86',
         category: "movies",
-        puzzle: "mad max: fury road"
+        puzzle: "mad max fury road"
     },
     {
         id: '87',
@@ -464,7 +464,7 @@ export const puzzleData = [
     {
         id: '92',
         category: "movies",
-        puzzle: "ferris bueller's day off"
+        puzzle: "ferris buellers day off"
     },
     {
         id: '93',
@@ -479,7 +479,7 @@ export const puzzleData = [
     {
         id: '95',
         category: "movies",
-        puzzle: "moulin rouge!"
+        puzzle: "moulin rouge"
     },
     {
         id: '96',

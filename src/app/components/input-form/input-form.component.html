@@ -7,9 +7,12 @@
         id="letter"
         formControlName="letter"
         placeholder="Enter Letter"
+        [disabled]="!hasSpun"
       />
     </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!hasSpun">
+      Submit
+    </button>
   </form>
 </section>
