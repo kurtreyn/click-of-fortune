@@ -25,7 +25,6 @@ export class InputFormComponent implements OnInit, OnDestroy {
   remainingGuess: number = 0;
   newGame: boolean = false;
   totalScore: number = 0;
-  canGuess: boolean = false;
   hasSpun: boolean = false;
 
   constructor(private formBuilder: FormBuilder, private puzzleService: PuzzleService) {
@@ -59,6 +58,7 @@ export class InputFormComponent implements OnInit, OnDestroy {
       this.newGame = details.startNewGame || false;
       this.remainingGuess = details.remainingGuess || 0;
       this.hasSpun = details.hasSpun || false;
+      this.incorrectGuesses = details.incorrectGuessedLetters || [];
     });
   }
 
@@ -181,7 +181,7 @@ export class InputFormComponent implements OnInit, OnDestroy {
       return;
     }
 
-    if (this.inputForm.valid && this.hasSpun && this.canGuess, this.gameDetails.maxGuess) {
+    if (this.inputForm.valid && this.hasSpun && this.gameDetails.maxGuess) {
       this.letter = this.inputForm.value.letter.toLowerCase();
 
       if (this.letter !== '' || this.letter !== null) {
@@ -219,11 +219,6 @@ export class InputFormComponent implements OnInit, OnDestroy {
         this.guessCount++;
       }
 
-      if (this.gameDetails.maxGuess) {
-        if (this.guessCount >= this.gameDetails.maxGuess) {
-          this.canGuess = false;
-        }
-      }
 
       this.remainingGuess = this.gameDetails.maxGuess - this.guessCount;
 
