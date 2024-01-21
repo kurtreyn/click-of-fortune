@@ -13,7 +13,6 @@ export interface IGame {
     correctGuessedString?: string;
     currentPuzzle?: IPuzzle;
     guessCount?: number;
-    hasLost?: boolean;
     hasSpun?: boolean;
     hasWon?: boolean;
     incorrectGuessedLetters?: string[];

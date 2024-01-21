@@ -1,7 +1,7 @@
 {
   "name": "spin-of-fortune",
   "author": "kurt reynolds",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
