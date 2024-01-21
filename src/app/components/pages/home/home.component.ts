@@ -62,11 +62,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   updateGameDetails() {
     if (this.currentPuzzle) {
-      let maxSpins = 0;
       let puzzVal = this.currentPuzzle.puzzle;
       let puzzValArr = this.puzzleService.createNoSpaceArrFromString(puzzVal);
 
-      maxSpins = puzzValArr.length;
       this.setGameDetails({
         ...this.gameDetails,
         allPuzzles: this.allPuzzles,
@@ -77,7 +75,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         currentPuzzle: this.currentPuzzle,
         indexRefArr: this.puzzleService.convertStringToArray(puzzVal),
         maxGuess: puzzValArr.length,
-        maxSpins: maxSpins,
         puzzleCategory: this.currentPuzzle.category,
         puzzleValue: this.currentPuzzle.puzzle,
         remainingGuess: puzzValArr.length,

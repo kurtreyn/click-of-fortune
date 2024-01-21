@@ -20,7 +20,6 @@ export interface IGame {
     inputValues?: { letter: string };
     maskedPuzzleArr?: string[];
     maxGuess?: number;
-    maxSpins?: number;
     newPuzzle?: IPuzzle[];
     puzzleCategory?: string;
     puzzleId?: string;
@@ -28,7 +27,6 @@ export interface IGame {
     remainingGuess?: number;
     score?: number;
     spinActive?: boolean;
-    spinCount?: number;
     spinDisabled?: boolean;
     spinValue?: number;
     startNewGame?: boolean;

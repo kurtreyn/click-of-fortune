@@ -114,7 +114,6 @@ export class InputFormComponent implements OnInit, OnDestroy {
         remainingGuess: remainingGuess,
         score: 0,
         spinActive: false,
-        spinCount: 0,
         spinDisabled: false,
         spinValue: 0,
         startNewGame: false,

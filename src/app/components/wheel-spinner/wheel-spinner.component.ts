@@ -16,7 +16,6 @@ export class WheelSpinnerComponent implements OnInit, OnDestroy {
   spinnerEnum = SpinnerEnum;
   spinValue: number = SpinnerEnum.ONE;
   score: number = 0;
-  spinCount: number = 0;
   spinActive: boolean = false;
   hasSpun: boolean = false;
 
@@ -36,7 +35,6 @@ export class WheelSpinnerComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$)
     ).subscribe(details => {
       this.gameDetails = details;
-      this.spinCount = details.spinCount || 0;
     });
   }
 
@@ -72,7 +70,6 @@ export class WheelSpinnerComponent implements OnInit, OnDestroy {
           default:
             break;
         }
-        this.spinCount++;
         this.hasSpun = true;
         setTimeout(() => {
           this.spinActive = false;
@@ -97,9 +94,9 @@ export class WheelSpinnerComponent implements OnInit, OnDestroy {
   }
 
   updateGameDetails() {
-    if (this.gameDetails && this.gameDetails.maxSpins) {
+    if (this.gameDetails && this.gameDetails.maxGuess) {
       let disabled;
-      if (this.spinCount === this.gameDetails.maxSpins) {
+      if (this.gameDetails.guessCount === this.gameDetails.maxGuess) {
         disabled = true;
       } else {
         disabled = false;
@@ -109,7 +106,6 @@ export class WheelSpinnerComponent implements OnInit, OnDestroy {
         hasSpun: this.hasSpun,
         score: this.score,
         spinActive: this.spinActive,
-        spinCount: this.spinCount,
         spinDisabled: disabled,
         spinValue: this.spinValue,
       });
