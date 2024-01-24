@@ -124,7 +124,7 @@ export class InputFormComponent implements OnInit, OnDestroy {
 
 
   checkGameStatus() {
-    if (this.gameDetails && this.gameDetails.guessCount && this.gameDetails.maxGuess && this.gameDetails.answerArr && this.gameDetails.answerArr.length > 0 && this.gameDetails.maskedPuzzleArr && this.gameDetails.maskedPuzzleArr.length > 0) {
+    if (this.gameDetails && this.gameDetails.guessCount && this.gameDetails.maxGuess && this.gameDetails.answerArr && this.gameDetails.answerArr.length > 0 && this.gameDetails.maskedPuzzleArr && this.gameDetails.maskedPuzzleArr.length > 0 && this.gameDetails.score) {
       let hasWon = false;
       let answerKey = this.gameDetails.answerString
       let startNewGame = this.gameDetails.startNewGame || false;
@@ -133,6 +133,7 @@ export class InputFormComponent implements OnInit, OnDestroy {
       if (this.gameDetails.guessCount <= this.gameDetails.maxGuess && answerKey === correctGuessStrNoSpaces) {
         hasWon = true;
         startNewGame = true;
+        this.totalScore += this.gameDetails.score;
         alert("You won!");
       }
 
@@ -140,14 +141,17 @@ export class InputFormComponent implements OnInit, OnDestroy {
         if (answerKey === correctGuessStrNoSpaces) {
           hasWon = true;
           startNewGame = true;
+          this.totalScore += this.gameDetails.score;
           alert("You won!");
         } else if (answerKey !== correctGuessStrNoSpaces && this.gameDetails.guessCount === this.gameDetails.maxGuess) {
           hasWon = false;
           startNewGame = true;
+          this.totalScore += this.gameDetails.score;
           alert("Sorry, you lost");
         } else {
           hasWon = false;
           startNewGame = true;
+          this.totalScore += this.gameDetails.score;
           alert("Sorry, you lost");
         }
       }
@@ -201,9 +205,7 @@ export class InputFormComponent implements OnInit, OnDestroy {
       if (this.gameDetails.answerArr?.includes(this.letter)) {
         this.correctGuesses.push(this.letter);
         this.guessedLetters.push(this.letter);
-        if (this.gameDetails.score) {
-          this.totalScore += this.gameDetails.score;
-        }
+
       } else {
         this.incorrectGuesses.push(this.letter);
         this.guessedLetters.push(this.letter);
