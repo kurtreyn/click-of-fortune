@@ -507,402 +507,402 @@ export const puzzleData = [
         puzzle: "the lord of the rings"
     },
     {
-        id: 101,
+        id: "101",
         category: "music",
         puzzle: "pink floyd"
     },
     {
-        id: 102,
+        id: "102",
         category: "phrases",
         puzzle: "never say never"
     },
     {
-        id: 103,
+        id: "103",
         category: "places",
         puzzle: "barcelona"
     },
     {
-        id: 104,
+        id: "104",
         category: "people",
         puzzle: "madonna"
     },
     {
-        id: 105,
+        id: "105",
         category: "things",
         puzzle: "headphones"
     },
     {
-        id: 106,
+        id: "106",
         category: "activities",
         puzzle: "photography"
     },
     {
-        id: 107,
+        id: "107",
         category: "history",
         puzzle: "ancient rome"
     },
     {
-        id: 108,
+        id: "108",
         category: "movies",
         puzzle: "the godfather part ii"
     },
     {
-        id: 109,
+        id: "109",
         category: "music",
         puzzle: "ac dc"
     },
     {
-        id: 110,
+        id: "110",
         category: "phrases",
         puzzle: "hit the nail on the head"
     },
     {
-        id: 111,
+        id: "111",
         category: "places",
         puzzle: "istanbul"
     },
     {
-        id: 112,
+        id: "112",
         category: "people",
         puzzle: "mother teresa"
     },
     {
-        id: 113,
+        id: "113",
         category: "things",
         puzzle: "backpack"
     },
     {
-        id: 114,
+        id: "114",
         category: "activities",
         puzzle: "yoga"
     },
     {
-        id: 115,
+        id: "115",
         category: "history",
         puzzle: "the black death"
     },
     {
-        id: 116,
+        id: "116",
         category: "mythology",
         puzzle: "zeus"
     },
     {
-        id: 117,
+        id: "117",
         category: "movies",
         puzzle: "fight club"
     },
     {
-        id: 118,
+        id: "118",
         category: "music",
         puzzle: "the doors"
     },
     {
-        id: 119,
+        id: "119",
         category: "phrases",
         puzzle: "bite the bullet"
     },
     {
-        id: 120,
+        id: "120",
         category: "places",
         puzzle: "hong kong"
     },
     {
-        id: 121,
+        id: "121",
         category: "people",
         puzzle: "abraham lincoln"
     },
     {
-        id: 122,
+        id: "122",
         category: "things",
         puzzle: "flashlight"
     },
     {
-        id: 123,
+        id: "123",
         category: "activities",
         puzzle: "meditation"
     },
     {
-        id: 124,
+        id: "124",
         category: "history",
         puzzle: "the great depression"
     },
     {
-        id: 125,
+        id: "125",
         category: "mythology",
         puzzle: "medusa"
     },
     {
-        id: 126,
+        id: "126",
         category: "movies",
         puzzle: "the lord of the rings the two towers"
     },
     {
-        id: 127,
+        id: "127",
         category: "music",
         puzzle: "nirvana"
     },
     {
-        id: 128,
+        id: "128",
         category: "phrases",
         puzzle: "burning the midnight oil"
     },
     {
-        id: 129,
+        id: "129",
         category: "places",
         puzzle: "buenos aires"
     },
     {
-        id: 130,
+        id: "130",
         category: "people",
         puzzle: "ghandi"
     },
     {
-        id: 131,
+        id: "131",
         category: "things",
         puzzle: "suitcase"
     },
     {
-        id: 132,
+        id: "132",
         category: "activities",
         puzzle: "dancing"
     },
     {
-        id: 133,
+        id: "133",
         category: "history",
         puzzle: "the american civil war"
     },
     {
-        id: 134,
+        id: "134",
         category: "mythology",
         puzzle: "poseidon"
     },
     {
-        id: 135,
+        id: "135",
         category: "movies",
         puzzle: "the lord of the rings the return of the king"
     },
     {
-        id: 136,
+        id: "136",
         category: "music",
         puzzle: "the rolling stones"
     },
     {
-        id: 137,
+        id: "137",
         category: "phrases",
         puzzle: "out of sight out of mind"
     },
     {
-        id: 138,
+        id: "138",
         category: "places",
         puzzle: "lisbon"
     },
     {
-        id: 139,
+        id: "139",
         category: "people",
         puzzle: "nelson mandela"
     },
     {
-        id: 140,
+        id: "140",
         category: "things",
         puzzle: "guitar"
     },
     {
-        id: 141,
+        id: "141",
         category: "activities",
         puzzle: "fishing"
     },
     {
-        id: 142,
+        id: "142",
         category: "history",
         puzzle: "the french revolution"
     },
     {
-        id: 143,
+        id: "143",
         category: "mythology",
         puzzle: "apollo"
     },
     {
-        id: 144,
+        id: "144",
         category: "movies",
         puzzle: "the lord of the rings the fellowship of the ring"
     },
     {
-        id: 145,
+        id: "145",
         category: "music",
         puzzle: "the beach boys"
     },
     {
-        id: 146,
+        id: "146",
         category: "phrases",
         puzzle: "the best of both worlds"
     },
     {
-        id: 147,
+        id: "147",
         category: "places",
         puzzle: "vienna"
     },
     {
-        id: 148,
+        id: "148",
         category: "people",
         puzzle: "cleopatra"
     },
     {
-        id: 149,
+        id: "149",
         category: "things",
         puzzle: "binoculars"
     },
     {
-        id: 150,
+        id: "150",
         category: "activities",
         puzzle: "surfing"
     },
     {
-        id: 151,
+        id: "151",
         category: "history",
         puzzle: "the russian revolution"
     },
     {
-        id: 152,
+        id: "152",
         category: "mythology",
         puzzle: "hercules"
     },
     {
-        id: 153,
+        id: "153",
         category: "movies",
         puzzle: "the green mile"
     },
     {
-        id: 154,
+        id: "154",
         category: "music",
         puzzle: "green day"
     },
     {
-        id: 155,
+        id: "155",
         category: "phrases",
         puzzle: "beat around the bush"
     },
     {
-        id: 156,
+        id: "156",
         category: "places",
         puzzle: "dubai"
     },
     {
-        id: 157,
+        id: "157",
         category: "people",
         puzzle: "nero"
     },
     {
-        id: 158,
+        id: "158",
         category: "things",
         puzzle: "watch"
     },
     {
-        id: 159,
+        id: "159",
         category: "activities",
         puzzle: "bird watching"
     },
     {
-        id: 160,
+        id: "160",
         category: "history",
         puzzle: "the spanish inquisition"
     },
     {
-        id: 161,
+        id: "161",
         category: "mythology",
         puzzle: "athena"
     },
     {
-        id: 162,
+        id: "162",
         category: "movies",
         puzzle: "the lion king"
     },
     {
-        id: 163,
+        id: "163",
         category: "music",
         puzzle: "the doors"
     },
     {
-        id: 164,
+        id: "164",
         category: "phrases",
         puzzle: "break the ice"
     },
     {
-        id: 165,
+        id: "165",
         category: "places",
         puzzle: "singapore"
     },
     {
-        id: 166,
+        id: "166",
         category: "people",
         puzzle: "princess diana"
     },
     {
-        id: 167,
+        id: "167",
         category: "things",
         puzzle: "wallet"
     },
     {
-        id: 168,
+        id: "168",
         category: "activities",
         puzzle: "ballet"
     },
     {
-        id: 169,
+        id: "169",
         category: "history",
         puzzle: "the civil rights movement"
     },
     {
-        id: 170,
+        id: "170",
         category: "mythology",
         puzzle: "odysseus"
     },
     {
-        id: 171,
+        id: "171",
         category: "movies",
         puzzle: "the matrix reloaded"
     },
     {
-        id: 172,
+        id: "172",
         category: "music",
         puzzle: "led zeppelin"
     },
     {
-        id: 173,
+        id: "173",
         category: "phrases",
         puzzle: "barking up the wrong tree"
     },
     {
-        id: 174,
+        id: "174",
         category: "places",
         puzzle: "moscow"
     },
     {
-        id: 175,
+        id: "175",
         category: "people",
         puzzle: "prince charles"
     },
     {
-        id: 176,
+        id: "176",
         category: "things",
         puzzle: "earphones"
     },
     {
-        id: 177,
+        id: "177",
         category: "activities",
         puzzle: "archery"
     },
     {
-        id: 178,
+        id: "178",
         category: "history",
         puzzle: "the trojan war"
     },
     {
-        id: 179,
+        id: "179",
         category: "mythology",
         puzzle: "hera"
     },
     {
-        id: 180,
+        id: "180",
         category: "movies",
         puzzle: "the matrix revolutions"
     }
