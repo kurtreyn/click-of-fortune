@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription, Subject } from 'rxjs';
+import { Subscription, Subject, take, takeUntil } from 'rxjs';
 
 import { ApiService } from '../../../services/api/api.service';
 import { PuzzleService } from '../../../services/puzzle/puzzle.service';
@@ -19,11 +19,20 @@ export class HomeComponent implements OnInit, OnDestroy {
   usedPuzzles: string[] = [];
   gameDetails: IGame = {} as IGame;
   currentPuzzle: IPuzzle = {} as IPuzzle;
+  newPuzzles: IPuzzle[] = [];
 
   constructor(private apiService: ApiService, private puzzleService: PuzzleService) { }
 
   ngOnInit() {
     this.loadAllPuzzles();
+    this.apiService.getFetchedPuzzles().pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(puzzles => {
+      if (puzzles && puzzles.length > 0) {
+        this.newPuzzles = puzzles;
+        console.log('newPuzzles: ', this.newPuzzles);
+      }
+    });
   }
 
   ngOnDestroy() {
