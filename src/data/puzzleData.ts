@@ -234,7 +234,7 @@ export const puzzleData = [
     {
         id: '46',
         category: "history",
-        puzzle: "renaissance"
+        puzzle: "the dark ages"
     },
     {
         id: '47',
@@ -744,7 +744,7 @@ export const puzzleData = [
     {
         id: "148",
         category: "people",
-        puzzle: "cleopatra"
+        puzzle: "marcus aurelius"
     },
     {
         id: "149",
@@ -819,7 +819,7 @@ export const puzzleData = [
     {
         id: "163",
         category: "music",
-        puzzle: "the doors"
+        puzzle: "the who"
     },
     {
         id: "164",
@@ -905,8 +905,86 @@ export const puzzleData = [
         id: "180",
         category: "movies",
         puzzle: "the matrix revolutions"
+    },
+    {
+        id: "181",
+        category: "tv shows",
+        puzzle: "breaking bad"
+    },
+    {
+        id: "182",
+        category: "tv shows",
+        puzzle: "stranger things"
+    },
+    {
+        id: "183",
+        category: "tv shows",
+        puzzle: "game of thrones"
+    },
+    {
+        id: "184",
+        category: "tv shows",
+        puzzle: "friends"
+    },
+    {
+        id: "185",
+        category: "tv shows",
+        puzzle: "the simpsons"
+    },
+    {
+        id: "186",
+        category: "tv shows",
+        puzzle: "the office"
+    },
+    {
+        id: "187",
+        category: "tv shows",
+        puzzle: "sherlock"
+    },
+    {
+        id: "188",
+        category: "tv shows",
+        puzzle: "the walking dead"
+    },
+    {
+        id: "191",
+        category: "tv shows",
+        puzzle: "the mandalorian"
+    },
+    {
+        id: "192",
+        category: "tv shows",
+        puzzle: "black mirror"
+    },
+    {
+        id: "194",
+        category: "tv shows",
+        puzzle: "the crown"
+    },
+    {
+        id: "195",
+        category: "tv shows",
+        puzzle: "house of cards"
+    },
+    {
+        id: "197",
+        category: "tv shows",
+        puzzle: "the witcher"
+    },
+    {
+        id: "198",
+        category: "tv shows",
+        puzzle: "south park"
+    },
+    {
+        id: "199",
+        category: "tv shows",
+        puzzle: "the big bang theory"
+    },
+    {
+        id: "200",
+        category: "tv shows",
+        puzzle: "family guy"
     }
-
-
 
 ]
